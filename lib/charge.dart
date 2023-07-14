@@ -12,10 +12,16 @@ class _ChargeState extends State<Charge> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFFAFAFA),
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         alignment: Alignment.center, 
-        child: const Text('Charge')
+        child: Text(
+          'Charge',
+          style: TextStyle(
+            color: Theme.of(context).backgroundColor == const Color(0XFF2A2B2E) ? Colors.white : Colors.black,
+
+          ),
+        ),
       ),
     );
   }

@@ -22,7 +22,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
@@ -41,38 +41,25 @@ class _LoginState extends State<Login> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
-                child: const Text(
+                child: Text(
                   'Login',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 24.0,
-                      color: Colors.black),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Welcome back, please log in to your account.',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.0,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Email Address',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12.0,
-                      color: Colors.black),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Container(
@@ -141,14 +128,9 @@ class _LoginState extends State<Login> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 12.0),
-                    child: const Text(
+                    child: Text(
                       'Password',
-                      style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
                   Container(
@@ -157,8 +139,8 @@ class _LoginState extends State<Login> {
                       height: 30.0,
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Colors.transparent,
                         ),
                         child: const Text(
                           'Forgot Password?',
@@ -266,27 +248,25 @@ class _LoginState extends State<Login> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),
                       ),
+                      side: BorderSide(
+                        width: 1,
+                        color: Theme.of(context).backgroundColor ==
+                                const Color(0XFF2A2B2E)
+                            ? Colors.white
+                            : Colors.black,
+                      ),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.white,
-
-
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.transparent,
                       ),
                       clipBehavior: Clip.none,
-                      child: const Text(
-                        'Keep me logged in',
-                        style: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: Color(0XFF2A2B2E),
-                        ),
-                      ),
+                      child: Text('Keep me logged in',
+                          style: Theme.of(context).textTheme.titleSmall),
                       onPressed: () {
                         _isChecked = !_isChecked;
                         setState(() {});
@@ -310,7 +290,8 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     splashColor: const Color(0XFF8ABA41),
-                    highlightColor: const Color.fromARGB(255, 116, 155, 58), //Color(0XFF749B3A)
+                    highlightColor: const Color.fromARGB(
+                        255, 116, 155, 58), //Color(0XFF749B3A)
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
@@ -346,19 +327,15 @@ class _LoginState extends State<Login> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Don't have an acount?",
-                      style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: Color(0XFF2A2B2E),
-                      ),
-                    ),
+                    Text("Don't have an acount?",
+                        style: Theme.of(context).textTheme.titleSmall),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        disabledBackgroundColor: Colors.transparent,
+                        disabledForegroundColor: Colors.transparent,
                       ),
                       child: const Text(
                         "Create Account",
@@ -382,23 +359,18 @@ class _LoginState extends State<Login> {
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 24.0),
-                      child: const Divider(color: Colors.black),
+                      child: Divider(color: Theme.of(context).iconTheme.color),
                     ),
                   ),
-                  const Text(
+                  Text(
                     'or',
-                    style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 24.0),
-                      child: const Divider(color: Colors.black),
+                      child: Divider(color: Theme.of(context).iconTheme.color),
                     ),
                   ),
                 ],
@@ -406,15 +378,8 @@ class _LoginState extends State<Login> {
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 12.0),
-                child: const Text(
-                  'Continue with',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
-                ),
+                child: Text('Continue with',
+                    style: Theme.of(context).textTheme.titleSmall),
               ),
               Container(
                 alignment: Alignment.center,
@@ -429,8 +394,8 @@ class _LoginState extends State<Login> {
                       ),
                       iconSize: 34.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(8.0),
@@ -440,8 +405,8 @@ class _LoginState extends State<Login> {
                       ),
                       iconSize: 37.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(8.0),
@@ -451,8 +416,8 @@ class _LoginState extends State<Login> {
                       ),
                       iconSize: 43.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                   ],
                 ),

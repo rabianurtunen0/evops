@@ -17,10 +17,10 @@ class _RefreshPasswordState extends State<RefreshPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
+        shadowColor: Colors.transparent,
         elevation: 0,
         leading: Container(
           alignment: Alignment.topLeft,
@@ -28,12 +28,12 @@ class _RefreshPasswordState extends State<RefreshPassword> {
             onPressed: () {
               Get.to(const Login());
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back, 
-              color: Colors.black,
+              color: Theme.of(context).iconTheme.color,
             ),
-            splashColor: Colors.white,
-            highlightColor: Colors.white,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),       
       ),
@@ -55,27 +55,17 @@ class _RefreshPasswordState extends State<RefreshPassword> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
-                child: const Text(
+                child: Text(
                   'Forgot Password?',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24.0,
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Email Address',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall
                 ),
               ),
               Container(
@@ -191,19 +181,14 @@ class _RefreshPasswordState extends State<RefreshPassword> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center, 
                   children: [
-                    const Text(
+                    Text(
                       "Remembered your password?",
-                      style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,     
-                        color: Color(0XFF2A2B2E), 
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.transparent,
                       ),
                       child: const Text(
                         "Login",

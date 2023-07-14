@@ -211,7 +211,7 @@ class _CalendarState extends State<Calendar> {
         ],
       ),
       bottomSheet: Container(
-        margin: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 42.0),
+        margin: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 42.0),
         height: 350,
         decoration: const BoxDecoration(
           color: Color(0XFF8ABA41),
@@ -279,11 +279,11 @@ class _CalendarState extends State<Calendar> {
                   child: eventsList.isEmpty
                       ? Container(
                         alignment: Alignment.center,
-                        child: const Icon(
+                        /*child: const Icon(
                           BootstrapIcons.calendar_plus,
                           color: Color(0XFFFAFAFA),
                           size: 60.0,
-                        ),
+                        ),*/
                       )
                       : ListView.builder(
                           shrinkWrap: true,

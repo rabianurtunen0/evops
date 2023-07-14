@@ -1,20 +1,21 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/assistantAI.dart';
+import 'package:evops/themeService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
-//import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+//import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:evops/calendar.dart';
 import 'package:evops/charge.dart';
 import 'package:evops/devices.dart';
 import 'package:evops/profile.dart';
 import 'package:evops/map.dart';
 import 'package:get/get.dart';
-//import 'package:rive/rive.dart';
+//import 'package:flutter_animated_icons/flutter_animated_icons.dart';
 //import 'package:flutter_animated_icons/icons8.dart';
 //import 'package:flutter_animated_icons/lottiefiles.dart';
+//import 'package:flutter_animated_icons/useanimations.dart';
 //import 'package:lottie/lottie.dart';
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -23,14 +24,13 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _pageController = PageController(initialPage: 0);
-  int page = 0;
-  bool light = true;
-  //late AnimationController _settingController;
-  //int activePage = 0;
+  int selectedIndex = 0;
+  int selectedItemPosition = 0;
+  late final _pageController = PageController(initialPage: selectedIndex);
   int maxCount = 5;
+  late AnimationController themeController;
 
   final List<Widget> bottomBarPages = [
     const Devices(),
@@ -40,23 +40,18 @@ class _HomeState extends State<Home> {
     const Profile(),
   ];
 
-  static const List<dynamic> devicesList = [
-    ['assets/images/device.jpeg', 'Device1', '1. ürünün açıklaması'],
-    ['assets/images/device.jpeg', 'Device2', '2. ürünün açıklaması'],
-     ['assets/images/device.jpeg', 'Device3', '3. ürünün açıklaması'],
-  ];
+  @override
+  void initState() {
+    super.initState();
+    themeController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+  }
 
   @override
   void dispose() {
     _pageController.dispose();
-    //_settingController.dispose();
+    themeController.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //_settingController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
   }
 
   @override
@@ -75,9 +70,9 @@ class _HomeState extends State<Home> {
             },
             icon: SvgPicture.asset(
               'assets/images/menu.svg',
-              color: const Color(0XFF2A2B2E),
+              color: Theme.of(context).iconTheme.color,
             ),
-            splashColor: Colors.white,
+            splashColor: Colors.transparent,
             splashRadius: 1.0,
           );
         }),
@@ -93,7 +88,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       drawer: Drawer(
-        backgroundColor: const Color(0XFFFAFAFA),
+        backgroundColor: Colors.white,
         width: 300,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.horizontal(
@@ -107,12 +102,17 @@ class _HomeState extends State<Home> {
             Column(
               children: [
                 Container(
-                  alignment: Alignment.topLeft,
                   width: MediaQuery.of(context).size.width,
-                  height: 200,
+                  height: 225,
                   padding: const EdgeInsets.fromLTRB(30.0, 60.0, 20.0, 30.0),
-                  color: const Color.fromARGB(255, 204, 216, 185),
-                  //color: const Color.fromARGB(255, 184, 205, 159),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(255, 171, 183, 156),
+                        Color(0XFF8ABA41),
+                      ],
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -121,7 +121,7 @@ class _HomeState extends State<Home> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(top: 15.0),
+                            padding: const EdgeInsets.only(top: 40.0),
                             child: const CircleAvatar(
                               backgroundColor: Colors.white,
                               radius: 24.0,
@@ -136,8 +136,8 @@ class _HomeState extends State<Home> {
                                 child: const Text(
                                   'Rabia Nur Tünen',
                                   style: TextStyle(
-                                    color: Color(0XFF2A2B2E),
-                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 14.0,
                                   ),
                                 ),
@@ -146,7 +146,7 @@ class _HomeState extends State<Home> {
                                 child: const Text(
                                   'rrabianurtunen@gmail.com',
                                   style: TextStyle(
-                                    color: Color(0XFF2A2B2E),
+                                    color: Color.fromARGB(255, 241, 244, 238),
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12.0,
                                   ),
@@ -156,53 +156,62 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
+                     
+                      
                       Container(
                         alignment: Alignment.topRight,
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color(0XFF8ABA41),
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(24.0)
-                              ),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 12.0,
-                                child: Image(
-                                  width: 16,
-                                  height: 16,
-                                  image: AssetImage(
-                                    devicesList[0][0],
-                                  ),
-                                ),
+                        child: IconButton(
+                          icon: Theme.of(context).backgroundColor == Colors.white
+                          ? const Icon(
+                            BootstrapIcons.brightness_high_fill,
+                            color: Colors.white,
+                            size: 22,
+                          ) : const Icon(
+                            BootstrapIcons.moon_stars_fill,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              ThemeService().changeThemeMode();
+                            });
+
+                          },
+                        ),
+                        /*IconButton(
+                          iconSize: 40.0,
+                          onPressed: () {
+                            if (themeController.status ==
+                                AnimationStatus.dismissed) {
+                              themeController.reset();
+                              themeController.animateTo(0.6);
+                            } else {
+                              themeController.reverse();
+                            }
+                          },
+                          icon: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(14.0, 0.0, 0.0, 12.0),
+                            child: ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                        Colors.red,
+                        BlendMode.modulate,
+                      ),
+                              child: Lottie.asset(
+                                Icons8.day_night_weather,
+                                controller: themeController,
+                                delegates: LottieDelegates(
+                                  values: [
+                                    ValueDelegate.color(
+                                      const ['**', 'wave_2 Outlines', '**'],
+                                      value: Color(0xff179977),
+                                    ),
+                                  ]
+                                )
                               ),
                             ),
-                            devicesList.length > 1 
-                            ? Container(
-                                alignment: Alignment.center,
-                                  width: 26,
-                                  height: 26,
-                                  margin: const EdgeInsets.only(left: 16.0),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0XFF8ABA41),
-                                    
-                                    borderRadius: BorderRadius.circular(24.0),
-                                  ),
-                                  child: Text(
-                                    '+' '${devicesList.length - 1}',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                            ) : Container(),
-                          ],
-                        ),
+                          ),
+                        ),*/
                       ),
                     ],
                   ),
@@ -210,7 +219,7 @@ class _HomeState extends State<Home> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  decoration: page == 0
+                  decoration: selectedIndex == 0
                       ? const BoxDecoration(
                           color: Color.fromARGB(255, 227, 230, 223),
                           border: Border(
@@ -232,7 +241,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         _pageController.jumpToPage(0);
-                        page = 0;
+                        selectedIndex = 0;
+                        selectedItemPosition = 0;
                       });
                     },
                     splashColor: Colors.transparent,
@@ -242,11 +252,15 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: Icon(
+                          child: selectedIndex == 0 
+                          ? const Icon(
+                              BootstrapIcons.fuel_pump_fill,
+                              color: Color(0XFF8ABA41),  
+                              size: 20,
+                            )
+                          : const Icon(
                             BootstrapIcons.fuel_pump,
-                            color: page == 0
-                                ? const Color(0XFF8ABA41)
-                                : const Color(0XFF2A2B2E),
+                            color: Color(0XFF2A2B2E),
                             size: 20,
                           ),
                         ),
@@ -259,7 +273,7 @@ class _HomeState extends State<Home> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
-                              color: page == 0
+                              color: selectedIndex == 0
                                   ? const Color(0XFF8ABA41)
                                   : const Color(0XFF2A2B2E),
                             ),
@@ -272,7 +286,7 @@ class _HomeState extends State<Home> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  decoration: page == 1
+                  decoration: selectedIndex == 1
                       ? const BoxDecoration(
                           color: Color.fromARGB(255, 227, 230, 223),
                           border: Border(
@@ -294,7 +308,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         _pageController.jumpToPage(1);
-                        page = 1;
+                        selectedIndex = 1;
+                        selectedItemPosition = 1;
                       });
                     },
                     splashColor: Colors.transparent,
@@ -304,11 +319,15 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            BootstrapIcons.battery_charging,
-                            color: page == 1
-                                ? const Color(0XFF8ABA41)
-                                : const Color(0XFF2A2B2E),
+                          child: selectedIndex == 1 
+                          ? const Icon(
+                              BootstrapIcons.lightning_charge_fill,
+                              color: Color(0XFF8ABA41),  
+                              size: 20,
+                            )
+                          : const Icon(
+                            BootstrapIcons.lightning_charge,
+                            color: Color(0XFF2A2B2E),
                             size: 20,
                           ),
                         ),
@@ -321,7 +340,7 @@ class _HomeState extends State<Home> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
-                              color: page == 1
+                              color: selectedIndex == 1
                                   ? const Color(0XFF8ABA41)
                                   : const Color(0XFF2A2B2E),
                             ),
@@ -334,7 +353,7 @@ class _HomeState extends State<Home> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  decoration: page == 2
+                  decoration: selectedIndex == 2
                       ? const BoxDecoration(
                           color: Color.fromARGB(255, 227, 230, 223),
                           border: Border(
@@ -356,7 +375,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         _pageController.jumpToPage(2);
-                        page = 2;
+                        selectedIndex = 2;
+                        selectedItemPosition = 2;
                       });
                     },
                     splashColor: Colors.transparent,
@@ -366,11 +386,15 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            BootstrapIcons.calendar_week,
-                            color: page == 2
-                                ? const Color(0XFF8ABA41)
-                                : const Color(0XFF2A2B2E),
+                          child: selectedIndex == 2 
+                          ? const Icon(
+                              BootstrapIcons.calendar2_week_fill,
+                              color: Color(0XFF8ABA41),  
+                              size: 20,
+                            )
+                          : const Icon(
+                            BootstrapIcons.calendar2_week,
+                            color: Color(0XFF2A2B2E),
                             size: 20,
                           ),
                         ),
@@ -383,7 +407,7 @@ class _HomeState extends State<Home> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
-                              color: page == 2
+                              color: selectedIndex == 2
                                   ? const Color(0XFF8ABA41)
                                   : const Color(0XFF2A2B2E),
                             ),
@@ -396,7 +420,7 @@ class _HomeState extends State<Home> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  decoration: page == 3
+                  decoration: selectedIndex == 3
                       ? const BoxDecoration(
                           color: Color.fromARGB(255, 227, 230, 223),
                           border: Border(
@@ -418,7 +442,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         _pageController.jumpToPage(3);
-                        page = 3;
+                        selectedIndex = 3;
+                        selectedItemPosition = 3;
                       });
                     },
                     splashColor: Colors.transparent,
@@ -428,11 +453,15 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: Icon(
+                          child: selectedIndex == 3 
+                          ? const Icon(
+                              BootstrapIcons.map_fill,
+                              color: Color(0XFF8ABA41),  
+                              size: 20,
+                            )
+                          : const Icon(
                             BootstrapIcons.map,
-                            color: page == 3
-                                ? const Color(0XFF8ABA41)
-                                : const Color(0XFF2A2B2E),
+                            color: Color(0XFF2A2B2E),
                             size: 20,
                           ),
                         ),
@@ -445,7 +474,7 @@ class _HomeState extends State<Home> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
-                              color: page == 3
+                              color: selectedIndex == 3
                                   ? const Color(0XFF8ABA41)
                                   : const Color(0XFF2A2B2E),
                             ),
@@ -458,7 +487,7 @@ class _HomeState extends State<Home> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
-                  decoration: page == 4
+                  decoration: selectedIndex == 4
                       ? const BoxDecoration(
                           color: Color.fromARGB(255, 227, 230, 223),
                           border: Border(
@@ -480,7 +509,8 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       setState(() {
                         _pageController.jumpToPage(4);
-                        page = 4;
+                        selectedIndex = 4;
+                        selectedItemPosition = 4;
                       });
                     },
                     splashColor: Colors.transparent,
@@ -490,11 +520,15 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            BootstrapIcons.person_circle,
-                            color: page == 4
-                                ? const Color(0XFF8ABA41)
-                                : const Color(0XFF2A2B2E),
+                          child: selectedIndex == 4 
+                          ? const Icon(
+                              BootstrapIcons.person_fill,
+                              color: Color(0XFF8ABA41),  
+                              size: 20,
+                            )
+                          : const Icon(
+                            BootstrapIcons.person,
+                            color: Color(0XFF2A2B2E),
                             size: 20,
                           ),
                         ),
@@ -507,7 +541,7 @@ class _HomeState extends State<Home> {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
-                              color: page == 4
+                              color: selectedIndex == 4
                                   ? const Color(0XFF8ABA41)
                                   : const Color(0XFF2A2B2E),
                             ),
@@ -523,12 +557,12 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                   height: 40,
-                  margin: const EdgeInsets.fromLTRB(36.0, 36.0, 36.0, 48.0),
+                  margin: const EdgeInsets.all(36.0),
                   decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 59, 97, 2),
-                          Color(0XFF8ABA41),
+                        Color(0XFF8ABA41),
+                        Color.fromARGB(255, 171, 183, 156),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(12.0)),
@@ -570,11 +604,11 @@ class _HomeState extends State<Home> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: List.generate(
-            bottomBarPages.length, 
-            (index) {
-              return bottomBarPages[index];
-            },
-          ),
+          bottomBarPages.length,
+          (index) {
+            return bottomBarPages[index];
+          },
+        ),
       ),
       onDrawerChanged: (isOpened) {
         isOpened
@@ -585,132 +619,86 @@ class _HomeState extends State<Home> {
       resizeToAvoidBottomInset: false,
       extendBody: true,
       extendBodyBehindAppBar: true,
+      bottomNavigationBar: SnakeNavigationBar.color(
+        backgroundColor: Theme.of(context).backgroundColor,
+        behaviour: SnakeBarBehaviour.pinned,
+        snakeShape: SnakeShape.indicator,
+        snakeViewColor: const Color(0XFF8ABA41),
+        currentIndex: selectedItemPosition,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+            selectedItemPosition = index;
+            _pageController.jumpToPage(index);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              BootstrapIcons.fuel_pump,
+              color: Theme.of(context).iconTheme.color,
+              size: 22,
+            ),
+            activeIcon: const Icon(
+              BootstrapIcons.fuel_pump_fill,
+              color: Color(0XFF8ABA41),
+              size: 22,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              BootstrapIcons.lightning_charge,
+              color: Theme.of(context).iconTheme.color,
+              size: 22,
+            ),
+            activeIcon: const Icon(
+              BootstrapIcons.lightning_charge_fill,
+              color: Color(0XFF8ABA41),
+              size: 22,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              BootstrapIcons.calendar2_week,
+              color: Theme.of(context).iconTheme.color,
+              size: 22,
+            ),
+            activeIcon: const Icon(
+              BootstrapIcons.calendar2_week_fill,
+              color: Color(0XFF8ABA41),
+              size: 22,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              BootstrapIcons.map,
+              color: Theme.of(context).iconTheme.color,
+              size: 22,
+            ),
+            activeIcon: const Icon(
+              BootstrapIcons.map_fill,
+              color: Color(0XFF8ABA41),
+              size: 22,
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              BootstrapIcons.person,
+              color: Theme.of(context).iconTheme.color,
+              size: 22,
+            ),
+            activeIcon: const Icon(
+              BootstrapIcons.person_fill,
+              color: Color(0XFF8ABA41),
+              size: 22,
+            ),
+          ),
+        ],
+      ),
+      /*
       bottomNavigationBar:
-          /*Container(
-        height: 60,
-        margin: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 48.0),
-        decoration: const BoxDecoration(
-          color: Color(0XFFEAEBEC),
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              color: activePage == 0 ? const Color(0XFF8ABA41) : const Color(0XFF2A2B2E),
-              iconSize: 54,
-              onPressed: () {
-                activePage = 0;
-                _pageController.jumpToPage(0);
-                _pageController.animateTo(
-                  1,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-                //_settingController.reset();
-                //_settingController.forward();
-              },
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Lottie.asset(
-                      Icons8.home_2, 
-                      //controller: _settingController,
-                    ),
-              ),
-            ),
-            IconButton(
-              splashRadius: 1,
-              iconSize: 54,
-              onPressed: () {
-                activePage = 1;
-                //_settingController.reset();
-                //_settingController.forward();
-                _pageController.animateToPage(
-                  1,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-              },
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Lottie.asset(
-                      Icons8.charging_battery, 
-                      //controller: _settingController,
-                    ),
-              ),
-            ),
-            IconButton(
-              splashRadius: 1,
-              iconSize: 54,
-              onPressed: () {
-                activePage = 2;
-                //_settingController.reset();
-                //_settingController.forward();
-                _pageController.animateToPage(
-                  2,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-              },
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Lottie.asset(
-                      Icons8.calendar, 
-                      //controller: _settingController,
-                    ),
-              ),
-            ),
-            IconButton(
-              splashRadius: 1,
-              iconSize: 54,
-              onPressed: () {
-                activePage = 3;
-                //_settingController.reset();
-                //_settingController.forward();
-                _pageController.animateToPage(
-                  3,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-              },
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Lottie.asset(
-                      Icons8.map_marker, 
-                      //controller: _settingController,
-                    ),
-              ),
-            ),
-            IconButton(
-              splashRadius: 1,
-              iconSize: 54,
-              onPressed: () {
-                activePage = 4;
-                //_settingController.reset();
-                //_settingController.forward();
-                _pageController.animateToPage(
-                  4,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-              },
-              icon: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: 
-                    Lottie.asset(
-                      Icons8.login, 
-                      //controller: _settingController,
-                    ),
-              ),
-            ),
-          ],
-        ),
-      ),*/
-          Padding(
+        
+        Padding(
         padding: const EdgeInsets.only(bottom: 16.0),
         child: AnimatedNotchBottomBar(
           pageController: _pageController,
@@ -779,7 +767,7 @@ class _HomeState extends State<Home> {
             });
           },
         ),
-      ),
+      ),*/
     );
   }
 }

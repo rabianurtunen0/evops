@@ -22,10 +22,10 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
+        shadowColor: Colors.transparent,
         elevation: 0,
         leading: Container(
           alignment: Alignment.topLeft,
@@ -33,12 +33,12 @@ class _SignUpState extends State<SignUp> {
             onPressed: () {
               Get.to(const Login());
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back, 
-              color: Colors.black,
+              color: Theme.of(context).iconTheme.color,
             ),
-            splashColor: Colors.white,
-            highlightColor: Colors.white,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),       
       ),
@@ -60,40 +60,25 @@ class _SignUpState extends State<SignUp> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
-                child: const Text(
+                child: Text(
                   'Sign Up',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24.0,
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Please, fill in your information and create an account.',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.0,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Full Name',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
-                    color: Colors.black
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall
                 ),
               ),
               Container(
@@ -155,14 +140,9 @@ class _SignUpState extends State<SignUp> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Email Address',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Container(
@@ -229,14 +209,9 @@ class _SignUpState extends State<SignUp> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 8.0),
-                child: const Text(
+                child: Text(
                   'Password',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
               Container(
@@ -366,19 +341,14 @@ class _SignUpState extends State<SignUp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center, 
                   children: [
-                    const Text(
+                    Text(
                       "Already have an acount?",
-                      style: TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,     
-                        color: Color(0XFF2A2B2E), 
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall
                     ),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.transparent,
                       ),
                       child: const Text(
                         "Login",
@@ -402,23 +372,19 @@ class _SignUpState extends State<SignUp> {
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 24.0),
-                      child: const Divider(color: Colors.black),
+                      child: Divider(color: Theme.of(context).iconTheme.color),
                     ),
                   ),
-                  const Text(
+                  Text(
                     'or',
-                    style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall
                   ),
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 24.0),
-                      child: const Divider(color: Colors.black),
+                      child: Divider(color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                   ),
                 ],
@@ -426,14 +392,9 @@ class _SignUpState extends State<SignUp> {
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 12.0),
-                child: const Text(
+                child: Text(
                   'Continue with',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               Container(
@@ -449,8 +410,8 @@ class _SignUpState extends State<SignUp> {
                       ),
                       iconSize: 34.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(8.0),
@@ -460,8 +421,8 @@ class _SignUpState extends State<SignUp> {
                       ),
                       iconSize: 37.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(8.0),
@@ -471,8 +432,8 @@ class _SignUpState extends State<SignUp> {
                       ),
                       iconSize: 43.0,
                       splashRadius: 30.0,
-                      splashColor: Colors.white,
-                      highlightColor: Colors.white,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                   ],
                 ),
