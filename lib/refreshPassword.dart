@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:evops/logIn.dart';
 
@@ -45,11 +46,11 @@ class _RefreshPasswordState extends State<RefreshPassword> {
             children: [
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 8.0),
-                child: const Image(
-                  image: AssetImage('assets/images/evops.png'),
-                  width: 200,
-                  height: 88,
+                margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 24.0),
+                child: SvgPicture.asset(
+                  Theme.of(context).backgroundColor == Color(0XFF2A2B2E) ? 'assets/images/evops_dark.svg' : 'assets/images/evops_light.svg',
+                  width: 190,
+                  height: 54,
                 ),
               ),
               Container(

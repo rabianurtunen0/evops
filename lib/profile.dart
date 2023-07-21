@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
                   child: Stack(
                     children: [
                       const CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 241, 244, 238),
+                        backgroundColor: Color(0XFFF0F1F0),
                         radius: 48.0,
                         child: Icon(BootstrapIcons.person_fill,
                             color: Color(0XFF8ABA41), size: 36.0),
@@ -123,9 +123,9 @@ class _ProfileState extends State<Profile> {
                               : 350
                           : 50,
                       margin: const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 5.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
-                        borderRadius: BorderRadius.vertical(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(12.0), bottom: Radius.zero),
                       ),
                       child: Column(
@@ -136,10 +136,10 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 margin: const EdgeInsets.fromLTRB(
                                     20.0, 2.0, 0.0, 0.0),
-                                child: const Text(
+                                child: Text(
                                   'PERSONAL INFORMATION',
                                   style: TextStyle(
-                                    color: Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14.0,
                                   ),
@@ -156,7 +156,7 @@ class _ProfileState extends State<Profile> {
                                         ? BootstrapIcons.chevron_up
                                         : BootstrapIcons.chevron_down,
                                     size: 20,
-                                    color: const Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -1150,8 +1150,8 @@ class _ProfileState extends State<Profile> {
                           : 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                         //borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(
@@ -1162,10 +1162,10 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 margin: const EdgeInsets.fromLTRB(
                                     20.0, 2.0, 0.0, 0.0),
-                                child: const Text(
+                                child: Text(
                                   'PAYMENTS',
                                   style: TextStyle(
-                                    color: Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14.0,
                                   ),
@@ -1182,7 +1182,7 @@ class _ProfileState extends State<Profile> {
                                         ? BootstrapIcons.chevron_up
                                         : BootstrapIcons.chevron_down,
                                     size: 20,
-                                    color: const Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -1199,7 +1199,7 @@ class _ProfileState extends State<Profile> {
                                     Container(
                                       height:
                                           registeredCreditCardsNumbers.length *
-                                              60,
+                                              52,
                                       child: ListView.builder(
                                         itemCount:
                                             registeredCreditCardsNumbers.length,
@@ -1209,8 +1209,7 @@ class _ProfileState extends State<Profile> {
                                                 .size
                                                 .width,
                                             decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 241, 244, 238),
+                                              color: Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
                                             ),
@@ -1241,7 +1240,7 @@ class _ProfileState extends State<Profile> {
                                                                   .size
                                                                   .width *
                                                               0.7,
-                                                      height: 40,
+                                                      height: 36,
                                                       margin: const EdgeInsets
                                                               .fromLTRB(15.0,
                                                           10.0, 15.0, 5.0),
@@ -1391,9 +1390,8 @@ class _ProfileState extends State<Profile> {
                       height: sharing ? 400 : 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
-                        //borderRadius: BorderRadius.circular(12.0),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                       ),
                       child: Column(
                         children: [
@@ -1403,10 +1401,10 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 margin: const EdgeInsets.fromLTRB(
                                     20.0, 2.0, 0.0, 0.0),
-                                child: const Text(
+                                child: Text(
                                   'SHARING',
                                   style: TextStyle(
-                                    color: Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14.0,
                                   ),
@@ -1423,7 +1421,7 @@ class _ProfileState extends State<Profile> {
                                         ? BootstrapIcons.chevron_up
                                         : BootstrapIcons.chevron_down,
                                     size: 20,
-                                    color: Color(0XFF2A2B2E),
+                                    color: Theme.of(context).highlightColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -1453,77 +1451,7 @@ class _ProfileState extends State<Profile> {
                                               ),
                                             );
                                           }))),
-
-                                      /*
-                                  child: ListView.builder(
-                                    itemCount: sharedPeoples.length,
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                          children: [
-                                            Container(
-                                                  margin: const EdgeInsets.fromLTRB(
-                                                      25.0, 15.0, 0.0, 0.0),
-                                                  alignment: Alignment.centerLeft,
-                                                  child: const CircleAvatar(
-                                                    backgroundColor: Color(0XFF8ABA41),
-                                                    radius: 16.0,
-                                                    child: Icon(
-                                                      BootstrapIcons.person_fill,
-                                                      color: Colors.white,
-                                                      size: 12.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context).size.width * 0.7,
-                                                  margin: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                                                  decoration: const BoxDecoration(
-                                                    border: Border(
-                                                      bottom: BorderSide(
-                                                        color: Color(0XFF2A2B2E),
-                                                        width: 0.2
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  10.0, 15.0, 0.0, 0.0),
-                                              child: Text(
-                                                sharedPeoples[index][1],
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                                              child: IconButton(
-                                                onPressed: () {
-                                      
-                                                }, 
-                                                icon: const Icon(
-                                                  BootstrapIcons.chevron_right,
-                                                  color: Color(0XFF2A2B2E),
-                                                  size: 18,
-                                                ),
-                                              ),
-                                            ),
-                                
-                                                    ],
-                                                  ),
-                                                ),
-                                           
-                                            
-                                          ],
-                                      );
-                                    },
-                                  ),
-                                
-                                */
-                                    ),
+                                      ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -1614,8 +1542,8 @@ class _ProfileState extends State<Profile> {
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                         //borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
@@ -1624,8 +1552,8 @@ class _ProfileState extends State<Profile> {
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                         //borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
@@ -1634,8 +1562,8 @@ class _ProfileState extends State<Profile> {
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                         //borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
@@ -1644,8 +1572,8 @@ class _ProfileState extends State<Profile> {
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 241, 244, 238),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                         //borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),

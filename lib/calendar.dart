@@ -52,239 +52,162 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
         children: [
           Container(
             margin: const EdgeInsets.fromLTRB(18.0, 102.0, 18.0, 0.0),
             alignment: Alignment.topCenter,
-            child: TableCalendar(
-              focusedDay: today,
-              firstDay: DateTime(2023),
-              lastDay: DateTime(2123),
-              startingDayOfWeek: StartingDayOfWeek.monday,
-              sixWeekMonthsEnforced: true,
-              daysOfWeekHeight: 24,
-              daysOfWeekStyle: const DaysOfWeekStyle(
-                weekdayStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0XFF2A2B2E),
-                ),
-                weekendStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0XFF2A2B2E),
-                ),
-              ),
-              headerStyle: const HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                titleTextStyle: TextStyle(
-                  color: Color(0XFF2A2B2E),
-                  fontSize: 16,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600,
-                ),
-                headerMargin: EdgeInsets.only(bottom: 16.0),
-                leftChevronIcon: Icon(
-                  Icons.chevron_left_rounded,
-                  color: Color(0XFF8ABA41),
-                ),
-                rightChevronIcon: Icon(
-                  Icons.chevron_right_rounded,
-                  color: Color(0XFF8ABA41),
-                ),
-              ),
-              onDaySelected: _onDaySelected,
-              selectedDayPredicate: (day) => isSameDay(day, today),
-              calendarStyle: CalendarStyle(
-                outsideTextStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w500,
-                ),
-                defaultTextStyle: const TextStyle(
-                  color: Color(0XFF2A2B2E),
-                  fontWeight: FontWeight.w600,
-                ),
-                weekendTextStyle: const TextStyle(
-                  color: Color(0XFF2A2B2E),
-                  fontWeight: FontWeight.w600,
-                ),
-                todayTextStyle: const TextStyle(
-                  color: Color(0XFF8ABA41),
-                  fontWeight: FontWeight.w800,
-                ),
-                todayDecoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                selectedDecoration: BoxDecoration(
-                  color: const Color(0XFF8ABA41),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0XFF8ABA41),
-                    width: 1,
+            child: SizedBox(
+              height: 436,
+              child: TableCalendar(
+                focusedDay: today,
+                firstDay: DateTime(2023),
+                lastDay: DateTime(2123),
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                sixWeekMonthsEnforced: true,
+                daysOfWeekHeight: 24,
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  weekendStyle: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ),
-                selectedTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: TextStyle(
+                    color: Theme.of(context).iconTheme.color,
+                    fontSize: 16,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  headerMargin: EdgeInsets.only(bottom: 16.0),
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left_rounded,
+                    color: Color(0XFF8ABA41),
+                  ),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right_rounded,
+                    color: Color(0XFF8ABA41),
+                  ),
+                ),
+                onDaySelected: _onDaySelected,
+                selectedDayPredicate: (day) => isSameDay(day, today),
+                calendarStyle: CalendarStyle(
+                  outsideTextStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  defaultTextStyle: TextStyle(
+                    color: Theme.of(context).iconTheme.color,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  weekendTextStyle: TextStyle(
+                    color: Theme.of(context).iconTheme.color,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  todayTextStyle: const TextStyle(
+                    color: Color(0XFF8ABA41),
+                    fontWeight: FontWeight.w800,
+                  ),
+                  todayDecoration: BoxDecoration(
+                    color: Theme.of(context).backgroundColor,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: const Color(0XFF8ABA41),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0XFF8ABA41),
+                      width: 1,
+                    ),
+                  ),
+                  selectedTextStyle: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              height: 48,
-              width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: eventsList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    alignment: Alignment.topCenter,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 4.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              width: 1.0,
-                              color: eventsList[index][2] == 'Charged'
-                                  ? Colors.green
-                                  : eventsList[index][2] == 'Not charged'
-                                      ? Colors.red
-                                      : Colors.grey),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              color: eventsList[index][2] == 'Charged'
-                                  ? Colors.green
-                                  : eventsList[index][2] == 'Not charged'
-                                      ? Colors.red
-                                      : Colors.grey,
-                              width: 30,
-                              height: 60,
-                              child: eventsList[index][2] == 'Charged'
-                                  ? const Icon(Icons.check_rounded,
-                                      color: Colors.white)
-                                  : eventsList[index][2] == 'Not charged'
-                                      ? const Icon(
-                                          Icons.clear_rounded,
-                                          color: Colors.white,
-                                        )
-                                      : const Icon(
-                                          Icons.timelapse_sharp,
-                                          color: Colors.white,
-                                        ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(eventsList[index][0]),
-                                  Text(
-                                    eventsList[index][1],
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+          Container(
+            margin: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 42.0),
+            height: MediaQuery.of(context).size.height - 580,
+            decoration: const BoxDecoration(
+              color: Color(0XFF8ABA41),
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.zero,
+                top: Radius.circular(24.0),
               ),
             ),
-          ),
-        ],
-      ),
-      bottomSheet: Container(
-        margin: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 42.0),
-        height: 350,
-        decoration: const BoxDecoration(
-          color: Color(0XFF8ABA41),
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24.0),
-            top: Radius.circular(24.0),
-          ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(vertical: 12.0),
-              child: SvgPicture.asset(
-                'assets/images/line.svg',
-                color: const Color(0XFFFFFDFA),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 12.0),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                      differenceDate > 0
-                          ? '$differenceDate days ago'
-                          : differenceDate < 0
-                              ? '${differenceDate.abs()} days before'
-                              : 'Today',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      )),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(12.0),
-                  child: IconButton(
-                    icon: const Icon(
-                      BootstrapIcons.plus_circle_fill,
-                      size: 16.0,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      box.write('year', selectYear);
-                      box.write('month', selectMonth);
-                      box.write('day', selectDay);
-                      box.write('date', selectDate);
-                      print(box.read('year'));
-                      print(box.read('month'));
-                      print(box.read('day'));
-                      Get.to(const NewEvent());
-                    },
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: SvgPicture.asset(
+                    'assets/images/line.svg',
+                    color: const Color(0XFFFFFDFA),
                   ),
                 ),
-              ],
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Expanded(
-                child: SizedBox(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 12.0),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          differenceDate > 0
+                              ? '$differenceDate days ago'
+                              : differenceDate < 0
+                                  ? '${differenceDate.abs()} days before'
+                                  : 'Today',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          )),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(12.0),
+                      child: IconButton(
+                        icon: const Icon(
+                          BootstrapIcons.plus_circle_fill,
+                          size: 16.0,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          box.write('year', selectYear);
+                          box.write('month', selectMonth);
+                          box.write('day', selectDay);
+                          box.write('date', selectDate);
+                          print(box.read('year'));
+                          print(box.read('month'));
+                          print(box.read('day'));
+                          Get.to(const NewEvent());
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  alignment: Alignment.center,
                   height: 150,
                   width: MediaQuery.of(context).size.width,
                   child: eventsList.isEmpty
                       ? Container(
-                        alignment: Alignment.center,
-                        /*child: const Icon(
-                          BootstrapIcons.calendar_plus,
-                          color: Color(0XFFFAFAFA),
-                          size: 60.0,
-                        ),*/
-                      )
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            BootstrapIcons.calendar_plus,
+                            color: Color(0XFFFAFAFA),
+                            size: 60.0,
+                          ),
+                        )
                       : ListView.builder(
                           shrinkWrap: true,
                           itemCount: eventsList.length,
@@ -315,10 +238,10 @@ class _CalendarState extends State<Calendar> {
                           },
                         ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

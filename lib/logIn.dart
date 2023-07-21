@@ -31,11 +31,11 @@ class _LoginState extends State<Login> {
             children: [
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 8.0),
-                child: const Image(
-                  image: AssetImage('assets/images/evops.png'),
-                  width: 200,
-                  height: 88,
+                margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 24.0),
+                child: SvgPicture.asset(
+                  Theme.of(context).backgroundColor == Color(0XFF282A37) ? 'assets/images/evops_dark.svg' : 'assets/images/evops_light.svg',
+                  width: 190,
+                  height: 54,
                 ),
               ),
               Container(
@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
                 width: MediaQuery.of(context).size.width * 0.9,
+                height: 48,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -251,7 +252,7 @@ class _LoginState extends State<Login> {
                       side: BorderSide(
                         width: 1,
                         color: Theme.of(context).backgroundColor ==
-                                const Color(0XFF2A2B2E)
+                                const Color(0XFF282A37)
                             ? Colors.white
                             : Colors.black,
                       ),
@@ -265,7 +266,8 @@ class _LoginState extends State<Login> {
                         foregroundColor: Colors.transparent,
                       ),
                       clipBehavior: Clip.none,
-                      child: Text('Keep me logged in',
+                      child: Text(
+                        'Keep me logged in',
                           style: Theme.of(context).textTheme.titleSmall),
                       onPressed: () {
                         _isChecked = !_isChecked;
