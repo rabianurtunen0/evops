@@ -1,9 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:evops/home.dart';
-import 'package:evops/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
@@ -34,10 +31,10 @@ class _AddCreditCardState extends State<AddCreditCard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFFFFFFF),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
+        shadowColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         leading: Container(
           alignment: Alignment.topLeft,
@@ -45,12 +42,12 @@ class _AddCreditCardState extends State<AddCreditCard> {
             onPressed: () {
               Get.back();
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Theme.of(context).highlightColor,
             ),
-            splashColor: Colors.white,
-            highlightColor: Colors.white,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),
       ),
@@ -72,7 +69,10 @@ class _AddCreditCardState extends State<AddCreditCard> {
                   obscureCardCvv: false,
                   obscureCardNumber: false,
                   obscureInitialCardNumber: false,
-                  cardBgColor: const Color(0XFF2A2B2E),
+                  cardBgColor: Theme.of(context).backgroundColor ==
+                          const Color(0XFF282A37)
+                      ? const Color.fromARGB(255, 64, 64, 77)
+                      : const Color(0XFF2A2B2E),
                   textStyle: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
@@ -81,8 +81,19 @@ class _AddCreditCardState extends State<AddCreditCard> {
                   ),
                 ),
                 Container(
+                  alignment: Alignment.topLeft,
+                  margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.07,
+                      20.0,
+                      MediaQuery.of(context).size.width * 0.07,
+                      8.0),
+                  child: Text(
+                    'Card Number',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  margin: const EdgeInsets.only(top: 40.0),
                   child: TextFormField(
                     autofocus: false,
                     controller: cardNumberEditingController,
@@ -110,7 +121,7 @@ class _AddCreditCardState extends State<AddCreditCard> {
                     },
                     onTap: () {
                       setState(() {
-                        isCvvFocused = false;
+                        //isCvvFocused = false;
                       });
                     },
                     cursorColor: const Color(0XFF2A2B2E),
@@ -125,13 +136,7 @@ class _AddCreditCardState extends State<AddCreditCard> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      labelText: 'Card Number',
-                      labelStyle: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Color.fromARGB(255, 59, 97, 2),
-                      ),
+
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: 'XXXX XXXX XXXX XXXX',
                       hintStyle: const TextStyle(
@@ -148,11 +153,11 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       contentPadding:
                           const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFF8ABA41)),
+                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFF8ABA41)),
+                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       border: const OutlineInputBorder(
@@ -162,8 +167,19 @@ class _AddCreditCardState extends State<AddCreditCard> {
                   ),
                 ),
                 Container(
+                  alignment: Alignment.topLeft,
+                  margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.07,
+                      20.0,
+                      MediaQuery.of(context).size.width * 0.07,
+                      8.0),
+                  child: Text(
+                    'Cardholder Name',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                Container(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  margin: const EdgeInsets.only(top: 40.0),
                   child: TextFormField(
                     autofocus: false,
                     controller: cardholderNameEditingController,
@@ -184,9 +200,7 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       });
                     },
                     onTap: () {
-                      setState(() {
-                        isCvvFocused = false;
-                      });
+                      setState(() {});
                     },
                     cursorColor: const Color(0XFF2A2B2E),
                     textInputAction: TextInputAction.next,
@@ -200,13 +214,6 @@ class _AddCreditCardState extends State<AddCreditCard> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      labelText: 'Cardholder Name',
-                      labelStyle: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Color.fromARGB(255, 59, 97, 2),
-                      ),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: 'Cardholder Name',
                       hintStyle: const TextStyle(
@@ -222,11 +229,11 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       contentPadding:
                           const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFF8ABA41)),
+                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFF8ABA41)),
+                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       border: const OutlineInputBorder(
@@ -238,175 +245,196 @@ class _AddCreditCardState extends State<AddCreditCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.42,
-                      margin: const EdgeInsets.only(top: 40.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        controller: cvvEditingController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(3),
-                        ],
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "⛔ This field is required";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            cvvEditingController.text = value;
-                            cvvEditingController.selection =
-                                TextSelection.fromPosition(TextPosition(
-                                    offset: cvvEditingController.text.length));
-                          });
-                        },
-                        onTap: () {
-                          setState(() {
-                            isCvvFocused = true;
-                          });
-                        },
-                        cursorColor: const Color(0XFF2A2B2E),
-                        textInputAction: TextInputAction.next,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: Color(0XFF2A2B2E),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          margin: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.025,
+                              20.0,
+                              MediaQuery.of(context).size.width * 0.025,
+                              8.0),
+                          child: Text(
+                            'CVV',
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
                         ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          labelText: 'CVV',
-                          labelStyle: const TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Color.fromARGB(255, 59, 97, 2),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'CVV',
-                          hintStyle: const TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color(0XFF595550),
-                          ),
-                          floatingLabelAlignment: FloatingLabelAlignment.start,
-                          prefixIcon: Icon(
-                            BootstrapIcons.credit_card,
-                            size: 22,
-                          ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.42,
+                          child: TextFormField(
+                            autofocus: false,
+                            controller: cvvEditingController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(3),
+                            ],
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "⛔ This field is required";
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                cvvEditingController.text = value;
+                                cvvEditingController.selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset:
+                                            cvvEditingController.text.length));
+                              });
+                            },
+                            onTap: () {
+                              setState(() {});
+                            },
+                            cursorColor: const Color(0XFF2A2B2E),
+                            textInputAction: TextInputAction.next,
+                            textAlignVertical: TextAlignVertical.center,
+                            style: const TextStyle(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: Color(0XFF2A2B2E),
+                            ),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: 'CVV',
+                              hintStyle: const TextStyle(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: Color(0XFF595550),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                              prefixIcon: Icon(
+                                BootstrapIcons.credit_card,
+                                size: 22,
+                              ),
 
-                          prefixIconColor: const Color(0XFF8ABA41),
-                          //suffixIcon: Icon(),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Color(0XFF8ABA41)),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Color(0XFF8ABA41)),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                              prefixIconColor: const Color(0XFF8ABA41),
+                              //suffixIcon: Icon(),
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0XFFFFFFFF)),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0XFFFFFFFF)),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.42,
-                      margin: const EdgeInsets.only(top: 40.0),
-                      child: TextFormField(
-                        autofocus: false,
-                        controller: expirationDateEditingController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(4),
-                          CardExpirationFormatter(),
-                        ],
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "⛔ This field is required";
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            expirationDateEditingController.text = value;
-                            expirationDateEditingController.selection =
-                                TextSelection.fromPosition(TextPosition(
-                                    offset: expirationDateEditingController
-                                        .text.length));
-                          });
-                        },
-                        onTap: () {
-                          setState(() {
-                            expirationDateEditingController.text;
-                            isCvvFocused = false;
-                          });
-                        },
-                        cursorColor: const Color(0XFF2A2B2E),
-                        textInputAction: TextInputAction.next,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: Color(0XFF2A2B2E),
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          labelText: 'Expiration Date',
-                          labelStyle: const TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Color.fromARGB(255, 59, 97, 2),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintText: 'MM/YY',
-                          hintStyle: const TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Color(0XFF595550),
-                          ),
-                          floatingLabelAlignment: FloatingLabelAlignment.start,
-                          prefixIcon: const Icon(
-                            BootstrapIcons.calendar_event,
-                            size: 22,
-                          ),
-                          prefixIconColor: const Color(0XFF8ABA41),
-                          //suffixIcon: Icon(),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Color(0XFF8ABA41)),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Color(0XFF8ABA41)),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          margin: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.024,
+                              20.0,
+                              MediaQuery.of(context).size.width * 0.024,
+                              8.0),
+                          child: Text(
+                            'Expiration Date',
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
-                      ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.42,
+                          child: TextFormField(
+                            autofocus: false,
+                            controller: expirationDateEditingController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(4),
+                              CardExpirationFormatter(),
+                            ],
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "⛔ This field is required";
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                expirationDateEditingController.text = value;
+                                expirationDateEditingController.selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset: expirationDateEditingController
+                                            .text.length));
+                              });
+                            },
+                            onTap: () {
+                              setState(() {
+                                expirationDateEditingController.text;
+                              });
+                            },
+                            cursorColor: const Color(0XFF2A2B2E),
+                            textInputAction: TextInputAction.next,
+                            textAlignVertical: TextAlignVertical.center,
+                            style: const TextStyle(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: Color(0XFF2A2B2E),
+                            ),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              hintText: 'MM/YY',
+                              hintStyle: const TextStyle(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: Color(0XFF595550),
+                              ),
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.start,
+                              prefixIcon: const Icon(
+                                BootstrapIcons.calendar_event,
+                                size: 22,
+                              ),
+                              prefixIconColor: const Color(0XFF8ABA41),
+                              //suffixIcon: Icon(),
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0XFFFFFFFF)),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Color(0XFFFFFFFF)),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              border: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

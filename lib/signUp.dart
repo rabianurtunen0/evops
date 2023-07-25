@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:evops/logIn.dart';
 
-
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
@@ -34,17 +33,17 @@ class _SignUpState extends State<SignUp> {
               Get.to(const Login());
             },
             icon: Icon(
-              Icons.arrow_back, 
+              Icons.arrow_back,
               color: Theme.of(context).iconTheme.color,
             ),
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
           ),
-        ),       
+        ),
       ),
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
+          margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -52,7 +51,9 @@ class _SignUpState extends State<SignUp> {
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 24.0),
                 child: SvgPicture.asset(
-                  Theme.of(context).backgroundColor == Color(0XFF2A2B2E) ? 'assets/images/evops_dark.svg' : 'assets/images/evops_light.svg',
+                  Theme.of(context).backgroundColor == const Color(0XFF282A37)
+                      ? 'assets/images/evops_dark.svg'
+                      : 'assets/images/evops_light.svg',
                   width: 190,
                   height: 54,
                 ),
@@ -62,15 +63,14 @@ class _SignUpState extends State<SignUp> {
                 margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
                 child: Text(
                   'Sign Up',
-                  style: Theme.of(context).textTheme.titleLarge
-                ),
+                  style: Theme.of(context).textTheme.headlineLarge),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 8.0),
                 child: Text(
                   'Please, fill in your information and create an account.',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               Container(
@@ -78,13 +78,13 @@ class _SignUpState extends State<SignUp> {
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
                 child: Text(
                   'Full Name',
-                  style: Theme.of(context).textTheme.headlineSmall
-                ),
+                  style: Theme.of(context).textTheme.bodyMedium),
               ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
+                height: 48,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -101,38 +101,28 @@ class _SignUpState extends State<SignUp> {
                   onSaved: (newValue) {
                     fullNameEditingController.text = newValue!;
                   },
-                  cursorColor: const Color(0XFF2A2B2E),
+                  cursorColor: Theme.of(context).highlightColor,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Colors.transparent,
                     contentPadding:
                         const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                     hintText: 'Full Name',
-                    hintStyle: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color(0XFF9AA1B4),
-                    ),
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0XFFE5EBF5)),
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
@@ -142,13 +132,14 @@ class _SignUpState extends State<SignUp> {
                 margin: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 8.0),
                 child: Text(
                   'Email Address',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
+                height: 48,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -170,38 +161,28 @@ class _SignUpState extends State<SignUp> {
                   onSaved: (newValue) {
                     emailEditingController.text = newValue!;
                   },
-                  cursorColor: const Color(0XFF2A2B2E),
+                  cursorColor: Theme.of(context).highlightColor,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Colors.transparent,
                     contentPadding:
                         const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                     hintText: 'name@example.com',
-                    hintStyle: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color(0XFF9AA1B4),
-                    ),
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color:  Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0XFFE5EBF5)),
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color:  Theme.of(context).hoverColor),
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
@@ -211,13 +192,14 @@ class _SignUpState extends State<SignUp> {
                 margin: const EdgeInsets.fromLTRB(12.0, 0.0, 0.0, 8.0),
                 child: Text(
                   'Password',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
+                height: 48,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -240,27 +222,17 @@ class _SignUpState extends State<SignUp> {
                   onSaved: (newValue) {
                     passwordEditingController.text = newValue!;
                   },
-                  cursorColor: const Color(0XFF2A2B2E),
+                  cursorColor: Theme.of(context).highlightColor,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Colors.transparent,
                     contentPadding:
                         const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                     hintText: '••••••••',
-                    hintStyle: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Color(0XFF9AA1B4),
-                    ),
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -271,41 +243,43 @@ class _SignUpState extends State<SignUp> {
                         _isVisible
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        color: const Color(0XFF595550),
-                        size: 20.0,
+                        color: Theme.of(context).iconTheme.color,
+                        size: 18.0,
                       ),
                       splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(4.0, 16.0, 4.0, 0.0),
                 child: Material(
                   elevation: 0,
                   borderRadius: BorderRadius.circular(12.0),
-                  color: const Color(0XFF8ABA41),
+                  color: Theme.of(context).primaryColor,
                   child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.9,
+                    minWidth: MediaQuery.of(context).size.width * 0.88,
                     height: 48,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    splashColor: const Color(0XFF8ABA41),
-                    highlightColor: const Color.fromARGB(255, 116, 155, 58),
+                    splashColor: Theme.of(context).primaryColor,
+                    highlightColor: Theme.of(context).primaryColorDark,
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
@@ -322,15 +296,9 @@ class _SignUpState extends State<SignUp> {
                             color: Color(0XFFFFFDFA),
                             strokeWidth: 2.0,
                           )
-                        : const Text(
+                        : Text(
                             'Sign Up',
-                            style: TextStyle(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Color(0XFFFFFDFA),
-                              letterSpacing: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                   ),
                 ),
@@ -339,29 +307,24 @@ class _SignUpState extends State<SignUp> {
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "Already have an acount?",
-                      style: Theme.of(context).textTheme.titleSmall
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: Colors.transparent,
-                      ),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0,
-                          color: Color(0XFF8ABA41),
-                        ),
-                      ),
                       onPressed: () {
                         Get.to(const Login());
                       },
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                        ),
+                      child: Text(
+                        "Login",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                   ],
                 ),
@@ -375,15 +338,13 @@ class _SignUpState extends State<SignUp> {
                       child: Divider(color: Theme.of(context).iconTheme.color),
                     ),
                   ),
-                  Text(
-                    'or',
-                    style: Theme.of(context).textTheme.titleSmall
-                  ),
+                  Text('or', style: Theme.of(context).textTheme.titleSmall),
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 24.0),
-                      child: Divider(color: Theme.of(context).iconTheme.color,
+                      child: Divider(
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                   ),

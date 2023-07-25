@@ -58,7 +58,7 @@ class _MapState extends State<Map> {
           ),
         ),
       ),*/
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         margin: const EdgeInsets.only(top: 6.0),
         decoration: const BoxDecoration(

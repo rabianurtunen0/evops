@@ -1387,7 +1387,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      height: sharing ? 400 : 50,
+                      height: sharing ? 200 : 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
                       decoration: BoxDecoration(
@@ -1435,47 +1435,6 @@ class _ProfileState extends State<Profile> {
                           sharing
                               ? Column(
                                   children: [
-                                    Container(
-                                      height: 200,
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(30),
-                                          child: Stack(
-                                              children: List.generate(
-                                                  sharedPeoples.length,
-                                                  (index) {
-                                            return Positioned(
-                                              left: index * 15,
-                                              child: CircleAvatar(
-                                                radius: 15,
-                                                child: Container(),
-                                              ),
-                                            );
-                                          }))),
-                                      ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          height: 25,
-                                        ),
-                                        Container(
-                                          child: MaterialButton(
-                                            onPressed: () {},
-                                            //splashColor: Colors.transparent,
-                                            //highlightColor: Colors.transparent,
-                                            child: const Text('ADD PERSON',
-                                                style: TextStyle(
-                                                  color: Color(0XFF8ABA41),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                ),
-                                                textAlign: TextAlign.left),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -1498,10 +1457,10 @@ class _ProfileState extends State<Profile> {
                                           height: 48,
                                           margin: const EdgeInsets.fromLTRB(
                                               0.0, 10.0, 15.0, 5.0),
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             border: Border(
                                               bottom: BorderSide(
-                                                color: Color(0XFF2A2B2E),
+                                                color: Theme.of(context).highlightColor,
                                                 width: 0.2,
                                               ),
                                             ),
@@ -1530,7 +1489,33 @@ class _ProfileState extends State<Profile> {
                                           ),
                                         )
                                       ],
-                                    )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 25,
+                                        ),
+                                        Container(
+                                          child: MaterialButton(
+                                            onPressed: () {},
+                                            //splashColor: Colors.transparent,
+                                            //highlightColor: Colors.transparent,
+                                            child: const Text('ADD PERSON',
+                                                style: TextStyle(
+                                                  color: Color(0XFF8ABA41),
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14.0,
+                                                ),
+                                                textAlign: TextAlign.left),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  
+                                  
                                   ],
                                 )
                               : Container(),

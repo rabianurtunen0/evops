@@ -1,6 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/assistantAI.dart';
 import 'package:evops/themeService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 //import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
@@ -16,6 +17,8 @@ import 'package:get/get.dart';
 //import 'package:flutter_animated_icons/lottiefiles.dart';
 //import 'package:flutter_animated_icons/useanimations.dart';
 //import 'package:lottie/lottie.dart';
+
+enum Sky { sun, moon }
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -88,7 +91,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       drawer: Drawer(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         width: 300,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.horizontal(
@@ -101,17 +104,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           children: [
             Column(
               children: [
+                /*
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 225,
                   padding: const EdgeInsets.fromLTRB(30.0, 60.0, 20.0, 30.0),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 171, 183, 156),
-                        Color(0XFF8ABA41),
-                      ],
-                    ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).backgroundColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,26 +155,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                     
-                      
                       Container(
                         alignment: Alignment.topRight,
                         child: IconButton(
-                          icon: Theme.of(context).backgroundColor == Colors.white
-                          ? const Icon(
-                            BootstrapIcons.brightness_high_fill,
-                            color: Colors.white,
-                            size: 22,
-                          ) : const Icon(
-                            BootstrapIcons.moon_stars_fill,
-                            color: Colors.white,
-                            size: 18,
-                          ),
+                          icon:
+                              Theme.of(context).backgroundColor == Colors.white
+                                  ? const Icon(
+                                      BootstrapIcons.brightness_high_fill,
+                                      color: Colors.white,
+                                      size: 22,
+                                    )
+                                  : const Icon(
+                                      BootstrapIcons.moon_stars_fill,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
                           onPressed: () {
                             setState(() {
                               ThemeService().changeThemeMode();
                             });
-
                           },
                         ),
                         /*IconButton(
@@ -216,13 +214,33 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
+                */
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 50.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.2,
+                        color: Theme.of(context).disabledColor,
+                      ),
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    Theme.of(context).backgroundColor == const Color(0XFF282A37)
+                        ? 'assets/images/evops_dark.svg'
+                        : 'assets/images/evops_light.svg',
+                    width: 152,
+                    height: 43.2,
+                  ),
+                ),
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   decoration: selectedIndex == 0
-                      ? const BoxDecoration(
-                          color: Color.fromARGB(255, 227, 230, 223),
-                          border: Border(
+                      ? BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          border: const Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
                               width: 9,
@@ -252,17 +270,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: selectedIndex == 0 
-                          ? const Icon(
-                              BootstrapIcons.fuel_pump_fill,
-                              color: Color(0XFF8ABA41),  
-                              size: 20,
-                            )
-                          : const Icon(
-                            BootstrapIcons.fuel_pump,
-                            color: Color(0XFF2A2B2E),
-                            size: 20,
-                          ),
+                          child: selectedIndex == 0
+                              ? Icon(
+                                  BootstrapIcons.fuel_pump_fill,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                )
+                              : Icon(
+                                  BootstrapIcons.fuel_pump,
+                                  color: Theme.of(context).highlightColor,
+                                  size: 20,
+                                ),
                         ),
                         Padding(
                           padding:
@@ -274,8 +292,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               color: selectedIndex == 0
-                                  ? const Color(0XFF8ABA41)
-                                  : const Color(0XFF2A2B2E),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).highlightColor,
                             ),
                           ),
                         ),
@@ -287,9 +305,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   decoration: selectedIndex == 1
-                      ? const BoxDecoration(
-                          color: Color.fromARGB(255, 227, 230, 223),
-                          border: Border(
+                      ? BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          border: const Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
                               width: 9,
@@ -319,17 +337,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: selectedIndex == 1 
-                          ? const Icon(
-                              BootstrapIcons.lightning_charge_fill,
-                              color: Color(0XFF8ABA41),  
-                              size: 20,
-                            )
-                          : const Icon(
-                            BootstrapIcons.lightning_charge,
-                            color: Color(0XFF2A2B2E),
-                            size: 20,
-                          ),
+                          child: selectedIndex == 1
+                              ? Icon(
+                                  BootstrapIcons.lightning_charge_fill,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                )
+                              : Icon(
+                                  BootstrapIcons.lightning_charge,
+                                  color: Theme.of(context).highlightColor,
+                                  size: 20,
+                                ),
                         ),
                         Padding(
                           padding:
@@ -341,8 +359,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               color: selectedIndex == 1
-                                  ? const Color(0XFF8ABA41)
-                                  : const Color(0XFF2A2B2E),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).highlightColor,
                             ),
                           ),
                         ),
@@ -354,9 +372,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   decoration: selectedIndex == 2
-                      ? const BoxDecoration(
-                          color: Color.fromARGB(255, 227, 230, 223),
-                          border: Border(
+                      ? BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          border: const Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
                               width: 9,
@@ -386,17 +404,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: selectedIndex == 2 
-                          ? const Icon(
-                              BootstrapIcons.calendar2_week_fill,
-                              color: Color(0XFF8ABA41),  
-                              size: 20,
-                            )
-                          : const Icon(
-                            BootstrapIcons.calendar2_week,
-                            color: Color(0XFF2A2B2E),
-                            size: 20,
-                          ),
+                          child: selectedIndex == 2
+                              ? Icon(
+                                  BootstrapIcons.calendar2_week_fill,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                )
+                              : Icon(
+                                  BootstrapIcons.calendar2_week,
+                                  color: Theme.of(context).highlightColor,
+                                  size: 20,
+                                ),
                         ),
                         Padding(
                           padding:
@@ -408,8 +426,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               color: selectedIndex == 2
-                                  ? const Color(0XFF8ABA41)
-                                  : const Color(0XFF2A2B2E),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).highlightColor,
                             ),
                           ),
                         ),
@@ -421,9 +439,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   decoration: selectedIndex == 3
-                      ? const BoxDecoration(
-                          color: Color.fromARGB(255, 227, 230, 223),
-                          border: Border(
+                      ? BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          border: const Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
                               width: 9,
@@ -453,17 +471,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: selectedIndex == 3 
-                          ? const Icon(
-                              BootstrapIcons.map_fill,
-                              color: Color(0XFF8ABA41),  
-                              size: 20,
-                            )
-                          : const Icon(
-                            BootstrapIcons.map,
-                            color: Color(0XFF2A2B2E),
-                            size: 20,
-                          ),
+                          child: selectedIndex == 3
+                              ? Icon(
+                                  BootstrapIcons.map_fill,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                )
+                              : Icon(
+                                  BootstrapIcons.map,
+                                  color: Theme.of(context).highlightColor,
+                                  size: 20,
+                                ),
                         ),
                         Padding(
                           padding:
@@ -475,8 +493,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               color: selectedIndex == 3
-                                  ? const Color(0XFF8ABA41)
-                                  : const Color(0XFF2A2B2E),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).highlightColor,
                             ),
                           ),
                         ),
@@ -488,9 +506,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
                   decoration: selectedIndex == 4
-                      ? const BoxDecoration(
-                          color: Color.fromARGB(255, 227, 230, 223),
-                          border: Border(
+                      ? BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          border: const Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
                               width: 9,
@@ -520,17 +538,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Padding(
                           padding:
                               const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
-                          child: selectedIndex == 4 
-                          ? const Icon(
-                              BootstrapIcons.person_fill,
-                              color: Color(0XFF8ABA41),  
-                              size: 20,
-                            )
-                          : const Icon(
-                            BootstrapIcons.person,
-                            color: Color(0XFF2A2B2E),
-                            size: 20,
-                          ),
+                          child: selectedIndex == 4
+                              ? Icon(
+                                  BootstrapIcons.person_fill,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 20,
+                                )
+                              : Icon(
+                                  BootstrapIcons.person,
+                                  color: Theme.of(context).highlightColor,
+                                  size: 20,
+                                ),
                         ),
                         Padding(
                           padding:
@@ -542,8 +560,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
                               color: selectedIndex == 4
-                                  ? const Color(0XFF8ABA41)
-                                  : const Color(0XFF2A2B2E),
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).highlightColor,
                             ),
                           ),
                         ),
@@ -555,16 +573,29 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
             Column(
               children: [
+                IconButton(
+                  icon: Theme.of(context).backgroundColor == Colors.white
+                      ? Icon(
+                          BootstrapIcons.brightness_high_fill,
+                          color: Theme.of(context).highlightColor,
+                          size: 22,
+                        )
+                      : Icon(
+                          BootstrapIcons.moon_stars_fill,
+                          color: Theme.of(context).highlightColor,
+                          size: 18,
+                        ),
+                  onPressed: () {
+                    setState(() {
+                      ThemeService().changeThemeMode();
+                    });
+                  },
+                ),
                 Container(
                   height: 40,
                   margin: const EdgeInsets.all(36.0),
                   decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                        Color(0XFF8ABA41),
-                        Color.fromARGB(255, 171, 183, 156),
-                        ],
-                      ),
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(12.0)),
                   child: MaterialButton(
                     onPressed: () {
@@ -577,17 +608,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       children: [
                         Icon(
                           BootstrapIcons.headset,
-                          color: Colors.white,
+                          color: Color(0XFFFFFDFA),
                           size: 20,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 18.0),
+                          padding: const EdgeInsets.only(left: 18.0),
                           child: Text(
                             'Assistant AI',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontFamily: 'AvenirNext',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.0,
+                              color: Color(0XFFFFFDFA),
                             ),
                           ),
                         ),
@@ -623,7 +655,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).backgroundColor,
         behaviour: SnakeBarBehaviour.pinned,
         snakeShape: SnakeShape.indicator,
-        snakeViewColor: const Color(0XFF8ABA41),
+        snakeViewColor: Theme.of(context).primaryColor,
         currentIndex: selectedItemPosition,
         onTap: (index) {
           setState(() {
@@ -639,9 +671,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               color: Theme.of(context).iconTheme.color,
               size: 22,
             ),
-            activeIcon: const Icon(
+            activeIcon: Icon(
               BootstrapIcons.fuel_pump_fill,
-              color: Color(0XFF8ABA41),
+              color: Theme.of(context).primaryColor,
               size: 22,
             ),
           ),
@@ -651,9 +683,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               color: Theme.of(context).iconTheme.color,
               size: 22,
             ),
-            activeIcon: const Icon(
+            activeIcon: Icon(
               BootstrapIcons.lightning_charge_fill,
-              color: Color(0XFF8ABA41),
+              color: Theme.of(context).primaryColor,
               size: 22,
             ),
           ),
@@ -663,9 +695,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               color: Theme.of(context).iconTheme.color,
               size: 22,
             ),
-            activeIcon: const Icon(
+            activeIcon: Icon(
               BootstrapIcons.calendar2_week_fill,
-              color: Color(0XFF8ABA41),
+              color: Theme.of(context).primaryColor,
               size: 22,
             ),
           ),
@@ -675,9 +707,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               color: Theme.of(context).iconTheme.color,
               size: 22,
             ),
-            activeIcon: const Icon(
+            activeIcon: Icon(
               BootstrapIcons.map_fill,
-              color: Color(0XFF8ABA41),
+              color: Theme.of(context).primaryColor,
               size: 22,
             ),
           ),
@@ -687,87 +719,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               color: Theme.of(context).iconTheme.color,
               size: 22,
             ),
-            activeIcon: const Icon(
+            activeIcon: Icon(
               BootstrapIcons.person_fill,
-              color: Color(0XFF8ABA41),
+              color: Theme.of(context).primaryColor,
               size: 22,
             ),
           ),
         ],
       ),
-      /*
-      bottomNavigationBar:
-        
-        Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: AnimatedNotchBottomBar(
-          pageController: _pageController,
-          color: Colors.white,
-          showLabel: false,
-          notchColor: Colors.white,
-          bottomBarItems: const [
-            BottomBarItem(
-              inActiveItem: Icon(
-                BootstrapIcons.fuel_pump,
-                color: Color(0XFF71717A),
-              ),
-              activeItem: Icon(
-                BootstrapIcons.fuel_pump,
-                color: Color(0XFF8ABA41),
-              ),
-            ),
-            BottomBarItem(
-                inActiveItem: Icon(
-                  BootstrapIcons.battery_charging,
-                  color: Color(0XFF71717A),
-                ),
-                activeItem: Icon(
-                  BootstrapIcons.battery_charging,
-                  color: Color(0XFF8ABA41),
-                )),
-            BottomBarItem(
-              inActiveItem: Icon(
-                BootstrapIcons.calendar_week,
-                color: Color(0XFF71717A),
-              ),
-              activeItem: Icon(
-                BootstrapIcons.calendar_week,
-                color: Color(0XFF8ABA41),
-              ),
-            ),
-            BottomBarItem(
-              inActiveItem: Icon(
-                BootstrapIcons.map,
-                color: Color(0XFF71717A),
-              ),
-              activeItem: Icon(
-                BootstrapIcons.map,
-                color: Color(0XFF8ABA41),
-              ),
-            ),
-            BottomBarItem(
-              inActiveItem: Icon(
-                BootstrapIcons.person_circle,
-                color: Color(0XFF71717A),
-              ),
-              activeItem: Icon(
-                BootstrapIcons.person_circle,
-                color: Color(0XFF8ABA41),
-              ),
-            ),
-          ],
-          onTap: (index) {
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-            );
-            setState(() {
-              page = index;
-            });
-          },
-        ),
-      ),*/
     );
   }
 }

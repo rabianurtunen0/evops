@@ -13,10 +13,10 @@ class _AssistantAIState extends State<AssistantAI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFFFAFAFA),
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
+        shadowColor: Theme.of(context).backgroundColor,
         elevation: 0.0,
         leading: Container(
           alignment: Alignment.topLeft,
@@ -24,19 +24,18 @@ class _AssistantAIState extends State<AssistantAI> {
             onPressed: () {
               Get.back();
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Theme.of(context).iconTheme.color,
             ),
-            splashColor: Colors.white,
-            highlightColor: Colors.white,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),
       ),
       body: SafeArea(
         child: Container(
           alignment: Alignment.center, 
-          color: Colors.white,
           child: const Text('Assistant AI')
         ),
       ),

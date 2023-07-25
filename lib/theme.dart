@@ -1,102 +1,192 @@
 import 'package:flutter/material.dart';
 
 class Themes {
+  static final lightTheme = ThemeData(
+    backgroundColor: const Color(0XFFFFFFFFF),
+    cardColor: const Color(0XFFF0F1F0),
+    highlightColor: const Color(0XFF131622),
+    disabledColor: const Color(0XFF878999),
+    hoverColor: const Color(0XFFD8DAEB),
+    primaryColor: const Color(0XFF8ABA41),
+    primaryColorLight: const Color(0XFFD9F99D),
+    primaryColorDark: const Color(0XFF749B3A),
+    iconTheme: const IconThemeData(
+      color: Color(0XFF131622),
+    ),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 24.0,
+        color: Color(0XFF131622),
+      ),
+      headlineMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 22.0,
+        color: Color(0XFF131622),
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w400,
+        fontSize: 20.0,
+        color: Color(0XFF131622),
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 14.0,
+        color: Color(0XFF8ABA41),
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 13.0,
+        color: Color(0XFF131622),
+      ),
+      bodySmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 13.0,
+        color: Color(0XFF8ABA41),
+      ),
+      titleLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+        color: Color(0XFF131622),
+      ),
+      titleMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 15.0,
+        color: Color(0XFF131622),
+      ),
+      titleSmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        color: Color(0XFF131622),
+      ),
+      labelMedium: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        fontSize: 16.0,
+        color: Color(0XFFFFFDFA),
+        letterSpacing: 1.5,
+      ),
+      displayLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+        color: Color(0XFF878999),
+      ),
+      displayMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 15.0,
+        color: Color(0XFF878999),
+      ),
+      displaySmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        color: Color(0XFF878999),
+      ),
+    ),
+  );
 
-static final lightTheme = ThemeData(
-  backgroundColor: Colors.white,
-  cardColor: Color(0XFFF0F1F0),
-  highlightColor: Color(0XFF2A2B2E),
-  disabledColor: Color(0XFFA1A1AA),
-  primaryColor: const Color(0XFF8ABA41),
-  primaryColorLight: Color(0XFFD9F99D),
-  primaryColorDark: Color(0XFF4D7C0F),
-  unselectedWidgetColor: Colors.purpleAccent,
-  iconTheme: const IconThemeData(
-    color: Colors.black
-  ),
-  textTheme: const TextTheme(
-    titleLarge: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w600,
-      fontSize: 24.0,
-      color: Colors.black,
+  static final darkTheme = ThemeData(
+    backgroundColor: const Color(0XFF282A37),
+    cardColor: const Color(0XFF40404D),
+    highlightColor: const Color(0XFFFFFFFF),
+    disabledColor: const Color(0XFF878999),
+    hoverColor: const Color(0XFF555766),
+    primaryColor: const Color(0XFF8ABA41),
+    primaryColorLight: const Color(0XFFD9F99D),
+    primaryColorDark: const Color(0XFF4D7C0F),
+    iconTheme: const IconThemeData(
+      color: Color(0XFFFFFFFF),
     ),
-    titleMedium: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w400,
-      fontSize: 16.0,
-      color: Color(0XFF2A2B2E),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 24.0,
+        color: Colors.white,
+      ),
+      headlineMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 22.0,
+        color: Colors.white,
+      ),
+      headlineSmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w400,
+        fontSize: 20.0,
+        color: Colors.white,
+      ),
+      bodyLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 14.0,
+        color: Color(0XFF8ABA41),
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 13.0,
+        color: Colors.white,
+      ),
+      bodySmall: TextStyle(
+          fontFamily: 'AvenirNext',
+          fontWeight: FontWeight.w600,
+          fontSize: 13.0,
+          color: Color(0XFF8ABA41)),
+      titleLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+        color: Colors.white,
+      ),
+      titleMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 15.0,
+        color: Colors.white,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        color: Colors.white,
+      ),
+      labelMedium: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        fontSize: 16.0,
+        color: Color(0XFFFFFDFA),
+        letterSpacing: 1.5,
+      ),
+      displayLarge: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 16.0,
+        color: Color(0XFF878999),
+      ),
+      displayMedium: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 15.0,
+        color: Color(0XFF878999),
+      ),
+      displaySmall: TextStyle(
+        fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        color: Color(0XFF878999),
+      ),
     ),
-     titleSmall: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w400,
-      fontSize: 14.0,
-      color: Color(0XFF2A2B2E),
-    ),
-    headlineSmall: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w700,
-      fontSize: 12.0,
-      color: Colors.black,
-    ),
-     headlineMedium: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 16.0,
-      color: Color(0XFF2A2B2E),
-    ),
-  ),
-  
-
-);
-
-static final darkTheme = ThemeData(
-  //backgroundColor: const Color(0XFF2A2B2E),
-  backgroundColor: const Color(0XFF282A37),
-  cardColor: Color.fromARGB(255, 64, 64, 77),
-  highlightColor: Colors.white,
-  disabledColor: Color(0XFFA1A1AA),
-  primaryColor: const Color(0XFF8ABA41),
-  primaryColorLight: Color(0XFFD9F99D),
-  primaryColorDark: Color(0XFF4D7C0F),
-
-
-  iconTheme: const IconThemeData(
-    color: Colors.white,
-  ),
-  textTheme: const TextTheme(
-    titleLarge: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w600,
-      fontSize: 24.0,
-      color: Colors.white,
-    ),
-    titleMedium: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w300,
-      fontSize: 16.0,
-      color: Color(0XFFFAFAFA),
-    ),
-    titleSmall: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w300,
-      fontSize: 14.0,
-      color: Color(0XFFFAFAFA),
-    ),
-    headlineSmall: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w700,
-      fontSize: 12.0,
-      color: Colors.white,
-    ),
-    headlineMedium: TextStyle(
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 16,
-      color: Colors.white,
-    ),
-  ),
-);
-
-
+  );
 }

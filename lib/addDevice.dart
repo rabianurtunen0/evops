@@ -22,7 +22,7 @@ class _AddDeviceState extends State<AddDevice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         shadowColor: Colors.white,

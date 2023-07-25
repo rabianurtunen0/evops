@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
+          margin: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -33,7 +33,9 @@ class _LoginState extends State<Login> {
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 24.0),
                 child: SvgPicture.asset(
-                  Theme.of(context).backgroundColor == Color(0XFF282A37) ? 'assets/images/evops_dark.svg' : 'assets/images/evops_light.svg',
+                  Theme.of(context).backgroundColor == const Color(0XFF282A37)
+                      ? 'assets/images/evops_dark.svg'
+                      : 'assets/images/evops_light.svg',
                   width: 190,
                   height: 54,
                 ),
@@ -43,7 +45,7 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
                 child: Text(
                   'Login',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
               ),
               Container(
@@ -51,7 +53,7 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.fromLTRB(12.0, 4.0, 12.0, 8.0),
                 child: Text(
                   'Welcome back, please log in to your account.',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
               Container(
@@ -59,13 +61,13 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
                 child: Text(
                   'Email Address',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
                 height: 48,
                 child: TextFormField(
                   enableInteractiveSelection: true,
@@ -88,38 +90,32 @@ class _LoginState extends State<Login> {
                   onSaved: (newValue) {
                     emailEditingController.text = newValue!;
                   },
-                  cursorColor: const Color(0XFF2A2B2E),
+                  cursorColor: Theme.of(context).highlightColor,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Colors.transparent,
                     contentPadding:
                         const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                     hintText: 'name@example.com',
-                    hintStyle: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color(0XFF9AA1B4),
-                    ),
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0XFFE5EBF5)),
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
@@ -131,30 +127,23 @@ class _LoginState extends State<Login> {
                     margin: const EdgeInsets.only(left: 12.0),
                     child: Text(
                       'Password',
-                      style: Theme.of(context).textTheme.headlineSmall,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(right: 6),
+                    margin: const EdgeInsets.only(right: 0),
                     child: SizedBox(
                       height: 30.0,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.transparent,
-                        ),
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12.0,
-                            color: Color(0XFF8ABA41),
-                          ),
-                        ),
+                      child: MaterialButton(
                         onPressed: () {
                           Get.to(const RefreshPassword());
                         },
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: Text(
+                          'Forgot Password?',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
                     ),
                   ),
@@ -162,7 +151,7 @@ class _LoginState extends State<Login> {
               ),
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -185,27 +174,17 @@ class _LoginState extends State<Login> {
                   onSaved: (newValue) {
                     passwordEditingController.text = newValue!;
                   },
-                  cursorColor: const Color(0XFF2A2B2E),
+                  cursorColor: Theme.of(context).highlightColor,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Color(0XFF2A2B2E),
-                  ),
+                  style: Theme.of(context).textTheme.titleSmall,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Colors.transparent,
                     contentPadding:
                         const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
                     hintText: '••••••••',
-                    hintStyle: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Color(0XFF9AA1B4),
-                    ),
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -216,21 +195,27 @@ class _LoginState extends State<Login> {
                         _isVisible
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        color: const Color(0XFF595550),
-                        size: 20.0,
+                        color: Theme.of(context).iconTheme.color,
+                        size: 18.0,
                       ),
                       splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Color(0XFFE5EBF5)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
@@ -238,62 +223,60 @@ class _LoginState extends State<Login> {
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(6.0, 16.0, 0.0, 0.0),
-                    child: Checkbox(
-                      value: _isChecked,
-                      onChanged: (value) {
-                        _isChecked = !_isChecked;
-                        setState(() {});
-                      },
-                      activeColor: const Color(0XFF8ABA41),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      side: BorderSide(
-                        width: 1,
-                        color: Theme.of(context).backgroundColor ==
-                                const Color(0XFF282A37)
-                            ? Colors.white
-                            : Colors.black,
+                    margin: const EdgeInsets.fromLTRB(14.0, 16.0, 0.0, 0.0),
+                    child: SizedBox(
+                      width: 20,
+                      child: Checkbox(
+                        value: _isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            _isChecked = !_isChecked;
+                          });
+                        },
+                        activeColor: const Color(0XFF8ABA41),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        side: BorderSide(
+                            width: 1, color: Theme.of(context).highlightColor),
                       ),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: Colors.transparent,
+                    child: MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            _isChecked = !_isChecked;
+                          });
+                        },
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        child: Text(
+                          'Keep me logged in',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                       ),
-                      clipBehavior: Clip.none,
-                      child: Text(
-                        'Keep me logged in',
-                          style: Theme.of(context).textTheme.titleSmall),
-                      onPressed: () {
-                        _isChecked = !_isChecked;
-                        setState(() {});
-                      },
                     ),
-                  )
+                
                 ],
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
                 alignment: Alignment.center,
                 margin: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
                 child: Material(
                   elevation: 0,
                   borderRadius: BorderRadius.circular(12.0),
-                  color: const Color(0XFF8ABA41),
+                  color: Theme.of(context).primaryColor,
                   child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.9,
+                    minWidth: MediaQuery.of(context).size.width * 0.88,
                     height: 48,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    splashColor: const Color(0XFF8ABA41),
-                    highlightColor: const Color.fromARGB(
-                        255, 116, 155, 58), //Color(0XFF749B3A)
+                    splashColor: Theme.of(context).primaryColor,
+                    highlightColor: Theme.of(context).primaryColorDark,
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
@@ -310,16 +293,10 @@ class _LoginState extends State<Login> {
                             color: Color(0XFFFFFDFA),
                             strokeWidth: 2.0,
                           )
-                        : const Text(
-                            'Login',
-                            style: TextStyle(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Color(0XFFFFFDFA),
-                              letterSpacing: 1.5,
-                            ),
-                          ),
+                        : Text(
+                          'Login',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
                   ),
                 ),
               ),
@@ -328,30 +305,26 @@ class _LoginState extends State<Login> {
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Don't have an acount?",
-                        style: Theme.of(context).textTheme.titleSmall),
+                    Text(
+                        "Don't have an acount?",
+                        style: Theme.of(context).textTheme.titleSmall,
+                    ),
                     TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        disabledBackgroundColor: Colors.transparent,
-                        disabledForegroundColor: Colors.transparent,
-                      ),
-                      child: const Text(
-                        "Create Account",
-                        style: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0,
-                          color: Color(0XFF8ABA41),
+                        onPressed: () {
+                          Get.to(const SignUp());
+                        },
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                        ),
+                        
+                        child: Text(
+                          'Create Account',
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
-                      onPressed: () {
-                        Get.to(const SignUp());
-                      },
-                    ),
+                    
                   ],
                 ),
               ),
@@ -380,7 +353,8 @@ class _LoginState extends State<Login> {
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(top: 12.0),
-                child: Text('Continue with',
+                child: Text(
+                  'Continue with',
                     style: Theme.of(context).textTheme.titleSmall),
               ),
               Container(
