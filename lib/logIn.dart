@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Container(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
                 width: MediaQuery.of(context).size.width * 0.88,
                 height: 48,
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                     filled: true,
                     fillColor: Colors.transparent,
                     contentPadding:
-                        const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
+                        const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 10.0),
                     hintText: 'name@example.com',
                     hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(
@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
               Container(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 width: MediaQuery.of(context).size.width * 0.88,
                 child: TextFormField(
                   enableInteractiveSelection: true,
@@ -181,8 +181,9 @@ class _LoginState extends State<Login> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,
+                    
                     contentPadding:
-                        const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
+                        const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 10.0),
                     hintText: '••••••••',
                     hintStyle: Theme.of(context).textTheme.displaySmall,
                     suffixIcon: IconButton(

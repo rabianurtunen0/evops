@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/assistantAI.dart';
 import 'package:evops/themeService.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 //import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -42,6 +42,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     const Map(),
     const Profile(),
   ];
+
+  
 
   @override
   void initState() {
@@ -92,7 +94,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).backgroundColor,
-        width: 300,
+        width: MediaQuery.of(context).size.width * 0.6,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.horizontal(
             left: Radius.zero,
@@ -217,15 +219,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 */
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 50.0),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 0.2,
-                        color: Theme.of(context).disabledColor,
-                      ),
-                    ),
-                  ),
+                  padding: const EdgeInsets.fromLTRB(24.0, 96.0, 0.0, 36.0),
+                  
                   child: SvgPicture.asset(
                     Theme.of(context).backgroundColor == const Color(0XFF282A37)
                         ? 'assets/images/evops_dark.svg'
@@ -236,7 +231,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                   decoration: selectedIndex == 0
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
@@ -284,10 +279,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(18.0, 0.0, 0.0, 0.0),
+                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
                           child: Text(
                             'Devices',
                             style: TextStyle(
+                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -303,7 +299,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                   decoration: selectedIndex == 1
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
@@ -351,10 +347,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(18.0, 0.0, 0.0, 0.0),
+                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
                           child: Text(
                             'Charge',
                             style: TextStyle(
+                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -370,7 +367,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                   decoration: selectedIndex == 2
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
@@ -418,10 +415,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(18.0, 0.0, 0.0, 0.0),
+                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
                           child: Text(
                             'Calendar',
                             style: TextStyle(
+                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -437,7 +435,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                   decoration: selectedIndex == 3
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
@@ -485,10 +483,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(18.0, 0.0, 0.0, 0.0),
+                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
                           child: Text(
                             'Map',
                             style: TextStyle(
+                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -504,7 +503,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
                   decoration: selectedIndex == 4
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
@@ -552,10 +551,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                         Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(18.0, 0.0, 0.0, 0.0),
+                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
                           child: Text(
                             'Profile',
                             style: TextStyle(
+                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                               fontSize: 14,
@@ -573,27 +573,73 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
             Column(
               children: [
-                IconButton(
-                  icon: Theme.of(context).backgroundColor == Colors.white
-                      ? Icon(
-                          BootstrapIcons.brightness_high_fill,
-                          color: Theme.of(context).highlightColor,
-                          size: 22,
-                        )
-                      : Icon(
-                          BootstrapIcons.moon_stars_fill,
-                          color: Theme.of(context).highlightColor,
-                          size: 18,
-                        ),
-                  onPressed: () {
-                    setState(() {
-                      ThemeService().changeThemeMode();
-                    });
-                  },
-                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 18.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.2,
+                        color: Theme.of(context).disabledColor,
+                      ))
+                  ),
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: CupertinoSlidingSegmentedControl<Sky>(
+                        backgroundColor: Theme.of(context).cardColor,
+                        thumbColor: Theme.of(context).backgroundColor ==
+                                const Color(0XFFFFFFFF)
+                            ? Colors.white
+                            : Color(0XFF131622),
+                        groupValue: Theme.of(context).backgroundColor ==
+                                const Color(0XFFFFFFFF)
+                            ? Sky.sun
+                            : Sky.moon,
+                        onValueChanged: (Sky? value) {
+                          if (value != null) {
+                            setState(() {
+                              ThemeService().changeThemeMode();
+                            });
+                          }
+                        },
+                        children: <Sky, Widget>{
+                          Sky.sun: Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Icon(
+                                BootstrapIcons.brightness_high_fill,
+                                size:18.0,
+                                color: Theme.of(context).backgroundColor ==
+                                        const Color(0XFFFFFFFF)
+                                    ? Color(0XFF131622)
+                                    : Colors.transparent,
+                              ),
+                            ),
+                          ),
+                          Sky.moon: Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Icon(
+                                BootstrapIcons.moon_stars,
+                                size: 15.0,
+                                color: Theme.of(context).backgroundColor ==
+                                        const Color(0XFFFFFFFF)
+                                    ? Colors.transparent
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        },
+                      ),
+                              
+                    
+                  ),
+                ),        
                 Container(
                   height: 40,
-                  margin: const EdgeInsets.all(36.0),
+                  margin: const EdgeInsets.fromLTRB(30.0, 18.0, 30.0, 36.0),
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(12.0)),
@@ -612,7 +658,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           size: 20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 18.0),
+                          padding: EdgeInsets.only(left: 12.0),
                           child: Text(
                             'Assistant AI',
                             style: TextStyle(

@@ -64,11 +64,12 @@ class _RefreshPasswordState extends State<RefreshPassword> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
-                child: Text('Email Address',
-                    style: Theme.of(context).textTheme.bodyMedium),
+                child: Text(
+                  'Email Address',
+                  style: Theme.of(context).textTheme.bodyMedium),
               ),
               Container(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
                 width: MediaQuery.of(context).size.width * 0.88,
                 height: 48,
@@ -101,7 +102,7 @@ class _RefreshPasswordState extends State<RefreshPassword> {
                     filled: true,
                     fillColor: Colors.transparent,
                     contentPadding:
-                        const EdgeInsets.fromLTRB(10.0, 13.0, 10.0, 13.0),
+                        const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 10.0),
                     hintText: 'name@example.com',
                     hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(

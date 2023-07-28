@@ -1,10 +1,12 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/addCreditCard.dart';
 import 'package:evops/logIn.dart';
+import 'package:evops/themeService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 enum Sky { sun, moon }
 
@@ -17,6 +19,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _scrollController = ScrollController();
+  final getStorage = GetStorage();
   final fullNameEditingController =
       TextEditingController(text: 'Rabia Nur Tünen');
   final emailEditingController =
@@ -31,6 +34,7 @@ class _ProfileState extends State<Profile> {
   bool personalInformation = false;
   bool payments = false;
   bool sharing = false;
+  bool app = false;
   bool changePassword = false;
   bool oldPasswordVisible = false;
   bool newPasswordVisible = false;
@@ -68,18 +72,21 @@ class _ProfileState extends State<Profile> {
             controller: _scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  margin: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 75.0),
+                  margin: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 60.0),
                   alignment: Alignment.topCenter,
                   child: Stack(
                     children: [
-                      const CircleAvatar(
-                        backgroundColor: Color(0XFFF0F1F0),
+                      CircleAvatar(
+                        backgroundColor: Theme.of(context).cardColor,
                         radius: 48.0,
-                        child: Icon(BootstrapIcons.person_fill,
-                            color: Color(0XFF8ABA41), size: 36.0),
+                        child: const Icon(
+                          BootstrapIcons.person_fill,
+                          color: Color(0XFF8ABA41),
+                          size: 36.0,
+                        ),
                       ),
                       Padding(
                         padding:
@@ -100,7 +107,8 @@ class _ProfileState extends State<Profile> {
                                 changePhotoBottomSheet();
                               },
                               splashColor: const Color(0XFF8ABA41),
-                              highlightColor: const Color.fromARGB(255, 116, 155, 58),
+                              highlightColor:
+                                  const Color.fromARGB(255, 116, 155, 58),
                               child: const Icon(
                                 BootstrapIcons.pencil,
                                 size: 12.0,
@@ -114,7 +122,7 @@ class _ProfileState extends State<Profile> {
                 Column(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: personalInformation
                           ? save
                               ? changePassword
@@ -138,11 +146,7 @@ class _ProfileState extends State<Profile> {
                                     20.0, 2.0, 0.0, 0.0),
                                 child: Text(
                                   'PERSONAL INFORMATION',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                               Container(
@@ -223,29 +227,26 @@ class _ProfileState extends State<Profile> {
                                                   save = true;
                                                 });
                                               },
-                                              cursorColor:
-                                                  const Color(0XFF2A2B2E),
+                                              cursorColor: Theme.of(context).highlightColor,
                                               textInputAction:
                                                   TextInputAction.next,
                                               textAlignVertical:
                                                   TextAlignVertical.center,
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Color(0XFF2A2B2E),
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
                                               decoration: InputDecoration(
                                                 filled: true,
-                                                fillColor:
-                                                    const Color(0XFFFFFDFA),
+                                                fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                 contentPadding:
                                                     const EdgeInsets.fromLTRB(
                                                         10.0, 8.0, 10.0, 10.0),
+                                                hintText: 'Full Name',
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
@@ -253,13 +254,14 @@ class _ProfileState extends State<Profile> {
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
                                                 ),
-                                                border:
-                                                    const OutlineInputBorder(
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -318,29 +320,26 @@ class _ProfileState extends State<Profile> {
                                                   save = true;
                                                 });
                                               },
-                                              cursorColor:
-                                                  const Color(0XFF2A2B2E),
+                                              cursorColor: Theme.of(context).highlightColor,
                                               textInputAction:
                                                   TextInputAction.next,
                                               textAlignVertical:
                                                   TextAlignVertical.center,
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Color(0XFF2A2B2E),
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
                                               decoration: InputDecoration(
                                                 filled: true,
-                                                fillColor:
-                                                    const Color(0XFFFFFDFA),
+                                                fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                 contentPadding:
                                                     const EdgeInsets.fromLTRB(
                                                         10.0, 8.0, 10.0, 10.0),
+                                                hintText: 'name@example.com',
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
@@ -348,13 +347,14 @@ class _ProfileState extends State<Profile> {
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
                                                 ),
-                                                border:
-                                                    const OutlineInputBorder(
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -413,29 +413,26 @@ class _ProfileState extends State<Profile> {
                                                   save = true;
                                                 });
                                               },
-                                              cursorColor:
-                                                  const Color(0XFF2A2B2E),
+                                              cursorColor: Theme.of(context).highlightColor,
                                               textInputAction:
                                                   TextInputAction.next,
                                               textAlignVertical:
                                                   TextAlignVertical.center,
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Color(0XFF2A2B2E),
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
                                               decoration: InputDecoration(
                                                 filled: true,
-                                                fillColor:
-                                                    const Color(0XFFFFFDFA),
+                                                fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                 contentPadding:
                                                     const EdgeInsets.fromLTRB(
                                                         10.0, 8.0, 10.0, 10.0),
+                                                hintText: 'Phone Number',
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
@@ -443,13 +440,14 @@ class _ProfileState extends State<Profile> {
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
                                                 ),
-                                                border:
-                                                    const OutlineInputBorder(
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -508,29 +506,26 @@ class _ProfileState extends State<Profile> {
                                                   save = true;
                                                 });
                                               },
-                                              cursorColor:
-                                                  const Color(0XFF2A2B2E),
+                                              cursorColor: Theme.of(context).highlightColor,
                                               textInputAction:
                                                   TextInputAction.next,
                                               textAlignVertical:
                                                   TextAlignVertical.center,
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Color(0XFF2A2B2E),
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
                                               decoration: InputDecoration(
                                                 filled: true,
-                                                fillColor:
-                                                    const Color(0XFFFFFDFA),
+                                                fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                 contentPadding:
                                                     const EdgeInsets.fromLTRB(
                                                         10.0, 8.0, 10.0, 10.0),
+                                                hintText: 'City, Country',
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
@@ -538,13 +533,14 @@ class _ProfileState extends State<Profile> {
                                                 focusedBorder:
                                                     OutlineInputBorder(
                                                   borderSide: const BorderSide(
-                                                      color: Color(0XFFFFFDFA)),
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12.0),
                                                 ),
-                                                border:
-                                                    const OutlineInputBorder(
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -600,18 +596,11 @@ class _ProfileState extends State<Profile> {
                                                             save = true;
                                                           });
                                                         },
-                                                        //splashColor: Colors.transparent,
-                                                        //highlightColor: Colors.transparent,
-                                                        child: const Text(
+                                                        splashColor: Colors.transparent,
+                                                        highlightColor: Colors.transparent,
+                                                        child: Text(
                                                             'CHANGE PASSWORD',
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0XFF8ABA41),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 14.0,
-                                                            ),
+                                                            style: Theme.of(context).textTheme.bodyLarge,
                                                             textAlign:
                                                                 TextAlign.left),
                                                       ),
@@ -672,50 +661,33 @@ class _ProfileState extends State<Profile> {
                                                       oldPasswordEditingController
                                                           .text = newValue!;
                                                     },
-                                                    cursorColor:
-                                                        const Color(0XFF2A2B2E),
+                                                    cursorColor: Theme.of(context).highlightColor,
                                                     textInputAction:
                                                         TextInputAction.next,
                                                     textAlignVertical:
                                                         TextAlignVertical
                                                             .center,
-                                                    style: const TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14,
-                                                      color: Color(0XFF2A2B2E),
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
                                                     decoration: InputDecoration(
                                                       filled: true,
-                                                      fillColor: const Color(
-                                                          0XFFFFFDFA),
+                                                      fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                       labelText: 'Old Password',
                                                       labelStyle:
-                                                          const TextStyle(
+                                                          TextStyle(
                                                         fontStyle:
                                                             FontStyle.normal,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize: 12,
-                                                        color: Color.fromARGB(
-                                                            255, 59, 97, 2),
+                                                        color: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Color(0XFF8ABA41) : Color(0XFFFFFFFF)
                                                       ),
                                                       floatingLabelBehavior:
                                                           FloatingLabelBehavior
                                                               .always,
                                                       hintText: '••••••••',
-                                                      hintStyle:
-                                                          const TextStyle(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14,
-                                                        color:
-                                                            Color(0XFF595550),
-                                                      ),
+                                                      hintStyle: Theme.of(context).textTheme.displaySmall,
                                                       floatingLabelAlignment:
                                                           FloatingLabelAlignment
                                                               .start,
@@ -732,8 +704,7 @@ class _ProfileState extends State<Profile> {
                                                                   .eye_slash
                                                               : BootstrapIcons
                                                                   .eye,
-                                                          color: const Color(
-                                                              0XFF2A2B2E),
+                                                          color: Theme.of(context).highlightColor,
                                                           size: 18,
                                                         ),
                                                       ),
@@ -745,32 +716,29 @@ class _ProfileState extends State<Profile> {
                                                               10.0,
                                                               10.0),
                                                       enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      border:
-                                                          const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12.0)),
-                                                      ),
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              12.0)),
+                                                ),
                                                     ),
                                                   ),
                                                 ),
@@ -827,50 +795,33 @@ class _ProfileState extends State<Profile> {
                                                       newPasswordEditingController
                                                           .text = newValue!;
                                                     },
-                                                    cursorColor:
-                                                        const Color(0XFF2A2B2E),
+                                                    cursorColor: Theme.of(context).highlightColor,
                                                     textInputAction:
                                                         TextInputAction.next,
                                                     textAlignVertical:
                                                         TextAlignVertical
                                                             .center,
-                                                    style: const TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14,
-                                                      color: Color(0XFF2A2B2E),
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
                                                     decoration: InputDecoration(
                                                       filled: true,
-                                                      fillColor: const Color(
-                                                          0XFFFFFDFA),
+                                                      fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                       labelText: 'New Password',
                                                       labelStyle:
-                                                          const TextStyle(
+                                                          TextStyle(
                                                         fontStyle:
                                                             FontStyle.normal,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize: 12,
-                                                        color: Color.fromARGB(
-                                                            255, 59, 97, 2),
+                                                        color: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Color(0XFF8ABA41) : Color(0XFFFFFFFF)
                                                       ),
                                                       floatingLabelBehavior:
                                                           FloatingLabelBehavior
                                                               .always,
                                                       hintText: '••••••••',
-                                                      hintStyle:
-                                                          const TextStyle(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14,
-                                                        color:
-                                                            Color(0XFF595550),
-                                                      ),
+                                                      hintStyle: Theme.of(context).textTheme.displaySmall,
                                                       floatingLabelAlignment:
                                                           FloatingLabelAlignment
                                                               .start,
@@ -887,8 +838,7 @@ class _ProfileState extends State<Profile> {
                                                                   .eye_slash
                                                               : BootstrapIcons
                                                                   .eye,
-                                                          color: const Color(
-                                                              0XFF2A2B2E),
+                                                          color: Theme.of(context).highlightColor,
                                                           size: 18,
                                                         ),
                                                       ),
@@ -900,32 +850,29 @@ class _ProfileState extends State<Profile> {
                                                               10.0,
                                                               10.0),
                                                       enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      border:
-                                                          const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12.0)),
-                                                      ),
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              12.0)),
+                                                ),
                                                     ),
                                                   ),
                                                 ),
@@ -982,50 +929,33 @@ class _ProfileState extends State<Profile> {
                                                       newPasswordAgainEditingController
                                                           .text = newValue!;
                                                     },
-                                                    cursorColor:
-                                                        const Color(0XFF2A2B2E),
+                                                    cursorColor: Theme.of(context).highlightColor,
                                                     textInputAction:
                                                         TextInputAction.next,
                                                     textAlignVertical:
                                                         TextAlignVertical
                                                             .center,
-                                                    style: const TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14,
-                                                      color: Color(0XFF2A2B2E),
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
                                                     decoration: InputDecoration(
                                                       filled: true,
-                                                      fillColor: const Color(
-                                                          0XFFFFFDFA),
+                                                      fillColor: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Colors.white : Colors.transparent,
                                                       labelText: 'New Password',
                                                       labelStyle:
-                                                          const TextStyle(
+                                                          TextStyle(
                                                         fontStyle:
                                                             FontStyle.normal,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize: 12,
-                                                        color: Color.fromARGB(
-                                                            255, 59, 97, 2),
+                                                        color: Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ? Color(0XFF8ABA41) : Color(0XFFFFFFFF)
                                                       ),
                                                       floatingLabelBehavior:
                                                           FloatingLabelBehavior
                                                               .always,
                                                       hintText: '••••••••',
-                                                      hintStyle:
-                                                          const TextStyle(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14,
-                                                        color:
-                                                            Color(0XFF595550),
-                                                      ),
+                                                      hintStyle: Theme.of(context).textTheme.displaySmall,
                                                       suffixIcon: IconButton(
                                                         onPressed: () {
                                                           setState(() {
@@ -1039,8 +969,7 @@ class _ProfileState extends State<Profile> {
                                                                   .eye_slash
                                                               : BootstrapIcons
                                                                   .eye,
-                                                          color: const Color(
-                                                              0XFF595550),
+                                                          color: Theme.of(context).highlightColor,
                                                           size: 18,
                                                         ),
                                                       ),
@@ -1052,32 +981,29 @@ class _ProfileState extends State<Profile> {
                                                               10.0,
                                                               10.0),
                                                       enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide:
-                                                            const BorderSide(
-                                                                color: Color(
-                                                                    0XFFFFFDFA)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                      ),
-                                                      border:
-                                                          const OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    12.0)),
-                                                      ),
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                border: const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              12.0)),
+                                                ),
                                                     ),
                                                   ),
                                                 ),
@@ -1092,7 +1018,7 @@ class _ProfileState extends State<Profile> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.14),
+                                                      0.12),
                                               Container(
                                                 width: MediaQuery.of(context)
                                                         .size
@@ -1120,17 +1046,9 @@ class _ProfileState extends State<Profile> {
                                                   highlightColor:
                                                       const Color.fromARGB(
                                                           255, 116, 155, 58),
-                                                  child: const Text(
+                                                  child: Text(
                                                     'Save',
-                                                    style: TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.normal,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16,
-                                                      color: Color(0XFFFFFDFA),
-                                                      letterSpacing: 1.5,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.labelMedium,
                                                   ),
                                                 ),
                                               ),
@@ -1144,15 +1062,14 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: payments
-                          ? 105 + registeredCreditCardsNumbers.length * 60
+                          ? 82 + registeredCreditCardsNumbers.length * 60
                           : 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
-                        //borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Column(
                         children: [
@@ -1164,11 +1081,7 @@ class _ProfileState extends State<Profile> {
                                     20.0, 2.0, 0.0, 0.0),
                                 child: Text(
                                   'PAYMENTS',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium
                                 ),
                               ),
                               Container(
@@ -1203,16 +1116,15 @@ class _ProfileState extends State<Profile> {
                                       child: ListView.builder(
                                         itemCount:
                                             registeredCreditCardsNumbers.length,
+                                            shrinkWrap: true,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            scrollDirection: Axis.vertical,
                                         itemBuilder: (context, index) {
                                           return Container(
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            decoration: BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
+                                            
                                             child: Column(
                                               children: [
                                                 Row(
@@ -1234,93 +1146,50 @@ class _ProfileState extends State<Profile> {
                                                         size: 25.0,
                                                       ),
                                                     ),
-                                                    Container(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.7,
-                                                      height: 36,
-                                                      margin: const EdgeInsets
-                                                              .fromLTRB(15.0,
-                                                          10.0, 15.0, 5.0),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0)),
-                                                      child: MaterialButton(
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        onPressed: () {},
-                                                        child: Text(
-                                                          registeredCreditCardsNumbers[
-                                                              index][0],
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                        ),
+                                                    MaterialButton(
+                                                      onPressed: () {
+                                                        getStorage.write('cardNumber', registeredCreditCardsNumbers[index][0]);
+                                                        getStorage.write('cardholderName', registeredCreditCardsNumbers[index][1]);
+                                                        getStorage.write('expirationDate', registeredCreditCardsNumbers[index][2]);
+                                                        getStorage.write('cvv', registeredCreditCardsNumbers[index][3]);
+                                                        getStorage.write('changeCreditCard', 'true');
+                                                        Get.to(const AddCreditCard());
+                                                      },
+                                                      splashColor: Colors.transparent,
+                                                      highlightColor: Colors.transparent,
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            width: MediaQuery.of(context).size.width * 0.6,
+                                                            height: 36,
+                                                            margin: const EdgeInsets
+                                                                    .fromLTRB(0.0,
+                                                                10.0, 0.0, 5.0),
+                                                                          
+                                                            child: Align(
+                                                                alignment: Alignment.centerLeft,
+                                                                child: Text(
+                                                                  registeredCreditCardsNumbers[
+                                                                      index][0],
+                                                                  textAlign:
+                                                                      TextAlign.left,
+                                                                  style: Theme.of(context).textTheme.bodyMedium,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: const EdgeInsets.fromLTRB(20.0, 2.0, 0.0, 0.0),
+                                                              child: Icon(
+                                                                BootstrapIcons.chevron_right,
+                                                                size: 16,
+                                                                color: Theme.of(context).highlightColor,
+                                                              ),
+                                                            )
+                                                        
+                                                        ],
                                                       ),
                                                     ),
-                                                    /*
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.7,
-                                                  height: 48,
-                                                  margin:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0.0, 10.0, 15.0, 5.0),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    border: Border(
-                                                      bottom: BorderSide(
-                                                        color:
-                                                            Color(0XFF2A2B2E),
-                                                        width: 0.2,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                                .fromLTRB(5.0,
-                                                            15.0, 0.0, 0.0),
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        child: Text(
-                                                          registeredCreditCardsNumbers[index][0].toString(),
-                                                          style: const TextStyle(
-                                                            color: Color(
-                                                                0XFF2A2B2E),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 14.0,
-                                                            fontStyle: FontStyle
-                                                                .normal,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        margin: const EdgeInsets
-                                                                .fromLTRB(0.0,
-                                                            10.0, 0.0, 0.0),
-                                                        child: const Icon(
-                                                          BootstrapIcons.chevron_right,
-                                                          size: 22,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                               */
                                                   ],
                                                 ),
                                               ],
@@ -1334,8 +1203,7 @@ class _ProfileState extends State<Profile> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Container(
-                                          width: 50,
-                                          height: 25,
+                                          width: 32,
                                         ),
                                         Container(
                                           alignment: Alignment.centerLeft,
@@ -1354,27 +1222,23 @@ class _ProfileState extends State<Profile> {
                                                   .size
                                                   .width *
                                               0.7,
-                                          decoration: const BoxDecoration(
-                                            border: Border(
-                                              top: BorderSide(
-                                                color: Color(0XFF2A2B2E),
-                                                width: 0.2,
-                                              ),
-                                            ),
-                                          ),
+                                          
                                           child: MaterialButton(
                                             onPressed: () {
+                                              getStorage.write('cardNumber', '');
+                                              getStorage.write('cardholderName', '');
+                                              getStorage.write('expirationDate', '');
+                                              getStorage.write('cvv', '');
+                                              getStorage.write('changeCreditCard', 'false');
                                               Get.to(const AddCreditCard());
                                             },
-                                            //splashColor: Colors.transparent,
-                                            //highlightColor: Colors.transparent,
-                                            child: const Text('ADD CREDİT CARD',
-                                                style: TextStyle(
-                                                  color: Color(0XFF8ABA41),
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                ),
-                                                textAlign: TextAlign.left),
+                                            splashColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            child: Text(
+                                              'ADD CREDİT CARD',
+                                              style: Theme.of(context).textTheme.bodyLarge,
+                                              textAlign: TextAlign.left,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -1386,7 +1250,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: sharing ? 200 : 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
@@ -1403,11 +1267,7 @@ class _ProfileState extends State<Profile> {
                                     20.0, 2.0, 0.0, 0.0),
                                 child: Text(
                                   'SHARING',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ),
                               Container(
@@ -1460,7 +1320,8 @@ class _ProfileState extends State<Profile> {
                                           decoration: BoxDecoration(
                                             border: Border(
                                               bottom: BorderSide(
-                                                color: Theme.of(context).highlightColor,
+                                                color: Theme.of(context)
+                                                    .highlightColor,
                                                 width: 0.2,
                                               ),
                                             ),
@@ -1514,8 +1375,6 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ],
                                     ),
-                                  
-                                  
                                   ],
                                 )
                               : Container(),
@@ -1523,7 +1382,137 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
+                      height: app ? 120 : 50,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 4.0),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    20.0, 2.0, 0.0, 0.0),
+                                child: Text(
+                                  'APP',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    0.0, 2.0, 5.0, 0.0),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    sharing
+                                        ? BootstrapIcons.chevron_up
+                                        : BootstrapIcons.chevron_down,
+                                    size: 20,
+                                    color: Theme.of(context).highlightColor,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      app = !app;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          app
+                              ? Column(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(
+                                          20.0, 5.0, 20.0, 0.0),
+                                      height: 60,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Theme'),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child:
+                                                CupertinoSlidingSegmentedControl<
+                                                    Sky>(
+                                              backgroundColor: Theme.of(context)
+                                                  .backgroundColor,
+                                              thumbColor: Theme.of(context)
+                                                          .backgroundColor ==
+                                                      const Color(0XFFFFFFFF)
+                                                  ? Color(0XFFFFC841)
+                                                  : Color(0XFF2A2B2E),
+                                              groupValue: Theme.of(context)
+                                                          .backgroundColor ==
+                                                      const Color(0XFFFFFFFF)
+                                                  ? Sky.sun
+                                                  : Sky.moon,
+                                              onValueChanged: (Sky? value) {
+                                                if (value != null) {
+                                                  setState(() {
+                                                    ThemeService()
+                                                        .changeThemeMode();
+                                                  });
+                                                }
+                                              },
+                                              children: <Sky, Widget>{
+                                                Sky.sun: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 2.0),
+                                                    child: Icon(
+                                                      BootstrapIcons
+                                                          .brightness_high_fill,
+                                                      size: 18.0,
+                                                      color: Theme.of(context)
+                                                                  .backgroundColor ==
+                                                              const Color(
+                                                                  0XFFFFFFFF)
+                                                          ? Colors.white
+                                                          : Colors.transparent,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Sky.moon: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 2.0),
+                                                    child: Icon(
+                                                      BootstrapIcons.moon_stars,
+                                                      size: 15.0,
+                                                      color: Theme.of(context)
+                                                                  .backgroundColor ==
+                                                              const Color(
+                                                                  0XFFFFFFFF)
+                                                          ? Colors.transparent
+                                                          : Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
@@ -1533,7 +1522,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
@@ -1543,7 +1532,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       height: 50,
                       margin: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 4.0),
@@ -1553,17 +1542,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 50,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 5.0, horizontal: 4.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        //borderRadius: BorderRadius.circular(12.0),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * 0.88,
                       alignment: Alignment.center,
                       margin: const EdgeInsets.fromLTRB(4.0, 5.0, 4.0, 50.0),
                       child: Material(

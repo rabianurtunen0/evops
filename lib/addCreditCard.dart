@@ -1,8 +1,10 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AddCreditCard extends StatefulWidget {
   const AddCreditCard({Key? key}) : super(key: key);
@@ -12,11 +14,13 @@ class AddCreditCard extends StatefulWidget {
 }
 
 class _AddCreditCardState extends State<AddCreditCard> {
-  final cardNumberEditingController = TextEditingController();
-  final cardholderNameEditingController = TextEditingController();
-  final cvvEditingController = TextEditingController();
-  final expirationDateEditingController = TextEditingController();
+  final getStorage = GetStorage();
+  late final cardNumberEditingController = TextEditingController(text: getStorage.read("cardNumber").toString());
+  late final cardholderNameEditingController = TextEditingController(text: getStorage.read("cardholderName").toString());
+  late final cvvEditingController = TextEditingController(text: getStorage.read("cvv").toString());
+  late final expirationDateEditingController = TextEditingController(text: getStorage.read("expirationDate").toString());
   bool isCvvFocused = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -57,27 +61,31 @@ class _AddCreditCardState extends State<AddCreditCard> {
           children: [
             Column(
               children: [
-                CreditCardWidget(
-                  cardNumber: cardNumberEditingController.text,
-                  expiryDate: expirationDateEditingController.text,
-                  cardHolderName: cardholderNameEditingController.text,
-                  cvvCode: cvvEditingController.text,
-                  showBackView: isCvvFocused,
-                  isHolderNameVisible: true,
-                  onCreditCardWidgetChange: (CreditCardBrand) {},
-                  isChipVisible: true,
-                  obscureCardCvv: false,
-                  obscureCardNumber: false,
-                  obscureInitialCardNumber: false,
-                  cardBgColor: Theme.of(context).backgroundColor ==
-                          const Color(0XFF282A37)
-                      ? const Color.fromARGB(255, 64, 64, 77)
-                      : const Color(0XFF2A2B2E),
-                  textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    fontStyle: FontStyle.normal,
+                Container(
+                  margin: const EdgeInsets.fromLTRB(12.0, 10.0, 12.0, 20.0),
+                  child: CreditCardWidget(
+                    cardNumber: cardNumberEditingController.text,
+                    expiryDate: expirationDateEditingController.text,
+                    cardHolderName: cardholderNameEditingController.text,
+                    cvvCode: cvvEditingController.text,
+                    showBackView: isCvvFocused,
+                    isHolderNameVisible: true,
+                    onCreditCardWidgetChange: (CreditCardBrand) {},
+                    isChipVisible: true,
+                    obscureCardCvv: false,
+                    obscureCardNumber: false,
+                    obscureInitialCardNumber: false,
+                    cardBgColor: const Color(0XFF3E404E),
+                    backCardBorder:
+                        Border.all(width: 2, color: Color(0XFF3E404E),),
+                        frontCardBorder: Border.all(width: 2, color: const Color(0XFF3E404E)),
+                    
+                    textStyle: const TextStyle(
+                      color: Color(0XFFA1A3B4),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontStyle: FontStyle.normal,
+                    ),
                   ),
                 ),
                 Container(
@@ -89,11 +97,11 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       8.0),
                   child: Text(
                     'Card Number',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.88,
                   child: TextFormField(
                     autofocus: false,
                     controller: cardNumberEditingController,
@@ -121,47 +129,40 @@ class _AddCreditCardState extends State<AddCreditCard> {
                     },
                     onTap: () {
                       setState(() {
-                        //isCvvFocused = false;
+                        isCvvFocused = false;
                       });
                     },
-                    cursorColor: const Color(0XFF2A2B2E),
+                    cursorColor: Theme.of(context).highlightColor,
                     textInputAction: TextInputAction.next,
                     textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Color(0XFF2A2B2E),
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
-
+                      fillColor: Colors.transparent,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: 'XXXX XXXX XXXX XXXX',
-                      hintStyle: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Color(0XFF595550),
-                      ),
+                      hintStyle: Theme.of(context).textTheme.displaySmall,
                       floatingLabelAlignment: FloatingLabelAlignment.start,
                       prefixIcon:
-                          const Icon(BootstrapIcons.credit_card_2_front),
+                          const Icon(BootstrapIcons.credit_card_2_front, size: 20),
                       prefixIconColor: const Color(0XFF8ABA41),
-                      //suffixIcon: Icon(),
                       contentPadding:
-                          const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                          const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
+                        borderSide:
+                            BorderSide(color: Theme.of(context).hoverColor),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
+                        borderSide:
+                            BorderSide(color: Theme.of(context).hoverColor),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).hoverColor),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
                       ),
                     ),
                   ),
@@ -175,11 +176,11 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       8.0),
                   child: Text(
                     'Cardholder Name',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.88,
                   child: TextFormField(
                     autofocus: false,
                     controller: cardholderNameEditingController,
@@ -200,45 +201,43 @@ class _AddCreditCardState extends State<AddCreditCard> {
                       });
                     },
                     onTap: () {
-                      setState(() {});
+                      setState(() {
+                        isCvvFocused = false;
+                      });
                     },
-                    cursorColor: const Color(0XFF2A2B2E),
+                    cursorColor: Theme.of(context).highlightColor,
                     textInputAction: TextInputAction.next,
                     textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Color(0XFF2A2B2E),
-                    ),
+                    style:Theme.of(context).textTheme.titleSmall,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.transparent,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       hintText: 'Cardholder Name',
-                      hintStyle: const TextStyle(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Color(0XFF595550),
-                      ),
+                      hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                       floatingLabelAlignment: FloatingLabelAlignment.start,
-                      prefixIcon: const Icon(BootstrapIcons.person),
+                      prefixIcon: const Icon(BootstrapIcons.person, size: 20),
                       prefixIconColor: const Color(0XFF8ABA41),
-                      //suffixIcon: Icon(),
                       contentPadding:
-                          const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                          const EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0XFFFFFFFF)),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                      ),
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).hoverColor),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).hoverColor),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).hoverColor),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12.0)),
+                                    ),
                     ),
                   ),
                 ),
@@ -251,17 +250,17 @@ class _AddCreditCardState extends State<AddCreditCard> {
                         Container(
                           alignment: Alignment.topLeft,
                           margin: EdgeInsets.fromLTRB(
-                              MediaQuery.of(context).size.width * 0.025,
+                              MediaQuery.of(context).size.width * 0.02,
                               20.0,
-                              MediaQuery.of(context).size.width * 0.025,
+                              MediaQuery.of(context).size.width * 0.02,
                               8.0),
                           child: Text(
                             'CVV',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.42,
+                          width: MediaQuery.of(context).size.width * 0.4,
                           child: TextFormField(
                             autofocus: false,
                             controller: cvvEditingController,
@@ -286,54 +285,57 @@ class _AddCreditCardState extends State<AddCreditCard> {
                               });
                             },
                             onTap: () {
-                              setState(() {});
+                              setState(() {
+                                isCvvFocused = true;
+                              });
                             },
-                            cursorColor: const Color(0XFF2A2B2E),
+                            cursorColor: Theme.of(context).highlightColor,
                             textInputAction: TextInputAction.next,
                             textAlignVertical: TextAlignVertical.center,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Color(0XFF2A2B2E),
-                            ),
+                            style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: Colors.transparent,
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               hintText: 'CVV',
-                              hintStyle: const TextStyle(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Color(0XFF595550),
-                              ),
+                              hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall,
                               floatingLabelAlignment:
                                   FloatingLabelAlignment.start,
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 BootstrapIcons.credit_card,
-                                size: 22,
+                                size: 20,
                               ),
 
                               prefixIconColor: const Color(0XFF8ABA41),
-                              //suffixIcon: Icon(),
                               contentPadding: const EdgeInsets.fromLTRB(
-                                  10.0, 0.0, 10.0, 0.0),
+                                  10.0, 8.0, 10.0, 10.0),
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0XFFFFFFFF)),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0XFFFFFFFF)),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                              ),
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(12.0)),
+                                            ),
                             ),
                           ),
                         ),
@@ -351,11 +353,11 @@ class _AddCreditCardState extends State<AddCreditCard> {
                               8.0),
                           child: Text(
                             'Expiration Date',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.42,
+                          width: MediaQuery.of(context).size.width * 0.4,
                           child: TextFormField(
                             autofocus: false,
                             controller: expirationDateEditingController,
@@ -383,54 +385,56 @@ class _AddCreditCardState extends State<AddCreditCard> {
                             onTap: () {
                               setState(() {
                                 expirationDateEditingController.text;
+                                isCvvFocused = false;
                               });
                             },
-                            cursorColor: const Color(0XFF2A2B2E),
+                            cursorColor: Theme.of(context).highlightColor,
                             textInputAction: TextInputAction.next,
                             textAlignVertical: TextAlignVertical.center,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Color(0XFF2A2B2E),
-                            ),
+                            style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
                             decoration: InputDecoration(
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: Colors.transparent,
 
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               hintText: 'MM/YY',
-                              hintStyle: const TextStyle(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Color(0XFF595550),
-                              ),
+                              hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall,
                               floatingLabelAlignment:
                                   FloatingLabelAlignment.start,
                               prefixIcon: const Icon(
                                 BootstrapIcons.calendar_event,
-                                size: 22,
+                                size: 20,
                               ),
                               prefixIconColor: const Color(0XFF8ABA41),
-                              //suffixIcon: Icon(),
                               contentPadding: const EdgeInsets.fromLTRB(
-                                  10.0, 0.0, 10.0, 0.0),
+                                  10.0, 8.0, 10.0, 10.0),
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0XFFFFFFFF)),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Color(0XFFFFFFFF)),
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12.0)),
-                              ),
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Theme.of(context)
+                                                      .hoverColor),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(12.0)),
+                                            ),
                             ),
                           ),
                         ),
@@ -458,20 +462,26 @@ class _AddCreditCardState extends State<AddCreditCard> {
                   highlightColor: const Color.fromARGB(
                       255, 116, 155, 58), //Color(0XFF749B3A)
                   onPressed: () {
-                    setState(() {
-                      Get.back();
-                    });
+                      setState(() {
+                        isLoading = true;
+                      });
+                      Future.delayed(const Duration(seconds: 1), () {
+                        setState(() {
+                          isLoading = false;
+                          Get.back();
+                        });
+                      });
+                  
                   },
-                  child: const Text(
-                    'Add Card',
-                    style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color(0XFFFFFDFA),
-                      letterSpacing: 1.5,
-                    ),
-                  ),
+                  child: isLoading
+                        ? const CircularProgressIndicator(
+                            color: Color(0XFFFFFDFA),
+                            strokeWidth: 2.0,
+                          )
+                        : Text(
+                          getStorage.read('changeCreditCard') == 'true' ? 'Change Card' : 'Add Card',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
                 ),
               ),
             ),

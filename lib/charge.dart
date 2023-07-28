@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 
 class Charge extends StatefulWidget {
@@ -53,6 +54,25 @@ class _ChargeState extends State<Charge> {
       body: SafeArea(
         child: Column(
           children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  child: Lottie.asset(
+                    Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ?
+                    'assets/images/testejson1.json' : 'assets/images/testejson.json',
+                    width: 360,
+                    height: 360,
+                  ),
+                ),
+                Text(
+                  '200 km',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                
+              ],
+            ),
+            /*
             Container(
               margin: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 5.0),
               alignment: Alignment.topCenter,
@@ -180,6 +200,7 @@ class _ChargeState extends State<Charge> {
                 onPressed: () {},
               ),
             ),
+            */
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
