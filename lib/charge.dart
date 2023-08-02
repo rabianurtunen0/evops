@@ -8,7 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-
 class Charge extends StatefulWidget {
   const Charge({Key? key}) : super(key: key);
 
@@ -47,271 +46,243 @@ class _ChargeState extends State<Charge> {
     0.184, // 0-4%
   ];
 
+  List devicesList = [
+    ['assets/images/device.svg', 'Device1', const Color(0XFFBEF264)],
+    ['assets/images/device.svg', 'Device2', const Color(0XFF84CC16)],
+    ['assets/images/device.svg', 'Device3', const Color(0XFF4D7C0F)],
+    ['assets/images/device.svg', 'Device4', const Color(0XFF365314)],
+  ];
+
+  int radioValue = 0;
+
+  void getRadioValue() {
+    setState(() {
+      radioValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  child: Lottie.asset(
-                    Theme.of(context).backgroundColor == Color(0XFFFFFFFF) ?
-                    'assets/images/testejson1.json' : 'assets/images/testejson.json',
-                    width: 360,
-                    height: 360,
-                  ),
-                ),
-                Text(
-                  '200 km',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                
-              ],
-            ),
-            /*
-            Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 5.0),
-              alignment: Alignment.topCenter,
+            SizedBox(
+              height: 300,
               child: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(150.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).primaryColorDark,
-                          blurRadius: 10.0,
-                          spreadRadius: 2.0,
-                          offset: const Offset(1.0, 1.0),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).backgroundColor,
-                          border: Border.all(
-                            color: Theme.of(context).primaryColorLight,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(150.0),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: Theme.of(context).backgroundColor,
-                          radius: 120.0,
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 5.0),
+                        child: Lottie.asset(
+                          Theme.of(context).backgroundColor ==
+                                  const Color(0XFFFFFFFF)
+                              ? 'assets/images/charging1.json'
+                              : 'assets/images/charging.json',
                         ),
                       ),
-                    ),
+                      Text(
+                        '200 km',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(36.5),
-                    child: Container(
-                      width: 180,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            blurRadius: 20.0,
-                            spreadRadius: 1.0,
-                            offset: const Offset(1.0, 1.0),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(200.0),
-                      ),
-                      child: Container(
-                        alignment: Alignment.topCenter,
-                        child: Stack(
-                          children: [
-                            const CircleAvatar(
-                              backgroundColor: Color(0XFF8ABA41),
-                              radius: 92.0,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 180,
-                                height: 180,
-                                padding: const EdgeInsets.all(3.0),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).backgroundColor,
-                                  borderRadius: BorderRadius.circular(170.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '200',
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 32.0,
-                                        color:
-                                            Theme.of(context).backgroundColor ==
-                                                    const Color(0XFF282A37)
-                                                ? Colors.white
-                                                : const Color(0XFF8ABA41),
-                                      ),
-                                    ),
-                                    Text(
-                                      'km',
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20.0,
-                                        color:
-                                            Theme.of(context).backgroundColor ==
-                                                    const Color(0XFF282A37)
-                                                ? Colors.white
-                                                : const Color(0XFF8ABA41),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                  const Text(
+                    'Total distance available to go',
+                    style: TextStyle(
+                      color: Color(0XFF8ABA41),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
                     ),
                   ),
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 25.0),
-              child: TextButton(
-                child: const Text(
-                  'Total Charge',
-                  style: TextStyle(
-                    color: Color(0XFF8ABA41),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                  ),
-                ),
-                onPressed: () {},
-              ),
-            ),
-            */
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: MediaQuery.of(context).size.height * 0.36,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(12.0),
-                        top: Radius.circular(12.0),
+              margin: const EdgeInsets.only(top: 60.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.32,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(12.0),
+                          top: Radius.circular(12.0),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin:
-                              const EdgeInsets.fromLTRB(15.0, 20.0, 0.0, 0.0),
-                          child: Text(
-                            'Batttery energy',
-                            style: TextStyle(
-                              color: Theme.of(context).highlightColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin:
+                                const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
+                            child: Text(
+                              'Batttery energy',
+                              style: TextStyle(
+                                color: Theme.of(context).highlightColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                            margin:
-                                const EdgeInsets.fromLTRB(20.0, 30.0, 0.0, 0.0),
-                            padding: EdgeInsets.fromLTRB(
-                                4.0,
-                                MediaQuery.of(context).size.height.toDouble() *
-                                    batteryHeightList[9],
-                                4.0,
-                                4.0),
-                            width: MediaQuery.of(context).size.width * 0.22,
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              border: Border.all(
-                                width: 1.0,
-                                color: Theme.of(context).highlightColor,
-                              ),
-                              borderRadius: BorderRadius.circular(12.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0XFF8ABA41),
-                                  blurRadius: 2.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(0.0, 0.0),
-                                ),
-                              ],
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: 20,
-                              height: 20,
+                          Container(
+                              margin: const EdgeInsets.fromLTRB(
+                                  20.0, 0.0, 0.0, 0.0),
+                              padding: EdgeInsets.fromLTRB(
+                                  4.0,
+                                  MediaQuery.of(context)
+                                          .size
+                                          .height
+                                          .toDouble() *
+                                      batteryHeightList[9],
+                                  4.0,
+                                  4.0),
+                              width: MediaQuery.of(context).size.width * 0.22,
+                              height: MediaQuery.of(context).size.height * 0.2,
                               decoration: BoxDecoration(
-                                color: const Color(0XFF8ABA41),
-                                borderRadius: BorderRadius.circular(9.0),
+                                color: Theme.of(context).cardColor,
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors.white,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
                                 boxShadow: const [
                                   BoxShadow(
-                                    color: Colors.white,
-                                    blurRadius: 1.0,
-                                    spreadRadius: 0.2,
+                                    color: Color(0XFF8ABA41),
+                                    blurRadius: 2.0,
+                                    spreadRadius: 1.0,
                                     offset: Offset(0.0, 0.0),
                                   ),
                                 ],
                               ),
-                              child: Text('60%',
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFF8ABA41),
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.2,
+                                      offset: Offset(0.0, 0.0),
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '60%',
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headlineMedium),
-                            )),
-                        Container(
-                          margin:
-                              const EdgeInsets.fromLTRB(15.0, 20.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Saving mode',
-                                style: TextStyle(
-                                  color: Theme.of(context).highlightColor,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
+                                      .labelMedium,
                                 ),
                               ),
-                              Switch(
-                                value: savingMode,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    savingMode = value;
-                                  });
-                                },
-                                activeColor: const Color(0XFF8ABA41),
-                              )
-                            ],
+                            ),
+                          Container(
+                            margin:
+                                const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Saving mode',
+                                  style: TextStyle(
+                                    color: Theme.of(context).highlightColor,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Switch(
+                                  value: savingMode,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      savingMode = value;
+                                    });
+                                  },
+                                  activeColor: const Color(0XFF8ABA41),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )),
-                Column(
-                  children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        ],
+                      )),
+                  Column(
+                    children: [
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          margin: EdgeInsets.only(
+                              bottom:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(12.0),
+                              top: Radius.circular(12.0),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    15.0, 15.0, 0.0, 0.0),
+                                child: Text(
+                                  'Total distance',
+                                  style: TextStyle(
+                                    color: Theme.of(context).highlightColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        15.0, 20.0, 0.0, 20.0),
+                                    child: SvgPicture.asset(
+                                      'assets/images/distance.svg',
+                                      width: 32.0,
+                                      height: 32.0,
+                                      color: Theme.of(context).highlightColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.fromLTRB(
+                                        15.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      '${myFormat.format(totalDistanceNumber)} km',
+                                      style: const TextStyle(
+                                        color: Color(0XFF8ABA41),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )),
+                      Container(
                         margin: EdgeInsets.only(
                             bottom: MediaQuery.of(context).size.height * 0.02),
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.05,
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: const BorderRadius.vertical(
@@ -319,151 +290,277 @@ class _ChargeState extends State<Charge> {
                             top: Radius.circular(12.0),
                           ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  15.0, 10.0, 0.0, 0.0),
-                              child: Text(
-                                'Total distance',
-                                style: TextStyle(
-                                  color: Theme.of(context).highlightColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
+                        child: Material(
+                          elevation: 0,
+                          borderRadius: BorderRadius.circular(12.0),
+                          color: Theme.of(context).cardColor,
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width * 0.9,
+                            height: 48,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onPressed: () {
+                              setState(() {
+                                Get.to(const ChargeStatistics());
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Statistics',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Theme.of(context).highlightColor,
+                                    letterSpacing: 1.5,
+                                  ),
                                 ),
+                                Icon(
+                                  BootstrapIcons.arrow_right,
+                                  size: 20,
+                                  color: Theme.of(context).highlightColor,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).size.height * 0.05),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(12.0),
+                                top: Radius.circular(12.0),
                               ),
                             ),
-                            Row(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
                                   margin: const EdgeInsets.fromLTRB(
-                                      15.0, 20.0, 0.0, 20.0),
-                                  child: SvgPicture.asset(
-                                    'assets/images/distance.svg',
-                                    width: 32.0,
-                                    height: 32.0,
+                                      15.0, 15.0, 15.0, 0.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Time',
+                                        style: TextStyle(
                                     color: Theme.of(context).highlightColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                      ),
+                                      Text(
+                                        '1h 27m',
+                                        style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                      15.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    
-                                    '${myFormat.format(totalDistanceNumber)} km',
-                                    style: const TextStyle(
-                                      color: Color(0XFF8ABA41),
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
+                                Material(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  child: MaterialButton(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          devicesList[radioValue][1],
+                                          style: TextStyle(
+                                    color: Theme.of(context).highlightColor,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                        ),
+                                        Icon(
+                                          BootstrapIcons.arrow_right,
+                                          size: 20.0,
+                                          color:
+                                              Theme.of(context).highlightColor,
+                                        )
+                                      ],
                                     ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _chooseDeviceModal();
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                        )),
-                    Container(
-                      margin: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).size.height * 0.02),
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(12.0),
-                          top: Radius.circular(12.0),
-                        ),
-                      ),
-                      child: Material(
-                        elevation: 0,
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: Theme.of(context).cardColor,
-                        child: MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width * 0.9,
-                          height: 48,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
                           ),
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onPressed: () {
-                            setState(() {
-                              Get.to(const ChargeStatistics());
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Statistics',
-                                style: TextStyle(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: Theme.of(context).highlightColor,
-                                  letterSpacing: 1.5,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(12.0),
+                                top: Radius.circular(12.0),
+                              ),
+                            ),
+                            child: Material(
+                              elevation: 0,
+                              borderRadius: BorderRadius.circular(12.0),
+                              color: const Color(0XFF8ABA41),
+                              child: MaterialButton(
+                                minWidth:
+                                    MediaQuery.of(context).size.width * 0.9,
+                                height: 48,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                splashColor: const Color(0XFF8ABA41),
+                                highlightColor: const Color.fromARGB(
+                                    255, 116, 155, 58), //Color(0XFF749B3A)
+                                onPressed: () {
+                                  setState(() {
+                                    Get.to(const Charging(initialData: '1234 **** **** 5678',));
+                                  });
+                                },
+                                child: const Text(
+                                  'Start Charging',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Color(0XFFFFFDFA),
+                                    letterSpacing: 1.5,
+                                  ),
                                 ),
                               ),
-                              Icon(
-                                BootstrapIcons.arrow_right,
-                                size: 20,
-                                color: Theme.of(context).highlightColor,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(12.0),
-                          top: Radius.circular(12.0),
-                        ),
-                      ),
-                      child: Material(
-                        elevation: 0,
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: const Color(0XFF8ABA41),
-                        child: MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width * 0.9,
-                          height: 48,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          splashColor: const Color(0XFF8ABA41),
-                          highlightColor: const Color.fromARGB(
-                              255, 116, 155, 58), //Color(0XFF749B3A)
-                          onPressed: () {
-                            setState(() {
-                              Get.to(const Charging());
-                            });
-                          },
-                          child: const Text(
-                            'Start charging',
-                            style: TextStyle(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Color(0XFFFFFDFA),
-                              letterSpacing: 1.5,
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _chooseDeviceModal() {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+            height: 250.0,
+            padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 22.0),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16.0),
+                bottom: Radius.zero,
+              ),
+              color: Theme.of(context).backgroundColor,
+            ),
+            child: StatefulBuilder(builder: (context, setState) {
+              return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: devicesList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 40.0,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 4.0,
+                      horizontal: 0.0,
+                    ),
+                    child: Material(
+                      elevation: 0,
+                      color: Theme.of(context).backgroundColor,
+                      child: MaterialButton(
+                        minWidth: MediaQuery.of(context).size.width * 0.7,
+                        height: 40,
+                        splashColor: const Color(0XFFEAEAEC),
+                        highlightColor: const Color(0XFFEAEAEC),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  BootstrapIcons.fuel_pump,
+                                  color: devicesList[index][2],
+                                  size: 18.0,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 8.0),
+                                  child: Text(devicesList[index][1],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
+                                ),
+                              ],
+                            ),
+                            Transform.scale(
+                              scale: 0.9,
+                              child: Radio(
+                                value: index,
+                                groupValue: radioValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    radioValue = value!;
+                                    print(value);
+                                    getRadioValue();
+                                  });
+                                },
+                                fillColor: MaterialStateColor.resolveWith(
+                                  (Set<MaterialState> states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return const Color(0XFF8ABA41);
+                                    }
+                                    return Theme.of(context).highlightColor;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            radioValue = index;
+                            getRadioValue();
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            }));
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(24.0),
+          bottom: Radius.zero,
         ),
       ),
     );

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class Map extends StatefulWidget {
@@ -9,6 +12,19 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
+
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const LatLng sourceLocation = LatLng(37.42796133580664, -122.085749655962);
+   
+
+  static const CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,32 +75,17 @@ class _MapState extends State<Map> {
         ),
       ),*/
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Container(
-        margin: const EdgeInsets.only(top: 6.0),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/map.png'),
-              fit: BoxFit.cover),
-        ),
-        /*child: Stack(
-          children: [
-            Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 30.0),
-                width: MediaQuery.of(context).size.width,
-                height: 444,
-                decoration: const BoxDecoration(
-                  color: Color(0XFFFAFAFA),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),*/
+      body: GoogleMap(
+        mapType: MapType.hybrid,
+        initialCameraPosition: CameraPosition(
+          target: sourceLocation,
+          zoom: 14.5,
+        )
+        
       ),
+      
+  
     );
   }
+ 
 }
