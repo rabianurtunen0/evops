@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -12,24 +10,34 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
+ 
+  
+  late GoogleMapController mapController;
 
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  bool mapToggle = false;
 
-  static const LatLng sourceLocation = LatLng(37.42796133580664, -122.085749655962);
-   
+  var currentLocation;
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  @override
+  void initState() {
+    super.initState();
+    Geolocator.getCurrentPosition().then((current_location) {
+      setState(() {
+        currentLocation = current_location;
+        mapToggle = true;
+      });
+    });
+    
+  }
 
+  
+
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*extendBodyBehindAppBar: true,
+        /*extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -74,18 +82,34 @@ class _MapState extends State<Map> {
           ),
         ),
       ),*/
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: CameraPosition(
-          target: sourceLocation,
-          zoom: 14.5,
-        )
-        
-      ),
-      
-  
-    );
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: GoogleMap(
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                mapType: MapType.normal,
+                
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(37.903784, 32.494618),
+                  //target: LatLng(currentLocation.latitude, currentLocation.longitude),
+                  zoom: 18.0,
+                ),
+                onMapCreated: onMapCreated,
+               
+              
+              ),
+           
+            );
   }
- 
+
+
+  void onMapCreated(controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+
+
+
 }
