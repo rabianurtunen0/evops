@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -10,34 +13,113 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
- 
-  
+  Completer<GoogleMapController> _controller = Completer();
+
+  static const LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
+
+  MapType _currentMapType = MapType.normal;
+
+  void _onMapTypeButtonPressed() {
+  setState(() {
+    _currentMapType = _currentMapType == MapType.normal
+        ? MapType.satellite
+        : MapType.normal;
+  });
+}
+
+
+  /*
+  late Completer<GoogleMapController> _controller = Completer();
+
+  LocationData? currentLocation;
+  void getCurrentLocation() async {
+    Location location = Location();
+    location.getLocation().then(
+      (location) {
+        currentLocation = location;
+      },
+    );
+    GoogleMapController googleMapController = await _controller.future;
+    location.onLocationChanged.listen(
+      (newLoc) {
+        currentLocation = newLoc;
+        googleMapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              zoom: 13.5,
+              target: LatLng(
+                newLoc.latitude!,
+                newLoc.longitude!,
+              ),
+            ),
+          ),
+        );
+        setState(() {});
+      },
+    );
+  }
+
+  //Completer<GoogleMapController> _controller = Completer();
+
+  double latitude = 37.903917;
+  double longitude = 32.494688;
+  */
+/*
+
   late GoogleMapController mapController;
 
   bool mapToggle = false;
 
   var currentLocation;
 
-  @override
-  void initState() {
-    super.initState();
-    Geolocator.getCurrentPosition().then((current_location) {
-      setState(() {
-        currentLocation = current_location;
-        mapToggle = true;
-      });
-    });
-    
+
+  Future<Position> getCurrentLocation () async { 
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if(!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    } 
+    LocationPermission permission = await Geolocator.checkPermission();
+    if(permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if(permission == LocationPermission.denied) {
+        return Future.error('Location premissions are denied.');
+      }
+    }
+
+    if(permission == LocationPermission.deniedForever) {
+      return Future.error('Location premission are permanently denied, we cannot premission');
+    }
+    return await Geolocator.getCurrentPosition();
   }
 
-  
 
- 
+  LatLng getLatLng () {
+    getCurrentLocation().then((value) {
+      
+        print(value);
+        latitude = value.latitude;
+        longitude = value.latitude;
+  
+    });
+    return LatLng(latitude, longitude);
+  }
+
+ */
+
+  @override
+  void initState() {
+    //getCurrentLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /*extendBodyBehindAppBar: true,
+      /*extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -82,34 +164,17 @@ class _MapState extends State<Map> {
           ),
         ),
       ),*/
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: GoogleMap(
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
-                mapType: MapType.normal,
-                
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(37.903784, 32.494618),
-                  //target: LatLng(currentLocation.latitude, currentLocation.longitude),
-                  zoom: 18.0,
-                ),
-                onMapCreated: onMapCreated,
-               
-              
-              ),
-           
-            );
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 13.0,
+          ),
+          mapType: _currentMapType,
+        ),
+    );
   }
 
-
-  void onMapCreated(controller) {
-    setState(() {
-      mapController = controller;
-    });
-  }
-
-
-
-
+  
 }
