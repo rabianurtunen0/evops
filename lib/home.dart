@@ -43,8 +43,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     const Profile(),
   ];
 
-  
-
   @override
   void initState() {
     super.initState();
@@ -75,22 +73,58 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             },
             icon: SvgPicture.asset(
               'assets/images/menu.svg',
-              color: Theme.of(context).iconTheme.color,
+              color: selectedIndex == 3
+                  ? const Color(0XFF282A37)
+                  : Theme.of(context).iconTheme.color,
             ),
             splashColor: Colors.transparent,
             splashRadius: 1.0,
           );
         }),
-        title: const Text(
-          '',
-          style: TextStyle(
-            fontFamily: 'Titan One',
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w400,
-            fontSize: 20,
-            color: Color(0XFF2A2B2E),
-          ),
-        ),
+        title: selectedIndex == 3
+            ? Container(
+                margin: const EdgeInsets.only(top: 9.0),
+                width: MediaQuery.of(context).size.width * 0.78,
+                height: 42,
+                child: TextFormField(
+                  cursorColor: const Color(0XFF282A37),
+                  textInputAction: TextInputAction.next,
+                  textAlignVertical: TextAlignVertical.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.0,
+                    color: Color(0XFF131622),
+                  ),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Search location',
+                    hintStyle: Theme.of(context).textTheme.displaySmall,
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          BootstrapIcons.search,
+                          size: 16.0,
+                        )),
+                    prefixIconColor: const Color(0XFF282A37),
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
       ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -220,7 +254,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 Container(
                   alignment: Alignment.topLeft,
                   padding: const EdgeInsets.fromLTRB(24.0, 96.0, 0.0, 36.0),
-                  
                   child: SvgPicture.asset(
                     Theme.of(context).backgroundColor == const Color(0XFF282A37)
                         ? 'assets/images/evops_dark.svg'
@@ -577,66 +610,65 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 18.0),
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 0.2,
-                        color: Theme.of(context).disabledColor,
-                      ))
-                  ),
+                      border: Border(
+                          bottom: BorderSide(
+                    width: 0.2,
+                    color: Theme.of(context).disabledColor,
+                  ))),
                   child: Container(
-                      alignment: Alignment.center,
-                      child: CupertinoSlidingSegmentedControl<Sky>(
-                        backgroundColor: Theme.of(context).cardColor,
-                        thumbColor: Theme.of(context).backgroundColor ==
-                                const Color(0XFFFFFFFF)
-                            ? Colors.white
-                            : Color(0XFF131622),
-                        groupValue: Theme.of(context).backgroundColor ==
-                                const Color(0XFFFFFFFF)
-                            ? Sky.sun
-                            : Sky.moon,
-                        onValueChanged: (Sky? value) {
-                          if (value != null) {
-                            setState(() {
-                              ThemeService().changeThemeMode();
-                            });
-                          }
-                        },
-                        children: <Sky, Widget>{
-                          Sky.sun: Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Icon(
-                                BootstrapIcons.brightness_high_fill,
-                                size:18.0,
-                                color: Theme.of(context).backgroundColor ==
-                                        const Color(0XFFFFFFFF)
-                                    ? Color(0XFF131622)
-                                    : Colors.transparent,
-                              ),
+                    alignment: Alignment.center,
+                    child: CupertinoSlidingSegmentedControl<Sky>(
+                      backgroundColor: Theme.of(context).cardColor,
+                      thumbColor: Theme.of(context).backgroundColor ==
+                              const Color(0XFFFFFFFF)
+                          ? Colors.white
+                          : Color(0XFF131622),
+                      groupValue: Theme.of(context).backgroundColor ==
+                              const Color(0XFFFFFFFF)
+                          ? Sky.sun
+                          : Sky.moon,
+                      onValueChanged: (Sky? value) {
+                        if (value != null) {
+                          setState(() {
+                            ThemeService().changeThemeMode();
+                          });
+                        }
+                      },
+                      children: <Sky, Widget>{
+                        Sky.sun: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Icon(
+                              BootstrapIcons.brightness_high_fill,
+                              size: 18.0,
+                              color: Theme.of(context).backgroundColor ==
+                                      const Color(0XFFFFFFFF)
+                                  ? Color(0XFF131622)
+                                  : Colors.transparent,
                             ),
                           ),
-                          Sky.moon: Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Icon(
-                                BootstrapIcons.moon_stars,
-                                size: 15.0,
-                                color: Theme.of(context).backgroundColor ==
-                                        const Color(0XFFFFFFFF)
-                                    ? Colors.transparent
-                                    : Colors.white,
-                              ),
+                        ),
+                        Sky.moon: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Icon(
+                              BootstrapIcons.moon_stars,
+                              size: 15.0,
+                              color: Theme.of(context).backgroundColor ==
+                                      const Color(0XFFFFFFFF)
+                                  ? Colors.transparent
+                                  : Colors.white,
                             ),
                           ),
-                        },
-                      ),
-                              
-                    
+                        ),
+                      },
+                    ),
                   ),
-                ),        
+                ),
                 Container(
                   height: 40,
                   margin: const EdgeInsets.fromLTRB(30.0, 18.0, 30.0, 36.0),

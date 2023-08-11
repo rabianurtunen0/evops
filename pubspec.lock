@@ -150,6 +150,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"
+  flutter_polyline_points:
+    dependency: "direct main"
+    description:
+      name: flutter_polyline_points
+      sha256: "02699e69142f51a248d784b6e3eec524194467fca5f7c4da19699ce2368b6980"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_snake_navigationbar:
     dependency: "direct main"
     description:
@@ -265,7 +273,7 @@ packages:
     source: hosted
     version: "2.4.15"
   google_maps_flutter_ios:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_maps_flutter_ios
       sha256: a9462a433bf3ebe60aadcf4906d2d6341a270d69d3e0fcaa8eb2b64699fcfb4f
@@ -296,6 +304,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.4"
+  http:
+    dependency: transitive
+    description:
+      name: http
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.6"
   http_parser:
     dependency: transitive
     description:
@@ -336,30 +352,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  location:
-    dependency: "direct main"
-    description:
-      name: location
-      sha256: "81eef746c121de69b9936ccad350707b2579a76f9d1a162e47db1fb7d2c9db9f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
-  location_platform_interface:
-    dependency: transitive
-    description:
-      name: location_platform_interface
-      sha256: "069476ccddce7fa162d37522cb823fb0df1c43176b38fba7ee2d7712e233f8ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
-  location_web:
-    dependency: transitive
-    description:
-      name: location_web
-      sha256: "3249dfd4a50732440a9d8b3791a05e33facde2d1902b1e8dbd222b30a8d0f7b4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.0"
   lottie:
     dependency: "direct main"
     description:
