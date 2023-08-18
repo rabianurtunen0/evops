@@ -4,7 +4,6 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/assistantAI.dart';
 import 'package:evops/themeService.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:evops/calendar.dart';
 import 'package:evops/charge.dart';
@@ -12,11 +11,6 @@ import 'package:evops/devices.dart';
 import 'package:evops/profile.dart';
 import 'package:evops/map.dart';
 import 'package:get/get.dart';
-//import 'package:flutter_animated_icons/flutter_animated_icons.dart';
-//import 'package:flutter_animated_icons/icons8.dart';
-//import 'package:flutter_animated_icons/lottiefiles.dart';
-//import 'package:flutter_animated_icons/useanimations.dart';
-//import 'package:lottie/lottie.dart';
 
 enum Sky { sun, moon }
 
@@ -34,18 +28,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   late final _pageController = PageController(initialPage: selectedIndex);
   int maxCount = 5;
   late AnimationController themeController;
-
-  final List<Widget> bottomBarPages = [
-    const Devices(),
-    const Charge(),
-    const Calendar(),
-    const Map(),
-    const Profile(),
-  ];
+  List<Widget> bottomBarPages = [];
 
   @override
   void initState() {
     super.initState();
+    bottomBarPages = [
+      const Devices(),
+      const Charge(),
+      const Calendar(),
+      Map(scaffoldKey: _scaffoldKey),
+      const Profile(),
+    ];
     themeController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
   }
@@ -61,71 +55,32 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        toolbarHeight: 50,
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        elevation: 0,
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: SvgPicture.asset(
-              'assets/images/menu.svg',
-              color: selectedIndex == 3
-                  ? const Color(0XFF282A37)
-                  : Theme.of(context).iconTheme.color,
+      appBar: selectedIndex != 3
+          ? AppBar(
+              toolbarHeight: 50,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 0,
+              leading: Builder(builder: (BuildContext context) {
+                return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/images/menu.svg',
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  splashColor: Colors.transparent,
+                  splashRadius: 1.0,
+                );
+              }),
+            )
+          : AppBar(
+              toolbarHeight: 0.0,
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 0,
             ),
-            splashColor: Colors.transparent,
-            splashRadius: 1.0,
-          );
-        }),
-        title: selectedIndex == 3
-            ? Container(
-                margin: const EdgeInsets.only(top: 9.0),
-                width: MediaQuery.of(context).size.width * 0.78,
-                height: 42,
-                child: TextFormField(
-                  cursorColor: const Color(0XFF282A37),
-                  textInputAction: TextInputAction.next,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                    color: Color(0XFF131622),
-                  ),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search location',
-                    hintStyle: Theme.of(context).textTheme.displaySmall,
-                    prefixIcon: const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Icon(
-                          BootstrapIcons.search,
-                          size: 16.0,
-                        )),
-                    prefixIconColor: const Color(0XFF282A37),
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
-      ),
       drawer: Drawer(
         backgroundColor: Theme.of(context).backgroundColor,
         width: MediaQuery.of(context).size.width * 0.6,

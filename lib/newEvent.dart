@@ -141,7 +141,7 @@ class _NewEventState extends State<NewEvent> {
           alignment: Alignment.bottomLeft,
           child: Text(
             'Create Charging Event',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
         actions: [
@@ -222,31 +222,21 @@ class _NewEventState extends State<NewEvent> {
                                   child: TextFormField(
                                     cursorColor: const Color(0XFF8ABA41),
                                     textInputAction: TextInputAction.next,
-                                    style: TextStyle(
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.5,
-                                      color: Theme.of(context).highlightColor,
-                                    ),
+                                    style: Theme.of(context).textTheme.titleSmall,
                                     decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.fromLTRB(
                                           2.0, 0.0, 2.0, 0.0),
                                       hintText: 'Title',
-                                      hintStyle: TextStyle(
-                                        color: Theme.of(context).disabledColor,
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.5,
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      hintStyle: Theme.of(context).textTheme.displaySmall,
+                                      enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder:const  UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
-                                      border: UnderlineInputBorder(
+                                      border: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
@@ -283,31 +273,21 @@ class _NewEventState extends State<NewEvent> {
                                   child: TextFormField(
                                     cursorColor: const Color(0XFF8ABA41),
                                     textInputAction: TextInputAction.next,
-                                    style: TextStyle(
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.5,
-                                      color: Theme.of(context).highlightColor,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      contentPadding: EdgeInsets.fromLTRB(
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.fromLTRB(
                                           2.0, 0.0, 2.0, 0.0),
                                       hintText: 'Location',
-                                      hintStyle: TextStyle(
-                                        color: Color(0XFFA1A1AA),
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.5,
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
+                                      hintStyle: Theme.of(context).textTheme.displaySmall,
+                                      enabledBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
-                                      border: UnderlineInputBorder(
+                                      border: const UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.transparent),
                                       ),
@@ -346,12 +326,7 @@ class _NewEventState extends State<NewEvent> {
                                         2.0, 12.0, 0.0, 0.0),
                                     child: Text(
                                       date,
-                                      style: TextStyle(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.5,
-                                        color: Theme.of(context).highlightColor,
-                                      ),
+                                      style: Theme.of(context).textTheme.titleSmall,
                                     ),
                                   ),
                                 ),
@@ -387,13 +362,7 @@ class _NewEventState extends State<NewEvent> {
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
                                           'Start time',
-                                          style: TextStyle(
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.5,
-                                            color: Theme.of(context)
-                                                .highlightColor,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                       ),
                                       Container(
@@ -416,10 +385,7 @@ class _NewEventState extends State<NewEvent> {
                                                     DateFormat.jm()
                                                         .format(time1)
                                                         .toString(),
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .highlightColor,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.titleSmall,
                                                   ),
                                                   Container(
                                                     margin:
@@ -567,13 +533,7 @@ class _NewEventState extends State<NewEvent> {
                                             const EdgeInsets.only(left: 4.0),
                                         child: Text(
                                           'End time',
-                                          style: TextStyle(
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.5,
-                                            color: Theme.of(context)
-                                                .highlightColor,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                       ),
                                       Container(
@@ -596,10 +556,7 @@ class _NewEventState extends State<NewEvent> {
                                                     DateFormat.jm()
                                                         .format(time2)
                                                         .toString(),
-                                                    style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .highlightColor,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.titleSmall,
                                                   ),
                                                   Container(
                                                     margin:
@@ -766,13 +723,7 @@ class _NewEventState extends State<NewEvent> {
                                     children: [
                                       Text(
                                         'Repeat',
-                                        style: TextStyle(
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color:
-                                              Theme.of(context).highlightColor,
-                                        ),
+                                        style: Theme.of(context).textTheme.titleSmall,
                                       ),
                                       Container(
                                         alignment: Alignment.center,
@@ -791,13 +742,7 @@ class _NewEventState extends State<NewEvent> {
                                               children: [
                                                 Text(
                                                   repeatList[repeatValue],
-                                                  style: TextStyle(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14,
-                                                    color: Theme.of(context)
-                                                        .highlightColor,
-                                                  ),
+                                                  style: Theme.of(context).textTheme.titleSmall,
                                                 ),
                                                 Container(
                                                   margin: const EdgeInsets.only(
@@ -882,10 +827,7 @@ class _NewEventState extends State<NewEvent> {
                                           children: [
                                             Text(
                                               addReminderList[index],
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .highlightColor,
-                                              ),
+                                              style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                             IconButton(
                                               icon: Icon(
@@ -971,10 +913,9 @@ class _NewEventState extends State<NewEvent> {
                                             backgroundColor: Colors.transparent,
                                             foregroundColor: Colors.transparent,
                                           ),
-                                          child: const Text(
+                                          child: Text(
                                             'ADD REMINDER',
-                                            style: TextStyle(
-                                                color: Color(0XFF8ABA41)),
+                                            style: Theme.of(context).textTheme.bodyLarge,
                                           ),
                                           onPressed: () {
                                             setState(() {
@@ -1106,13 +1047,7 @@ class _NewEventState extends State<NewEvent> {
                                             const EdgeInsets.only(left: 2.0),
                                         child: Text(
                                           'Device',
-                                          style: TextStyle(
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            color: Theme.of(context)
-                                                .highlightColor,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                       ),
                                       Container(
@@ -1138,13 +1073,7 @@ class _NewEventState extends State<NewEvent> {
                                                 ),
                                                 Text(
                                                   devicesList[radioValue][1],
-                                                  style: TextStyle(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14,
-                                                    color: Theme.of(context)
-                                                        .highlightColor,
-                                                  ),
+                                                  style: Theme.of(context).textTheme.titleSmall,
                                                 ),
                                               ],
                                             ),
@@ -1396,7 +1325,7 @@ class _NewEventState extends State<NewEvent> {
                                                   numberList[index].toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .titleMedium),
+                                                      .titleSmall),
                                             );
                                           }),
                                         ),

@@ -1604,12 +1604,12 @@ class _ProfileState extends State<Profile> {
     Get.bottomSheet(Container(
       width: MediaQuery.of(context).size.width,
       height: 240,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.vertical(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(
           bottom: Radius.zero,
           top: Radius.circular(32.0),
         ),
-        color: Color.fromARGB(255, 227, 230, 223),
+        color: Theme.of(context).backgroundColor
       ),
       child: Column(
         children: [
@@ -1618,36 +1618,37 @@ class _ProfileState extends State<Profile> {
             padding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 12.0),
             child: SvgPicture.asset(
               'assets/images/line.svg',
+              color: Theme.of(context).disabledColor,
             ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 15.0),
             child: MaterialButton(
               height: 48.0,
-              highlightColor: const Color.fromARGB(255, 206, 210, 201),
-              splashColor: const Color.fromARGB(255, 206, 210, 201),
+              highlightColor: Theme.of(context).cardColor,
+              splashColor: Theme.of(context).cardColor,
               onPressed: () {},
               child: Row(
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-                    child: const Icon(
+                    child: Icon(
                       BootstrapIcons.camera,
                       size: 18,
-                      color: Color(0XFF2A2B2E),
+                      color: Theme.of(context).highlightColor,
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                    child: const Text(
+                    child: Text(
                       'Camera',
                       style: TextStyle(
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
-                        color: Color(0XFF2A2B2E),
+                        color: Theme.of(context).highlightColor,
                       ),
                     ),
                   ),
@@ -1659,30 +1660,30 @@ class _ProfileState extends State<Profile> {
             margin: const EdgeInsets.only(top: 5.0),
             child: MaterialButton(
               height: 48.0,
-              highlightColor: const Color.fromARGB(255, 206, 210, 201),
-              splashColor: const Color.fromARGB(255, 206, 210, 201),
+              highlightColor: Theme.of(context).cardColor,
+              splashColor: Theme.of(context).cardColor,
               onPressed: () {},
               child: Row(
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-                    child: const Icon(
+                    child: Icon(
                       BootstrapIcons.image,
                       size: 18,
-                      color: Color(0XFF2A2B2E),
+                      color: Theme.of(context).highlightColor,
                     ),
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                    child: const Text(
+                    child: Text(
                       'Gallery',
                       style: TextStyle(
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
-                        color: Color(0XFF2A2B2E),
+                        color: Theme.of(context).highlightColor,
                       ),
                     ),
                   ),
@@ -1694,30 +1695,30 @@ class _ProfileState extends State<Profile> {
             margin: const EdgeInsets.only(top: 5.0),
             child: MaterialButton(
               height: 48.0,
-              highlightColor: const Color.fromARGB(255, 206, 210, 201),
-              splashColor: const Color.fromARGB(255, 206, 210, 201),
+              highlightColor: Theme.of(context).cardColor,
+              splashColor: Theme.of(context).cardColor,
               onPressed: () {},
               child: Row(
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
                     padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-                    child: const Icon(
+                    child: Icon(
                       BootstrapIcons.trash3,
                       size: 18,
-                      color: Color(0XFF2A2B2E),
+                      color: Theme.of(context).highlightColor,
                     ),
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     padding: const EdgeInsets.fromLTRB(16.0, 0.0, 0.0, 0.0),
-                    child: const Text(
+                    child: Text(
                       'Delete photo',
                       style: TextStyle(
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
-                        color: Color(0XFF2A2B2E),
+                        color: Theme.of(context).highlightColor,
                       ),
                     ),
                   ),

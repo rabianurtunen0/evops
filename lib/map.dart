@@ -9,7 +9,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Map extends StatefulWidget {
-  const Map({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const Map({
+    Key? key,
+    required this.scaffoldKey,
+  }) : super(key: key);
 
   @override
   State<Map> createState() => _MapState();
@@ -17,8 +22,13 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   final Completer<GoogleMapController> _controller = Completer();
+  final searchEditingController = TextEditingController();
 
-  bool showMarkerDialog = false;
+  LatLng initPosition = const LatLng(0, 0);
+  LatLng currentLatLng = const LatLng(0.0, 0.0);
+  LatLng destinationLatLng = const LatLng(0.0, 0.0);
+  LocationPermission permission = LocationPermission.denied;
+
   List<Marker> markersList = [];
   List<LatLng> positions = [
     const LatLng(37.907012, 32.495559),
@@ -27,11 +37,11 @@ class _MapState extends State<Map> {
     const LatLng(37.882495, 32.490526),
     const LatLng(37.856606, 32.471254),
   ];
-  LatLng initPosition = const LatLng(0, 0);
-  LatLng currentLatLng = const LatLng(37.903799, 32.49468);
-  LatLng destinationLatLng = const LatLng(0.0, 0.0);
-  LocationPermission permission = LocationPermission.denied;
   List<LatLng> polylineCoordinates = [];
+  bool showMarkerDialog = false;
+  bool showSearchBar = false;
+  bool writingSearchBar = false;
+  String searchWords = '';
 
   Future<Uint8List> getImages(String path, int width) async {
     ByteData data = await rootBundle.load(path);
@@ -57,14 +67,13 @@ class _MapState extends State<Map> {
           ),
           onTap: () {
             setState(() {
+              FocusScope.of(context).unfocus();
               print('lokasyon -----> $i');
-
               destinationLatLng = positions[i];
               print(destinationLatLng);
               polylineCoordinates = [];
               getPolyPoints();
               showMarkerDialog = true;
-              //_showModal();
             });
           },
         ),
@@ -75,6 +84,7 @@ class _MapState extends State<Map> {
       checkPermission();
       getCurrentLocation();
       _currentLocation();
+      showSearchBar = true;
     }
   }
 
@@ -132,10 +142,17 @@ class _MapState extends State<Map> {
     }
   }
 
+  void updateSearchText(String newValue) {
+    setState(() {
+      searchWords = newValue;
+      print(searchWords);
+    });
+  }
+  
+  
   @override
   void initState() {
     generateMarkersList();
-
     super.initState();
   }
 
@@ -143,585 +160,422 @@ class _MapState extends State<Map> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: checkReady(currentLatLng, permission)
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).highlightColor,
-              ),
-            )
-          : Stack(children: [
-              GoogleMap(
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
-                mapType: MapType.normal,
-                polylines: {
-                  Polyline(
-                    polylineId: const PolylineId("route"),
-                    points: polylineCoordinates,
-                    color: Colors.red,
-                    width: 4,
-                    endCap: Cap.buttCap,
-                    startCap: Cap.buttCap,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        toolbarHeight: 50,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        elevation: 0,
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            onPressed: () {
+              widget.scaffoldKey.currentState?.openDrawer();
+            },
+            icon: SvgPicture.asset(
+              'assets/images/menu.svg',
+              color: const Color(0XFF282A37),
+            ),
+            splashColor: Colors.transparent,
+            splashRadius: 1.0,
+          );
+        }),
+        title: showSearchBar ? Container(
+          margin: const EdgeInsets.only(top: 6),
+          width: MediaQuery.of(context).size.width * 0.75,
+          height: 42,
+          child: TextFormField(
+            controller: searchEditingController,
+            onTap: () {
+              writingSearchBar = true;
+            },
+            onTapOutside: (event) {
+              writingSearchBar = false;
+            },
+            onChanged: (value) {
+              setState(() {
+                updateSearchText(value);
+                writingSearchBar = true;
+              });
+            },
+            cursorColor: const Color(0XFF282A37),
+            textInputAction: TextInputAction.next,
+            textAlignVertical: TextAlignVertical.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14.0,
+              color: Color(0XFF131622),
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'Search location',
+              hintStyle: Theme.of(context).textTheme.displaySmall,
+              suffixIcon: IconButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      BootstrapIcons.search,
+                      size: 16,
+                      color: Color(0XFF131622),
+                    ),
                   ),
-                },
-                initialCameraPosition:
-                    CameraPosition(target: currentLatLng, zoom: 16.0),
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-                markers: Set<Marker>.of(markersList),
+              suffixIconColor: const Color(0XFF282A37),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 0.0, 4.0, 0.0),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                borderSide: BorderSide(color: Colors.white),
               ),
-              showMarkerDialog
-                  ? AnimatedPositioned(
-                      duration: const Duration(seconds: 4),
-                      bottom: 100,
-                      left: MediaQuery.of(context).size.width * 0.05,
-                      right: MediaQuery.of(context).size.width * 0.05,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 350,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).backgroundColor,
-                            borderRadius: BorderRadius.circular(16.0)),
-                        child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              margin: const EdgeInsets.fromLTRB(
-                                  0.0, 12.0, 0.0, 18.0),
-                              child: SvgPicture.asset(
-                                'assets/images/line.svg',
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              ),
+            ),
+          ),
+        ) : Container(),
+      ),
+      body: checkReady(currentLatLng, permission)
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).highlightColor,
+                ),
+              )
+            : Stack(children: [
+                GoogleMap(
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: false,
+                  mapType: MapType.normal,
+                  polylines: {
+                    Polyline(
+                      polylineId: const PolylineId("route"),
+                      points: polylineCoordinates,
+                      color: Colors.red,
+                      width: 4,
+                      endCap: Cap.buttCap,
+                      startCap: Cap.buttCap,
+                    ),
+                  },
+                  initialCameraPosition:
+                      CameraPosition(target: currentLatLng, zoom: 16.0),
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                  markers: Set<Marker>.of(markersList),
+                ),
+                showMarkerDialog && writingSearchBar == false
+                    ? AnimatedPositioned(
+                        duration: const Duration(seconds: 4),
+                        bottom: 100,
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        right: MediaQuery.of(context).size.width * 0.05,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          height: 320,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).backgroundColor,
+                              borderRadius: BorderRadius.circular(16.0)),
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.fromLTRB(
+                                    0.0, 12.0, 0.0, 18.0),
+                                child: SvgPicture.asset(
+                                  'assets/images/line.svg',
+                                  color: Theme.of(context).disabledColor,
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    24.0, 0.0, 24.0, 24.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 24.0),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.18,
+                                      height: MediaQuery.of(context).size.width *
+                                          0.18,
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).disabledColor,
+                                          borderRadius:
+                                              BorderRadius.circular(16.0)),
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Text(
+                                            'Car Charging Station',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge,
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Text(
+                                            '1257 Leaf St, Alabama',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .displaySmall,
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 2.0),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                BootstrapIcons.geo_alt,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                size: 14.0,
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 4.0),
+                                                child: Text(
+                                                  '500 m / 10 min',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'Connection',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                        Text(
+                                          'Type 3',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/images/line_vertical.svg',
+                                      color: Theme.of(context).disabledColor,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'Per kWh',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                        Text(
+                                          '€ 1.3',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        )
+                                      ],
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/images/line_vertical.svg',
+                                      color: Theme.of(context).disabledColor,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          'Parking Fee',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                        Text(
+                                          '€ 0.7',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 12.0),
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                height: 1,
                                 color: Theme.of(context).disabledColor,
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  24.0, 0.0, 24.0, 24.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(right: 24.0),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).disabledColor,
-                                        borderRadius:
-                                            BorderRadius.circular(16.0)),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Text(
-                                          'Car Charging Station',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Text(
-                                          '1257 Leaf St, Alabama',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displaySmall,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 2.0),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              BootstrapIcons.geo_alt,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              size: 14.0,
-                                            ),
-                                            Container(
-                                              margin: const EdgeInsets.only(
-                                                  left: 4.0),
-                                              child: Text(
-                                                '500 m / 10 min',
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(
+                                    12.0, 0.0, 12.0, 8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    MaterialButton(
+                                      elevation: 0,
+                                      color: Theme.of(context).backgroundColor,
+                                      splashColor:
+                                          Theme.of(context).backgroundColor,
+                                      highlightColor:
+                                          Theme.of(context).backgroundColor,
+                                      onPressed: () {},
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Arrive',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Today 9:30',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodySmall,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'Connection',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
+                                              Icon(
+                                                BootstrapIcons.chevron_down,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                size: 14.0,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        'Type 3',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
+                                    ),
+                                    Container(
+                                      width: 90.0,
+                                      height: 30.0,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.circular(16.0),
                                       ),
-                                    ],
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/images/line_vertical.svg',
-                                    color: Theme.of(context).disabledColor,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'Per kWh',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      Text(
-                                        '€ 1.3',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      )
-                                    ],
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/images/line_vertical.svg',
-                                    color: Theme.of(context).disabledColor,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        'Parking Fee',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      Text(
-                                        '€ 0.7',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 12.0),
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              height: 1,
-                              color: Theme.of(context).disabledColor,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  12.0, 0.0, 12.0, 18.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  MaterialButton(
-                                    elevation: 0,
-                                    color: Theme.of(context).backgroundColor,
-                                    splashColor:
-                                        Theme.of(context).backgroundColor,
-                                    highlightColor:
-                                        Theme.of(context).backgroundColor,
-                                    onPressed: () {},
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Arrive',
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '1h 15m',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium,
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Today 9:30',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
-                                            ),
-                                            Icon(
-                                              BootstrapIcons.chevron_down,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              size: 14.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 90.0,
-                                    height: 30.0,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '1h 15m',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
                                       ),
                                     ),
+                                    MaterialButton(
+                                      elevation: 0,
+                                      color: Theme.of(context).backgroundColor,
+                                      splashColor:
+                                          Theme.of(context).backgroundColor,
+                                      highlightColor:
+                                          Theme.of(context).backgroundColor,
+                                      onPressed: () {},
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Depart',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Today 10:45',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
+                                              ),
+                                              Icon(
+                                                BootstrapIcons.chevron_down,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                size: 14.0,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                alignment: Alignment.center,
+                                margin:
+                                    const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+                                child: MaterialButton(
+                                  minWidth:
+                                      MediaQuery.of(context).size.width * 0.82,
+                                  height: 40,
+                                  color: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
                                   ),
-                                  MaterialButton(
-                                    elevation: 0,
-                                    color: Theme.of(context).backgroundColor,
-                                    splashColor:
-                                        Theme.of(context).backgroundColor,
-                                    highlightColor:
-                                        Theme.of(context).backgroundColor,
-                                    onPressed: () {},
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Depart',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Today 10:45',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
-                                            ),
-                                            Icon(
-                                              BootstrapIcons.chevron_down,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              size: 14.0,
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                                  splashColor: Theme.of(context).primaryColor,
+                                  highlightColor:
+                                      Theme.of(context).primaryColorDark,
+                                  onPressed: () {
+                                    setState(() {});
+                                  },
+                                  child: const Text(
+                                    'Go To Charger',
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15.0,
+                                      color: Color(0XFFFFFDFA),
+                                      letterSpacing: 1.5,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.82,
-                              alignment: Alignment.center,
-                              margin:
-                                  const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
-                              child: MaterialButton(
-                                minWidth:
-                                    MediaQuery.of(context).size.width * 0.82,
-                                height: 42,
-                                color: Theme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                splashColor: Theme.of(context).primaryColor,
-                                highlightColor:
-                                    Theme.of(context).primaryColorDark,
-                                onPressed: () {},
-                                child: Text(
-                                  'Book Charger',
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  : Container(),
-            ]),
+                      )
+                    : Container(),
+              ]),
+      
     );
-  }
-
-  void _showModal() {
-    showModalBottomSheet<void>(
-        backgroundColor: Colors.transparent,
-        useSafeArea: true,
-        //useRootNavigator: true,
-        barrierColor: Colors.transparent,
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width - 40, 
-        ),
-        context: context,
-        builder: (context) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 100.0),
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: 350,
-            decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 18.0),
-                  child: SvgPicture.asset(
-                    'assets/images/line.svg',
-                    color: Theme.of(context).disabledColor,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 24.0),
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        height: MediaQuery.of(context).size.width * 0.2,
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).disabledColor,
-                            borderRadius: BorderRadius.circular(16.0)),
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Text(
-                              'Car Charging Station',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Text(
-                              '1257 Leaf St, Alabama',
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  BootstrapIcons.geo_alt,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 14.0,
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    '500 m / 10 min',
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Connection',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            'Type 3',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                      SvgPicture.asset(
-                        'assets/images/line_vertical.svg',
-                        color: Theme.of(context).disabledColor,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Per kWh',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            '€ 1.3',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                      SvgPicture.asset(
-                        'assets/images/line_vertical.svg',
-                        color: Theme.of(context).disabledColor,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Parking Fee',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            '€ 0.7',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.symmetric(vertical: 12.0),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 1,
-                  color: Theme.of(context).disabledColor,
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 18.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MaterialButton(
-                        elevation: 0,
-                        color: Theme.of(context).backgroundColor,
-                        splashColor: Theme.of(context).backgroundColor,
-                        highlightColor: Theme.of(context).backgroundColor,
-                        onPressed: () {},
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Arrive',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Today 9:30',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Icon(
-                                  BootstrapIcons.chevron_down,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 14.0,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 90.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '1h 15m',
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                      MaterialButton(
-                        elevation: 0,
-                        color: Theme.of(context).backgroundColor,
-                        splashColor: Theme.of(context).backgroundColor,
-                        highlightColor: Theme.of(context).backgroundColor,
-                        onPressed: () {},
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Depart',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Today 10:45',
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                Icon(
-                                  BootstrapIcons.chevron_down,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 14.0,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.82,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.82,
-                    height: 42,
-                    color: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    splashColor: Theme.of(context).primaryColor,
-                    highlightColor: Theme.of(context).primaryColorDark,
-                    onPressed: () {},
-                    child: Text(
-                      'Book Charger',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
   }
 }

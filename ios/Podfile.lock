@@ -10,8 +10,6 @@ PODS:
   - GoogleMaps/Base (8.0.0)
   - GoogleMaps/Maps (8.0.0):
     - GoogleMaps/Base
-  - location (0.0.1):
-    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -21,7 +19,6 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - GoogleMaps (= 8.0.0)
-  - location (from `.symlinks/plugins/location/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
@@ -35,8 +32,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/geolocator_apple/ios"
   google_maps_flutter_ios:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
-  location:
-    :path: ".symlinks/plugins/location/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
@@ -45,7 +40,6 @@ SPEC CHECKSUMS:
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   google_maps_flutter_ios: 29f6e9fa56f959c35f1f07498da074c81e57d709
   GoogleMaps: 0dce473ab18742d0f327887853630927cbee9127
-  location: 14159dff482de87eb2e0c3a9f234eca65ad7decb
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
 
 PODFILE CHECKSUM: 16dac1b86d9a6da817d6658c8d155f3f782b7600

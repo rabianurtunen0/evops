@@ -68,12 +68,24 @@ class Themes {
         fontSize: 14.0,
         color: Color(0XFF131622),
       ),
+      labelLarge: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        fontSize: 16.0,
+        color: Color(0XFF131622),
+      ),
       labelMedium: TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
         color: Color(0XFFFFFDFA),
         letterSpacing: 1.5,
+      ),
+      labelSmall: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        fontSize: 14.0,
+        color: Color(0XFF131622),
       ),
       displayLarge: TextStyle(
         //fontFamily: 'AvenirNext',
@@ -140,10 +152,11 @@ class Themes {
         color: Colors.white,
       ),
       bodySmall: TextStyle(
-          //fontFamily: 'AvenirNext',
-          fontWeight: FontWeight.w600,
-          fontSize: 13.0,
-          color: Color(0XFF8ABA41)),
+        //fontFamily: 'AvenirNext',
+        fontWeight: FontWeight.w600,
+        fontSize: 13.0,
+        color: Color(0XFF8ABA41),
+      ),
       titleLarge: TextStyle(
         //fontFamily: 'AvenirNext',
         fontWeight: FontWeight.w400,
@@ -162,12 +175,24 @@ class Themes {
         fontSize: 14.0,
         color: Colors.white,
       ),
+      labelLarge: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        fontSize: 16.0,
+        color: Colors.white,
+      ),
       labelMedium: TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
         color: Color(0XFFFFFDFA),
         letterSpacing: 1.5,
+      ),
+      labelSmall: TextStyle(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w500,
+        fontSize: 14.0,
+        color: Colors.white,
       ),
       displayLarge: TextStyle(
         //fontFamily: 'AvenirNext',
