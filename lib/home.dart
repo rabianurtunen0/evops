@@ -15,7 +15,9 @@ import 'package:get/get.dart';
 enum Sky { sun, moon }
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final int selectedIndex;
+  final int selectedItemPosition;
+  const Home({Key? key, required this.selectedIndex, required this.selectedItemPosition}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -23,8 +25,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int selectedIndex = 0;
-  int selectedItemPosition = 0;
+  late int selectedIndex;
+  late int selectedItemPosition;
   late final _pageController = PageController(initialPage: selectedIndex);
   int maxCount = 5;
   late AnimationController themeController;
@@ -32,6 +34,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    selectedIndex = widget.selectedIndex;
+    selectedItemPosition = widget.selectedItemPosition;
     super.initState();
     bottomBarPages = [
       const Devices(),
@@ -82,6 +86,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               elevation: 0,
             ),
       drawer: Drawer(
+        elevation: 0,
         backgroundColor: Theme.of(context).backgroundColor,
         width: MediaQuery.of(context).size.width * 0.6,
         shape: const RoundedRectangleBorder(

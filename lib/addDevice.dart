@@ -31,7 +31,7 @@ class _AddDeviceState extends State<AddDevice> {
           alignment: Alignment.topLeft,
           child: IconButton(
             onPressed: () {
-              Get.to(const Home());
+              Get.back();
             },
             icon: const Icon(
               Icons.arrow_back,

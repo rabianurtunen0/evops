@@ -39,40 +39,52 @@ class _RefreshPasswordState extends State<RefreshPassword> {
       ),
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 56.0),
+          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width * 0.044,
+              0.0, MediaQuery.of(context).size.width * 0.044, 0.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 24.0),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.014,
+                    0.0,
+                    0.0,
+                    MediaQuery.of(context).size.height * 0.026),
                 child: SvgPicture.asset(
                   Theme.of(context).backgroundColor == const Color(0XFF282A37)
                       ? 'assets/images/evops_dark.svg'
                       : 'assets/images/evops_light.svg',
                   width: 190,
-                  height: 54,
+                  height: MediaQuery.of(context).size.height * 0.058,
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 4.0),
-                child: Text(
-                  'Forgot Password?',
-                  style: Theme.of(context).textTheme.headlineLarge),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.028,
+                    MediaQuery.of(context).size.height * 0.01,
+                    0.0,
+                    MediaQuery.of(context).size.height * 0.004),
+                child: Text('Forgot Password?',
+                    style: Theme.of(context).textTheme.headlineLarge),
               ),
               Container(
                 alignment: Alignment.topLeft,
-                margin: const EdgeInsets.fromLTRB(12.0, 40.0, 0.0, 8.0),
-                child: Text(
-                  'Email Address',
-                  style: Theme.of(context).textTheme.bodyMedium),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.028,
+                    MediaQuery.of(context).size.height * 0.05,
+                    0.0,
+                    MediaQuery.of(context).size.height * 0.005),
+                child: Text('Email Address',
+                    style: Theme.of(context).textTheme.bodyMedium),
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 24.0),
+                margin: EdgeInsets.fromLTRB(
+                    0.0, 0.0, 0.0, MediaQuery.of(context).size.height * 0.03),
                 width: MediaQuery.of(context).size.width * 0.88,
-                height: 48,
+                height: MediaQuery.of(context).size.height * 0.056,
                 child: TextFormField(
                   enableInteractiveSelection: true,
                   autofocus: false,
@@ -101,21 +113,28 @@ class _RefreshPasswordState extends State<RefreshPassword> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.transparent,
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 10.0),
+                    contentPadding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.028,
+                        0.0,
+                        MediaQuery.of(context).size.width * 0.028,
+                        0.0),
                     hintText: 'name@example.com',
                     hintStyle: Theme.of(context).textTheme.displaySmall,
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Theme.of(context).hoverColor),
-                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).hoverColor),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0)),
                     ),
                   ),
                 ),
@@ -123,44 +142,45 @@ class _RefreshPasswordState extends State<RefreshPassword> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.88,
                 alignment: Alignment.center,
-                margin: const EdgeInsets.fromLTRB(4.0, 16.0, 4.0, 0.0),
-                child: Material(
-                  elevation: 0,
-                  borderRadius: BorderRadius.circular(12.0),
+                margin: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.007,
+                    MediaQuery.of(context).size.height * 0.016,
+                    MediaQuery.of(context).size.width * 0.007,
+                    0.0),
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width * 0.88,
+                  height: MediaQuery.of(context).size.height * 0.056,
                   color: Theme.of(context).primaryColor,
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.88,
-                    height: 48,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    splashColor: Theme.of(context).primaryColor,
-                    highlightColor: Theme.of(context).primaryColorDark,
-                    onPressed: () {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      Future.delayed(const Duration(seconds: 1), () {
-                        setState(() {
-                          _isLoading = false;
-                          Get.to(const Login());
-                        });
-                      });
-                    },
-                    child: _isLoading
-                        ? const CircularProgressIndicator(
-                            color: Color(0XFFFFFDFA),
-                            strokeWidth: 2.0,
-                          )
-                        : Text(
-                            'Send Reset Link',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
+                  splashColor: Theme.of(context).primaryColor,
+                  highlightColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    Future.delayed(const Duration(seconds: 1), () {
+                      setState(() {
+                        _isLoading = false;
+                        Get.to(const Login());
+                      });
+                    });
+                  },
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Color(0XFFFFFDFA),
+                          strokeWidth: 2.0,
+                        )
+                      : Text(
+                          'Send Reset Link',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
                 ),
               ),
               Container(
                 alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height * 0.04,
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -175,7 +195,8 @@ class _RefreshPasswordState extends State<RefreshPassword> {
                         Get.to(const Login());
                       },
                       style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+                        overlayColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.transparent),
                       ),
                       child: Text(
                         "Login",
