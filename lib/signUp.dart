@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUp> {
                         MediaQuery.of(context).size.width * 0.028,
                         MediaQuery.of(context).size.height * 0.036,
                         0.0,
-                        MediaQuery.of(context).size.height * 0.005),
+                        MediaQuery.of(context).size.height * 0.008),
                     child: Text('Full Name',
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
@@ -164,7 +164,7 @@ class _SignUpState extends State<SignUp> {
                         MediaQuery.of(context).size.width * 0.028,
                         0.0,
                         0.0,
-                        MediaQuery.of(context).size.height * 0.005),
+                        MediaQuery.of(context).size.height * 0.008),
                     child: Text(
                       'Email Address',
                       style: Theme.of(context).textTheme.bodyMedium,
@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
                         MediaQuery.of(context).size.width * 0.028,
                         0.0,
                         0.0,
-                        MediaQuery.of(context).size.height * 0.005),
+                        MediaQuery.of(context).size.height * 0.008),
                     child: Text(
                       'Password',
                       style: Theme.of(context).textTheme.bodyMedium,

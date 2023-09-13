@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
                         MediaQuery.of(context).size.width * 0.028,
                         MediaQuery.of(context).size.height * 0.05,
                         0.0,
-                        MediaQuery.of(context).size.height * 0.005),
+                        MediaQuery.of(context).size.height * 0.008),
                     child: Text(
                       'Email Address',
                       style: Theme.of(context).textTheme.bodyMedium,
@@ -153,15 +153,15 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.028),
+                        margin: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width * 0.028, 0.0, 0.0, MediaQuery.of(context).size.height * 0.002),
                         child: Text(
                           'Password',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 0.0),
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, MediaQuery.of(context).size.height * 0.002),
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * 0.028,
                           child: MaterialButton(
