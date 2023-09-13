@@ -108,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0,
                         MediaQuery.of(context).size.height * 0.03),
                     width: MediaQuery.of(context).size.width * 0.88,
-                    height: MediaQuery.of(context).size.height * 0.056,
+                    height: MediaQuery.of(context).size.height * 0.052,
                     child: TextFormField(
                       enableInteractiveSelection: true,
                       autofocus: false,
@@ -175,7 +175,7 @@ class _SignUpState extends State<SignUp> {
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0,
                         MediaQuery.of(context).size.height * 0.03),
                     width: MediaQuery.of(context).size.width * 0.88,
-                    height: MediaQuery.of(context).size.height * 0.056,
+                    height: MediaQuery.of(context).size.height * 0.052,
                     child: TextFormField(
                       enableInteractiveSelection: true,
                       autofocus: false,
@@ -247,7 +247,7 @@ class _SignUpState extends State<SignUp> {
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0,
                         MediaQuery.of(context).size.height * 0.03),
                     width: MediaQuery.of(context).size.width * 0.88,
-                    height: MediaQuery.of(context).size.height * 0.056,
+                    height: MediaQuery.of(context).size.height * 0.052,
                     child: TextFormField(
                       enableInteractiveSelection: true,
                       autofocus: false,
@@ -329,7 +329,7 @@ class _SignUpState extends State<SignUp> {
                         0.0),
                     child: MaterialButton(
                       minWidth: MediaQuery.of(context).size.width * 0.88,
-                      height: MediaQuery.of(context).size.height * 0.056,
+                      height: MediaQuery.of(context).size.height * 0.052,
                       color: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),

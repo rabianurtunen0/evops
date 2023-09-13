@@ -1,6 +1,7 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -53,7 +54,7 @@ class _ChargingState extends State<Charging> {
     });
   }
 
-   @override
+  @override
   void initState() {
     super.initState();
     deneme = widget.initialData;
@@ -85,13 +86,13 @@ class _ChargingState extends State<Charging> {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Stack(
-                  alignment: Alignment.center, 
+                  alignment: Alignment.center,
                   children: [
                     Container(
                       child: Lottie.asset(
@@ -132,52 +133,22 @@ class _ChargingState extends State<Charging> {
                                 style: TextStyle(
                                   color: Theme.of(context).highlightColor,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                 ),
                               ),
                             ],
                           ),
                         )),
-                  ]),
-                /*
+                  ],
+                ),
                 Container(
-                    alignment: Alignment.center,
-                    child: CircularPercentIndicator(
-                      radius: 120.0,
-                      lineWidth: 15.0,
-                      percent: 0.4,
-                      progressColor: Theme.of(context).primaryColor,
-                      backgroundColor: Theme.of(context).cardColor,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      center: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 10.0),
-                            child: const Icon(
-                                BootstrapIcons.lightning_charge_fill,
-                                color: Color(0XFF8ABA41)),
-                          ),
-                          Text(
-                            '40%',
-                            style: TextStyle(
-                              color: Theme.of(context).highlightColor,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 28,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
-                */
-                Container(
-                  margin: const EdgeInsets.only(bottom: 80.0),
-                  child: const Text(
-                    'Charging',
+                  margin: const EdgeInsets.only(top: 12.0),
+                  child: Text(
+                    'Charging..',
                     style: TextStyle(
-                      color: Color(0XFF8ABA41),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
+                      color: const Color(0XFF8ABA41),
+                      fontWeight: FontWeight.w600,
+                      fontSize: ScreenUtil().setSp(14),
                     ),
                   ),
                 ),
@@ -189,41 +160,37 @@ class _ChargingState extends State<Charging> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    0.0, 15.0, 5.0, 0.0),
-                                child: Text(
-                                  'Device Informations',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-
-
-
-
-
-                          ],
-                        ),
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.24,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.028,
+                                MediaQuery.of(context).size.height * 0.014,
+                                0.0,
+                                MediaQuery.of(context).size.height * 0.021),
+                            child: Text(
+                              'Device Informations',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
                           margin: EdgeInsets.only(
                               bottom: MediaQuery.of(context).size.width * 0.03),
-                          padding: const EdgeInsets.only(left: 15.0),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.028),
                           width: MediaQuery.of(context).size.width * 0.4,
                           height: MediaQuery.of(context).size.height * 0.06,
                           decoration: BoxDecoration(
@@ -236,26 +203,18 @@ class _ChargingState extends State<Charging> {
                             children: [
                               Text(
                                 'Remaining Time',
-                                style: TextStyle(
-                                  color: Theme.of(context).highlightColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
                                 '01:27:45',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          
-                          padding: const EdgeInsets.only(left: 15.0),
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.028),
                           width: MediaQuery.of(context).size.width * 0.4,
                           height: MediaQuery.of(context).size.height * 0.06,
                           decoration: BoxDecoration(
@@ -267,19 +226,11 @@ class _ChargingState extends State<Charging> {
                             children: [
                               Text(
                                 'Charging fee',
-                                style: TextStyle(
-                                  color: Theme.of(context).highlightColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
                                 '€9',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -289,22 +240,26 @@ class _ChargingState extends State<Charging> {
                   ],
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.88,
+                  height: MediaQuery.of(context).size.height * 0.052,
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.fromLTRB(4.0, 28.0, 4.0, 28.0),
+                  margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.007,
+                      MediaQuery.of(context).size.height * 0.021,
+                      MediaQuery.of(context).size.width * 0.007,
+                      0.0),
                   child: Material(
                     elevation: 0,
                     borderRadius: BorderRadius.circular(12.0),
-                    color: const Color(0XFF8ABA41),
+                    color: Theme.of(context).primaryColor,
                     child: MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width * 0.9,
-                      height: 48,
+                      minWidth: MediaQuery.of(context).size.width * 0.88,
+                      height: MediaQuery.of(context).size.height * 0.052,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      splashColor: const Color(0XFF8ABA41),
-                      highlightColor: const Color.fromARGB(
-                          255, 116, 155, 58), //Color(0XFF749B3A)
+                      splashColor: Theme.of(context).primaryColor,
+                      highlightColor: Theme.of(context).primaryColorDark,
                       onPressed: () {
                         setState(() {
                           showPaymentScreen();
@@ -319,7 +274,6 @@ class _ChargingState extends State<Charging> {
                 ),
               ],
             ),
-            
           ],
         ),
       ),
@@ -332,10 +286,12 @@ class _ChargingState extends State<Charging> {
         creditCardValue;
       });
     }
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
           _alertDialog = context;
           return AlertDialog(
             backgroundColor: Theme.of(context).cardColor,
@@ -346,33 +302,34 @@ class _ChargingState extends State<Charging> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 25.0),
+                  margin: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.025),
                   child: Icon(
                     BootstrapIcons.check_circle_fill,
                     color: Theme.of(context).primaryColor,
-                    size: 60,
+                    size: ScreenUtil().setSp(50),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 5.0),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.005),
                   child: Text(
                     'Congratulations',
                     style: TextStyle(
-                      color: Theme.of(context).highlightColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                    ),
+                        color: Theme.of(context).highlightColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: ScreenUtil().setSp(16)),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 25.0),
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.04),
                   child: Text(
                     'Your transaction is successful',
                     style: TextStyle(
-                      color: Theme.of(context).disabledColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
-                    ),
+                        color: Theme.of(context).disabledColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: ScreenUtil().setSp(12)),
                   ),
                 ),
                 SvgPicture.asset(
@@ -383,7 +340,11 @@ class _ChargingState extends State<Charging> {
             ),
             actions: [
               Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 20.0, 10.0, 20.0),
+                margin: EdgeInsets.fromLTRB(
+                    0.0,
+                    MediaQuery.of(context).size.height * 0.012,
+                    MediaQuery.of(context).size.width * 0.006,
+                    MediaQuery.of(context).size.height * 0.012),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -391,29 +352,27 @@ class _ChargingState extends State<Charging> {
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.all(20.0),
+                      margin: EdgeInsets.all(
+                          MediaQuery.of(context).size.height * 0.016),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Charging duration',
                             textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: Theme.of(context).highlightColor,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Container(
-                            margin: const EdgeInsets.only(top: 2.0),
+                            margin: EdgeInsets.only(
+                                top:
+                                    MediaQuery.of(context).size.height * 0.004),
                             child: Text(
                               '2 hours',
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: ScreenUtil().setSp(12)),
                             ),
                           ),
                         ],
@@ -421,28 +380,26 @@ class _ChargingState extends State<Charging> {
                     ),
                     Container(
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.all(20.0),
+                        margin: EdgeInsets.all(
+                            MediaQuery.of(context).size.height * 0.016),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Charging fee',
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Theme.of(context).highlightColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                              ),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 2.0),
+                              margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height *
+                                      0.004),
                               child: Text(
                                 '€ 18',
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: ScreenUtil().setSp(12)),
                               ),
                             ),
                           ],
@@ -451,10 +408,11 @@ class _ChargingState extends State<Charging> {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
                 alignment: Alignment.center,
-                margin: const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 4.0),
-                height: MediaQuery.of(context).size.height * 0.05,
+                margin:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.008),
+                height: MediaQuery.of(context).size.height * 0.048,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12.0)),
@@ -472,8 +430,8 @@ class _ChargingState extends State<Charging> {
                         //margin: const EdgeInsets.only(left: 10.0),
                         child: SvgPicture.asset(
                           'assets/images/box.svg',
-                          width: 30,
-                          height: 30,
+                          width: MediaQuery.of(context).size.width * 0.028,
+                          height: MediaQuery.of(context).size.height * 0.032,
                         ),
                       ),
                       Column(
@@ -482,27 +440,27 @@ class _ChargingState extends State<Charging> {
                         children: [
                           Container(
                             alignment: Alignment.topLeft,
-                            margin: const EdgeInsets.only(left: 15.0),
-                            child: Text(
-                              'Credit Card',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                color: Theme.of(context).disabledColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
+                            margin: EdgeInsets.only(
+                                left:
+                                    MediaQuery.of(context).size.width * 0.036),
+                            child: Text('Credit Card',
+                                textAlign: TextAlign.left,
+                                style:
+                                    Theme.of(context).textTheme.displaySmall),
                           ),
                           Container(
                             alignment: Alignment.topLeft,
-                            margin: const EdgeInsets.only(left: 15.0),
+                            margin: EdgeInsets.only(
+                                left:
+                                    MediaQuery.of(context).size.width * 0.036),
                             child: Text(
                               savedCardNumberEditingController.text,
                               textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                color: Color(0XFF131622),
+                              style: TextStyle(
+                                fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 14,
+                                fontSize: ScreenUtil().setSp(11),
+                                color: const Color(0XFF131622),
                               ),
                             ),
                           ),
@@ -513,21 +471,26 @@ class _ChargingState extends State<Charging> {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.88,
+                height: MediaQuery.of(context).size.height * 0.05,
                 alignment: Alignment.center,
-                margin: const EdgeInsets.fromLTRB(4.0, 28.0, 4.0, 4.0),
+                 margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.007,
+                      MediaQuery.of(context).size.height * 0.021,
+                      MediaQuery.of(context).size.width * 0.007,
+                      MediaQuery.of(context).size.height * 0.007),
                 child: Material(
                   elevation: 0,
                   borderRadius: BorderRadius.circular(12.0),
-                  color: const Color(0XFF8ABA41),
+                  color: Theme.of(context).primaryColor,
                   child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width * 0.9,
-                    height: 48,
+                    minWidth: MediaQuery.of(context).size.width * 0.88,
+                    height: MediaQuery.of(context).size.height * 0.05,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    splashColor: const Color(0XFF8ABA41),
-                    highlightColor: const Color.fromARGB(255, 116, 155, 58),
+                    splashColor: Theme.of(context).primaryColor,
+                    highlightColor: Theme.of(context).primaryColorDark,
                     onPressed: () {
                       setState(() {
                         paymentLoading = true;
@@ -539,9 +502,7 @@ class _ChargingState extends State<Charging> {
                           Get.back();
                         });
                       });
-                      setState(() {
-                        
-                      });
+                      setState(() {});
                     },
                     child: paymentLoading
                         ? const CircularProgressIndicator(
@@ -549,9 +510,9 @@ class _ChargingState extends State<Charging> {
                             strokeWidth: 2.0,
                           )
                         : Text(
-                          'PAY',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
+                            'PAY',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
                   ),
                 ),
               ),
@@ -573,13 +534,15 @@ class _ChargingState extends State<Charging> {
             return Container(
                 width: MediaQuery.of(context).size.width,
                 height: anotherCreditCard
-                    ? ((creditCardNumbers.length + 1) * 60) + 420
-                    : (creditCardNumbers.length + 1) * 60,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 22.0),
+                    ? ((creditCardNumbers.length + 1) * MediaQuery.of(context).size.height * 0.074) + MediaQuery.of(context).size.height * 0.5
+                    : (creditCardNumbers.length + 1) * MediaQuery.of(context).size.height * 0.074,
+                padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.018, 
+                    horizontal: MediaQuery.of(context).size.width * 0.036
+                ),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16.0),
+                    top: Radius.circular(24.0),
                     bottom: Radius.zero,
                   ),
                   color: Theme.of(context).backgroundColor,
@@ -595,6 +558,7 @@ class _ChargingState extends State<Charging> {
                           itemCount: creditCardNumbers.length,
                           itemBuilder: (context, index) {
                             return Container(
+                              alignment: Alignment.center,
                               height: 48,
                               child: Material(
                                 elevation: 0,
@@ -614,14 +578,14 @@ class _ChargingState extends State<Charging> {
                                           Container(
                                             child: SvgPicture.asset(
                                               'assets/images/box.svg',
-                                              width: 30,
-                                              height: 30,
+                                              width: MediaQuery.of(context).size.width * 0.028,
+                                              height: MediaQuery.of(context).size.height * 0.032,
                                             ),
                                           ),
                                           Container(
                                             alignment: Alignment.center,
-                                            margin: const EdgeInsets.only(
-                                                left: 15.0),
+                                            margin: EdgeInsets.only(
+                                                left: MediaQuery.of(context).size.width * 0.036),
                                             child: Text(
                                               creditCardNumbers[index],
                                               textAlign: TextAlign.left,
@@ -644,8 +608,12 @@ class _ChargingState extends State<Charging> {
                                               Navigator.pop(context);
                                               isClosedBottomSheet = true;
                                               onPaymentOptionChanged(value);
-                                              savedCardNumberEditingController.text = creditCardNumbers[value];
-                                              Navigator.of(_alertDialog as BuildContext).pop();
+                                              savedCardNumberEditingController
+                                                      .text =
+                                                  creditCardNumbers[value];
+                                              Navigator.of(_alertDialog
+                                                      as BuildContext)
+                                                  .pop();
                                               showPaymentScreen();
                                             });
                                           },
@@ -671,8 +639,11 @@ class _ChargingState extends State<Charging> {
                                       Navigator.pop(context);
                                       isClosedBottomSheet = true;
                                       onPaymentOptionChanged(index);
-                                      savedCardNumberEditingController.text = creditCardNumbers[index];
-                                      Navigator.of(_alertDialog!,).pop();
+                                      savedCardNumberEditingController.text =
+                                          creditCardNumbers[index];
+                                      Navigator.of(
+                                        _alertDialog!,
+                                      ).pop();
                                       showPaymentScreen();
                                     });
                                   },
@@ -719,484 +690,482 @@ class _ChargingState extends State<Charging> {
                       ),
                     ),
                     anotherCreditCard
-                        ? Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.07,
-                                    20.0,
-                                    MediaQuery.of(context).size.width * 0.07,
-                                    8.0),
-                                child: Text(
-                                  'Card Number',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: TextFormField(
-                                  autofocus: false,
-                                  controller: cardNumberEditingController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                    LengthLimitingTextInputFormatter(16),
-                                    CardNumberFormatter(),
-                                  ],
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "⛔ This field is required";
-                                    }
-                                    return null;
-                                  },
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      cardNumberEditingController.text =
-                                          newValue;
-
-                                      cardNumberEditingController.selection =
-                                          TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset:
-                                                      cardNumberEditingController
-                                                          .text.length));
-                                    });
-                                  },
-                                  onTap: () {
-                                    setState(() {});
-                                  },
-                                  cursorColor: Theme.of(context).highlightColor,
-                                  textInputAction: TextInputAction.next,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    hintText: 'XXXX XXXX XXXX XXXX',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.start,
-                                    prefixIcon: const Icon(
-                                        BootstrapIcons.credit_card_2_front,
-                                        size: 20),
-                                    prefixIconColor: const Color(0XFF8ABA41),
-                                    contentPadding: const EdgeInsets.fromLTRB(
-                                        10.0, 0.0, 10.0, 0.0),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                    ),
+                        ? Container(
+                          margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
+                          child: Column(
+                              children: [
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  margin: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.022,
+                                      MediaQuery.of(context).size.height * 0.028,
+                                      0.0,
+                                      MediaQuery.of(context).size.height * 0.008),
+                                  child: Text(
+                                    'Card Number',
+                                    style: Theme.of(context).textTheme.bodyMedium,
                                   ),
                                 ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.07,
-                                    20.0,
-                                    MediaQuery.of(context).size.width * 0.07,
-                                    8.0),
-                                child: Text(
-                                  'Cardholder Name',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: TextFormField(
-                                  autofocus: false,
-                                  controller: cardholderNameEditingController,
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "⛔ This field is required";
-                                    }
-                                    return null;
-                                  },
-                                  onChanged: (value) {
-                                    setState(() {
-                                      cardholderNameEditingController.text =
-                                          value;
-                                      cardholderNameEditingController
-                                              .selection =
-                                          TextSelection.fromPosition(
-                                              TextPosition(
-                                        offset: cardholderNameEditingController
-                                            .text.length,
-                                      ));
-                                    });
-                                  },
-                                  onTap: () {
-                                    setState(() {});
-                                  },
-                                  cursorColor: Theme.of(context).highlightColor,
-                                  textInputAction: TextInputAction.next,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    hintText: 'Cardholder Name',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
-                                    floatingLabelAlignment:
-                                        FloatingLabelAlignment.start,
-                                    prefixIcon: const Icon(
-                                      BootstrapIcons.person,
-                                      size: 20,
-                                    ),
-                                    prefixIconColor: const Color(0XFF8ABA41),
-                                    contentPadding: const EdgeInsets.fromLTRB(
-                                        10.0, 0.0, 10.0, 0.0),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).hoverColor),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: EdgeInsets.fromLTRB(
-                                            MediaQuery.of(context).size.width *
-                                                0.025,
-                                            20.0,
-                                            MediaQuery.of(context).size.width *
-                                                0.025,
-                                            8.0),
-                                        child: Text(
-                                          'CVV',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.37,
-                                        child: TextFormField(
-                                          autofocus: false,
-                                          controller: cvvEditingController,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                            LengthLimitingTextInputFormatter(3),
-                                          ],
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "⛔ This field is required";
-                                            }
-                                            return null;
-                                          },
-                                          onChanged: (value) {
-                                            setState(() {
-                                              cvvEditingController.text = value;
-                                              cvvEditingController.selection =
-                                                  TextSelection.fromPosition(
-                                                      TextPosition(
-                                                          offset:
-                                                              cvvEditingController
-                                                                  .text
-                                                                  .length));
-                                            });
-                                          },
-                                          onTap: () {
-                                            setState(() {});
-                                          },
-                                          cursorColor:
-                                              Theme.of(context).highlightColor,
-                                          textInputAction: TextInputAction.next,
-                                          textAlignVertical:
-                                              TextAlignVertical.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.always,
-                                            hintText: 'CVV',
-                                            hintStyle: Theme.of(context)
-                                                .textTheme
-                                                .displaySmall,
-                                            floatingLabelAlignment:
-                                                FloatingLabelAlignment.start,
-                                            prefixIcon: const Icon(
-                                              BootstrapIcons.credit_card,
-                                              size: 20,
-                                            ),
-                                            prefixIconColor:
-                                                const Color(0XFF8ABA41),
-                                            contentPadding:
-                                                const EdgeInsets.fromLTRB(
-                                                    10.0, 0.0, 10.0, 0.0),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(12.0)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height * 0.052,
+                                  child: TextFormField(
+                                    autofocus: false,
+                                    controller: cardNumberEditingController,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(16),
+                                      CardNumberFormatter(),
                                     ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        margin: EdgeInsets.fromLTRB(
-                                            MediaQuery.of(context).size.width *
-                                                0.024,
-                                            20.0,
-                                            MediaQuery.of(context).size.width *
-                                                0.024,
-                                            8.0),
-                                        child: Text(
-                                          'Expiration Date',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.37,
-                                        child: TextFormField(
-                                          autofocus: false,
-                                          controller:
-                                              expirationDateEditingController,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                            LengthLimitingTextInputFormatter(4),
-                                            CardExpirationFormatter(),
-                                          ],
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "⛔ This field is required";
-                                            }
-                                            return null;
-                                          },
-                                          onChanged: (value) {
-                                            setState(() {
-                                              expirationDateEditingController
-                                                  .text = value;
-                                              expirationDateEditingController
-                                                      .selection =
-                                                  TextSelection.fromPosition(
-                                                      TextPosition(
-                                                          offset:
-                                                              expirationDateEditingController
-                                                                  .text
-                                                                  .length));
-                                            });
-                                          },
-                                          onTap: () {
-                                            setState(() {
-                                              expirationDateEditingController
-                                                  .text;
-                                            });
-                                          },
-                                          cursorColor:
-                                              Theme.of(context).highlightColor,
-                                          textInputAction: TextInputAction.next,
-                                          textAlignVertical:
-                                              TextAlignVertical.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.transparent,
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.always,
-                                            hintText: 'MM/YY',
-                                            hintStyle: Theme.of(context)
-                                                .textTheme
-                                                .displaySmall,
-                                            floatingLabelAlignment:
-                                                FloatingLabelAlignment.start,
-                                            prefixIcon: const Icon(
-                                              BootstrapIcons.calendar_event,
-                                              size: 20,
-                                            ),
-                                            prefixIconColor:
-                                                const Color(0XFF8ABA41),
-                                            //suffixIcon: Icon(),
-                                            contentPadding:
-                                                const EdgeInsets.fromLTRB(
-                                                    10.0, 0.0, 10.0, 0.0),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .hoverColor),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(12.0)),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                margin: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.width * 0.07,
-                                    20.0,
-                                    MediaQuery.of(context).size.width * 0.05,
-                                    0.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Save credit card',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall,
-                                    ),
-                                    Switch(
-                                      value: saveCreditCard,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          saveCreditCard = value;
-                                        });
-                                      },
-                                      activeColor: const Color(0XFF8ABA41),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.fromLTRB(
-                                    4.0, 8.0, 4.0, 0.0),
-                                child: Material(
-                                  elevation: 0,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  color: const Color(0XFF8ABA41),
-                                  child: MaterialButton(
-                                    minWidth:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    height: 48,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    splashColor: const Color(0XFF8ABA41),
-                                    highlightColor: const Color.fromARGB(
-                                        255, 116, 155, 58), //Color(0XFF749B3A)
-                                    onPressed: () {
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "⛔ This field is required";
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (newValue) {
                                       setState(() {
-                                        changeCardLoading = true;
-                                      });
-                                      Future.delayed(const Duration(seconds: 1),
-                                          () {
-                                        setState(() {
-                                          changeCardLoading = false;
-                                          Navigator.pop(context);
-                                          isClosedBottomSheet = true;
-                                          anotherCreditCard = false;
-                                        });
+                                        cardNumberEditingController.text =
+                                            newValue;
+                                        cardNumberEditingController.selection =
+                                            TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset:
+                                                        cardNumberEditingController
+                                                            .text.length));
                                       });
                                     },
-                                    child: changeCardLoading
-                                        ? const CircularProgressIndicator(
-                                            color: Color(0XFFFFFDFA),
-                                            strokeWidth: 2.0,
-                                          )
-                                        : Text(
-                                            'Add Card',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                          ),
+                                    onTap: () {
+                                      setState(() {});
+                                    },
+                                    cursorColor: Theme.of(context).highlightColor,
+                                    textInputAction: TextInputAction.next,
+                                    textAlignVertical: TextAlignVertical.center,
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.transparent,
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      hintText: 'XXXX XXXX XXXX XXXX',
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall,
+                                      floatingLabelAlignment:
+                                          FloatingLabelAlignment.start,
+                                      prefixIcon: Icon(
+                                          BootstrapIcons.credit_card_2_front,
+                                          size: ScreenUtil().setSp(16)),
+                                      prefixIconColor: Theme.of(context).primaryColor,
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          10.0, 0.0, 10.0, 0.0),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  margin: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.022,
+                                      MediaQuery.of(context).size.height * 0.028,
+                                      0.0,
+                                      MediaQuery.of(context).size.height * 0.008),
+                                  child: Text(
+                                    'Cardholder Name',
+                                    style: Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height * 0.052,
+                                  child: TextFormField(
+                                    autofocus: false,
+                                    controller: cardholderNameEditingController,
+                                    keyboardType: TextInputType.text,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "⛔ This field is required";
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        cardholderNameEditingController.text =
+                                            value;
+                                        cardholderNameEditingController
+                                                .selection =
+                                            TextSelection.fromPosition(
+                                                TextPosition(
+                                          offset: cardholderNameEditingController
+                                              .text.length,
+                                        ));
+                                      });
+                                    },
+                                    onTap: () {
+                                      setState(() {});
+                                    },
+                                    cursorColor: Theme.of(context).highlightColor,
+                                    textInputAction: TextInputAction.next,
+                                    textAlignVertical: TextAlignVertical.center,
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.transparent,
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      hintText: 'Cardholder Name',
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .displaySmall,
+                                      floatingLabelAlignment:
+                                          FloatingLabelAlignment.start,
+                                      prefixIcon: Icon(
+                                        BootstrapIcons.person,
+                                        size: ScreenUtil().setSp(17),
+                                      ),
+                                      prefixIconColor: Theme.of(context).primaryColor,
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                          10.0, 0.0, 10.0, 0.0),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context).hoverColor),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          margin: EdgeInsets.fromLTRB(
+                                              MediaQuery.of(context).size.width *
+                                                  0.022,
+                                              MediaQuery.of(context).size.height * 0.028,
+                                              0.0,
+                                              MediaQuery.of(context).size.height * 0.008),
+                                          child: Text(
+                                            'CVV',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.36,
+                                          height: MediaQuery.of(context).size.height * 0.052,
+                                          child: TextFormField(
+                                            autofocus: false,
+                                            controller: cvvEditingController,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(3),
+                                            ],
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "⛔ This field is required";
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                cvvEditingController.text = value;
+                                                cvvEditingController.selection =
+                                                    TextSelection.fromPosition(
+                                                        TextPosition(
+                                                            offset:
+                                                                cvvEditingController
+                                                                    .text
+                                                                    .length));
+                                              });
+                                            },
+                                            onTap: () {
+                                              setState(() {});
+                                            },
+                                            cursorColor:
+                                                Theme.of(context).highlightColor,
+                                            textInputAction: TextInputAction.next,
+                                            textAlignVertical:
+                                                TextAlignVertical.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.transparent,
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
+                                              hintText: 'CVV',
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .displaySmall,
+                                              floatingLabelAlignment:
+                                                  FloatingLabelAlignment.start,
+                                              prefixIcon: Icon(
+                                                BootstrapIcons.credit_card,
+                                                size: ScreenUtil().setSp(16),
+                                              ),
+                                              prefixIconColor: Theme.of(context).primaryColor,
+                                              contentPadding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10.0, 0.0, 10.0, 0.0),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(12.0)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          margin: EdgeInsets.fromLTRB(
+                                              MediaQuery.of(context).size.width *
+                                                  0.022,
+                                              MediaQuery.of(context).size.height * 0.028,
+                                              MediaQuery.of(context).size.width *
+                                                  0.025,
+                                              MediaQuery.of(context).size.height * 0.008),
+                                          child: Text(
+                                            'Expiration Date',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.36,
+                                          height: MediaQuery.of(context).size.height * 0.052,
+                                          child: TextFormField(
+                                            autofocus: false,
+                                            controller:
+                                                expirationDateEditingController,
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(4),
+                                              CardExpirationFormatter(),
+                                            ],
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "⛔ This field is required";
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                expirationDateEditingController
+                                                    .text = value;
+                                                expirationDateEditingController
+                                                        .selection =
+                                                    TextSelection.fromPosition(
+                                                        TextPosition(
+                                                            offset:
+                                                                expirationDateEditingController
+                                                                    .text
+                                                                    .length));
+                                              });
+                                            },
+                                            onTap: () {
+                                              setState(() {
+                                                expirationDateEditingController
+                                                    .text;
+                                              });
+                                            },
+                                            cursorColor:
+                                                Theme.of(context).highlightColor,
+                                            textInputAction: TextInputAction.next,
+                                            textAlignVertical:
+                                                TextAlignVertical.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.transparent,
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
+                                              hintText: 'MM/YY',
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .displaySmall,
+                                              floatingLabelAlignment:
+                                                  FloatingLabelAlignment.start,
+                                              prefixIcon: Icon(
+                                                BootstrapIcons.calendar_event,
+                                                size: ScreenUtil().setSp(16)
+                                              ),
+                                              prefixIconColor: Theme.of(context).primaryColor,
+                                              contentPadding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10.0, 0.0, 10.0, 0.0),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Theme.of(context)
+                                                        .hoverColor),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(12.0)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.width * 0.022,
+                                      MediaQuery.of(context).size.height * 0.028,
+                                      0.0,
+                                      0.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Save credit card',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                      Switch(
+                                        value: saveCreditCard,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            saveCreditCard = value;
+                                          });
+                                        },
+                                        activeColor: Theme.of(context).primaryColor,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height * 0.052,
+                                  alignment: Alignment.center,
+                                  child: Material(
+                                    elevation: 0,
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    color: Theme.of(context).primaryColor,
+                                    child: MaterialButton(
+                                      minWidth:
+                                          MediaQuery.of(context).size.width * 0.84,
+                                      height: MediaQuery.of(context).size.height * 0.052,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                      splashColor: Theme.of(context).primaryColor,
+                                      highlightColor: Theme.of(context).primaryColorDark,
+                                      onPressed: () {
+                                        setState(() {
+                                          changeCardLoading = true;
+                                        });
+                                        Future.delayed(const Duration(seconds: 1),
+                                            () {
+                                          setState(() {
+                                            changeCardLoading = false;
+                                            Navigator.pop(context);
+                                            isClosedBottomSheet = true;
+                                            anotherCreditCard = false;
+                                          });
+                                        });
+                                      },
+                                      child: changeCardLoading
+                                          ? const CircularProgressIndicator(
+                                              color: Color(0XFFFFFDFA),
+                                              strokeWidth: 2.0,
+                                            )
+                                          : Text(
+                                              'Add Card',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        )
                         : Container()
                   ],
                 ));
@@ -1205,7 +1174,7 @@ class _ChargingState extends State<Charging> {
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(24.0),
+          top: Radius.circular(36.0),
           bottom: Radius.zero,
         ),
       ),

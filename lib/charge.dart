@@ -1,8 +1,8 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/chargeStatistics.dart';
 import 'package:evops/charging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -24,26 +24,26 @@ class _ChargeState extends State<Charge> {
 
   List batteryHeightList = [
     0.004, // 100%
-    0.013, // 95-99%
-    0.022, // 90-94%
-    0.031, // 85-89%
-    0.040, // 80-84%
-    0.049, // 75-79%
-    0.058, // 70-74%
-    0.067, // 65-69%
-    0.076, // 60-64%
-    0.085, // 55-59%
-    0.094, // 50-54%
-    0.103, // 45-49%
-    0.112, // 40-44%
-    0.121, // 35-39%
-    0.130, // 30-34%
-    0.139, // 25-29%
-    0.148, // 20-24%
-    0.157, // 15-19%
-    0.166, // 10-14%
-    0.175, // 5-9%
-    0.184, // 0-4%
+    0.012, // 95-99%
+    0.020, // 90-94%
+    0.028, // 85-89%
+    0.036, // 80-84%
+    0.044, // 75-79%
+    0.052, // 70-74%
+    0.060, // 65-69%
+    0.068, // 60-64%
+    0.076, // 55-59%
+    0.084, // 50-54%
+    0.092, // 45-49%
+    0.100, // 40-44%
+    0.108, // 35-39%
+    0.116, // 30-34%
+    0.124, // 25-29%
+    0.132, // 20-24%
+    0.140, // 15-19%
+    0.148, // 10-14%
+    0.156, // 5-9%
+    0.164, // 0-4%
   ];
 
   List devicesList = [
@@ -70,48 +70,42 @@ class _ChargeState extends State<Charge> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 300,
+              height: MediaQuery.of(context).size.height * 0.34,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 5.0),
-                        child: Lottie.asset(
-                          Theme.of(context).backgroundColor ==
-                                  const Color(0XFFFFFFFF)
-                              ? 'assets/images/charging1.json'
-                              : 'assets/images/charging.json',
-                        ),
+                      Lottie.asset(
+                        Theme.of(context).backgroundColor ==
+                                const Color(0XFFFFFFFF)
+                            ? 'assets/images/charging1.json'
+                            : 'assets/images/charging.json',
                       ),
                       Text(
                         '200 km',
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
-                  const Text(
+                  Text(
                     'Total distance available to go',
-                    style: TextStyle(
-                      color: Color(0XFF8ABA41),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.0,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 60.0),
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.06),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.height * 0.32,
+                      width: MediaQuery.of(context).size.width * 0.42,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: const BorderRadius.vertical(
@@ -124,85 +118,94 @@ class _ChargeState extends State<Charge> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin:
-                                const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 15.0),
+                            margin: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.028,
+                                MediaQuery.of(context).size.height * 0.014,
+                                0.0,
+                                MediaQuery.of(context).size.height * 0.021),
                             child: Text(
                               'Batttery energy',
-                              style: TextStyle(
-                                color: Theme.of(context).highlightColor,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                           Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                  20.0, 0.0, 0.0, 0.0),
-                              padding: EdgeInsets.fromLTRB(
-                                  4.0,
-                                  MediaQuery.of(context)
-                                          .size
-                                          .height
-                                          .toDouble() *
-                                      batteryHeightList[9],
-                                  4.0,
-                                  4.0),
-                              width: MediaQuery.of(context).size.width * 0.22,
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).cardColor,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: Colors.white,
-                                ),
-                                borderRadius: BorderRadius.circular(12.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color(0XFF8ABA41),
-                                    blurRadius: 2.0,
-                                    spreadRadius: 1.0,
-                                    offset: Offset(0.0, 0.0),
+                            margin: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.042,
+                                0.0,
+                                0.0,
+                                0.0),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.width * 0.01,
+                                    MediaQuery.of(context)
+                                            .size
+                                            .height
+                                            .toDouble() *
+                                        batteryHeightList[9],
+                                    MediaQuery.of(context).size.width * 0.01,
+                                    MediaQuery.of(context).size.height * 0.004,
                                   ),
-                                ],
-                              ),
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  color: const Color(0XFF8ABA41),
-                                  borderRadius: BorderRadius.circular(9.0),
-                                  boxShadow: const [
-                                    BoxShadow(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.19,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.174,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).cardColor,
+                                    border: Border.all(
+                                      width: 1.0,
                                       color: Colors.white,
-                                      blurRadius: 1.0,
-                                      spreadRadius: 0.2,
-                                      offset: Offset(0.0, 0.0),
                                     ),
-                                  ],
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color(0XFF8ABA41),
+                                        blurRadius: 2.0,
+                                        spreadRadius: 1.0,
+                                        offset: Offset(0.0, 0.0),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 20,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0XFF8ABA41),
+                                      borderRadius: BorderRadius.circular(9.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.white,
+                                          blurRadius: 1.0,
+                                          spreadRadius: 0.2,
+                                          offset: Offset(0.0, 0.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                child: Text(
+                                Text(
                                   '60%',
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium,
+                                  style: Theme.of(context).textTheme.titleLarge,
                                 ),
-                              ),
+                              ],
                             ),
+                          ),
                           Container(
-                            margin:
-                                const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                            margin: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.028,
+                                0.0,
+                                0.0,
+                                0.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Saving mode',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                                 Switch(
                                   value: savingMode,
@@ -221,7 +224,7 @@ class _ChargeState extends State<Charge> {
                   Column(
                     children: [
                       Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
+                          width: MediaQuery.of(context).size.width * 0.42,
                           margin: EdgeInsets.only(
                               bottom:
                                   MediaQuery.of(context).size.height * 0.02),
@@ -237,15 +240,11 @@ class _ChargeState extends State<Charge> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    15.0, 15.0, 0.0, 0.0),
+                                margin: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.width * 0.035, MediaQuery.of(context).size.height * 0.014, 0.0, 0.0),
                                 child: Text(
                                   'Total distance',
-                                  style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleLarge,
                                 ),
                               ),
                               Row(
@@ -253,12 +252,12 @@ class _ChargeState extends State<Charge> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        15.0, 20.0, 0.0, 20.0),
+                                    margin: EdgeInsets.fromLTRB(
+                                        MediaQuery.of(context).size.width * 0.042, MediaQuery.of(context).size.height * 0.021, 0.0, MediaQuery.of(context).size.height * 0.021),
                                     child: SvgPicture.asset(
                                       'assets/images/distance.svg',
-                                      width: 32.0,
-                                      height: 32.0,
+                                      width: MediaQuery.of(context).size.width * 0.072,
+                                      height: MediaQuery.of(context).size.width * 0.072,
                                       color: Theme.of(context).highlightColor,
                                     ),
                                   ),
@@ -267,11 +266,8 @@ class _ChargeState extends State<Charge> {
                                         15.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       '${myFormat.format(totalDistanceNumber)} km',
-                                      style: const TextStyle(
-                                        color: Color(0XFF8ABA41),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                      ),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                     ),
                                   ),
                                 ],
@@ -312,13 +308,7 @@ class _ChargeState extends State<Charge> {
                               children: [
                                 Text(
                                   'Statistics',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Theme.of(context).highlightColor,
-                                    letterSpacing: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 Icon(
                                   BootstrapIcons.arrow_right,
@@ -359,18 +349,19 @@ class _ChargeState extends State<Charge> {
                                       Text(
                                         'Time',
                                         style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
+                                          color:
+                                              Theme.of(context).highlightColor,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                       Text(
                                         '1h 27m',
                                         style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -388,10 +379,11 @@ class _ChargeState extends State<Charge> {
                                         Text(
                                           devicesList[radioValue][1],
                                           style: TextStyle(
-                                    color: Theme.of(context).highlightColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                  ),
+                                            color: Theme.of(context)
+                                                .highlightColor,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                         Icon(
                                           BootstrapIcons.arrow_right,
@@ -413,7 +405,7 @@ class _ChargeState extends State<Charge> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.4,
-                            height: MediaQuery.of(context).size.height * 0.05,
+                            height: MediaQuery.of(context).size.height * 0.048,
                             decoration: BoxDecoration(
                               color: Theme.of(context).cardColor,
                               borderRadius: const BorderRadius.vertical(
@@ -437,19 +429,18 @@ class _ChargeState extends State<Charge> {
                                     255, 116, 155, 58), //Color(0XFF749B3A)
                                 onPressed: () {
                                   setState(() {
-                                    Get.to(const Charging(initialData: '1234 **** **** 5678',));
+                                    Get.to(const Charging(
+                                      initialData: '1234 **** **** 5678',
+                                    ));
                                   });
                                 },
-                                child: const Text(
-                                  'Start Charging',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    color: Color(0XFFFFFDFA),
-                                    letterSpacing: 1.5,
+                                child: Text('Start Charging',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: ScreenUtil().setSp(13),
+                                      color: const Color(0XFFFFFDFA),
+                                      ),
                                   ),
-                                ),
                               ),
                             ),
                           ),

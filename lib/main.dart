@@ -1,3 +1,4 @@
+import 'package:evops/start.dart';
 import 'package:evops/themeService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
       themeMode: ThemeService().getThemeMode(),
+      //home: const StartScreen(),
       home: const Login(),
     );
   }

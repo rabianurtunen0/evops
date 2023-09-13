@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DeviceInformation extends StatefulWidget {
@@ -9,43 +10,37 @@ class DeviceInformation extends StatefulWidget {
 }
 
 class _DeviceInformationState extends State<DeviceInformation> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         elevation: 0.0,
         leading: Container(
-          alignment: Alignment.topLeft,
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.035),
           child: IconButton(
             onPressed: () {
               Get.back();
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              size: ScreenUtil().setSp(20),
+              color: Theme.of(context).iconTheme.color,
             ),
-            splashColor: Colors.white,
-            highlightColor: Colors.white,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
         ),
       ),
       body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(12.0, 0.0, 12.0, 0.0),
-          alignment: Alignment.topCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            Container(
-              child: const Text(
-                'Devices Informations',
-              ),
-            ),
-          ]),
+        child: Center(
+          child: Text(
+            'Devices Informations',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ),
       ),
     );

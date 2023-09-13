@@ -7,10 +7,10 @@ class Themes {
     cardColor: const Color(0XFFF0F1F0),
     highlightColor: const Color(0XFF131622),
     disabledColor: const Color(0XFF878999),
-    hoverColor: const Color(0XFFD8DAEB),
+    hoverColor: const Color(0XFFD4D5D4),
     primaryColor: const Color(0XFF8ABA41),
     primaryColorLight: const Color(0XFFD9F99D),
-    primaryColorDark: const Color(0XFF749B3A),
+    primaryColorDark: const Color.fromARGB(255, 116, 155, 58),
     iconTheme: const IconThemeData(
       color: Color(0XFF131622),
     ),
@@ -69,7 +69,7 @@ class Themes {
       labelMedium: TextStyle(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
-        fontSize: ScreenUtil().setSp(14),
+        fontSize: ScreenUtil().setSp(15),
         color: const Color(0XFFFFFDFA),
         letterSpacing: 1.5,
       ),
@@ -105,7 +105,7 @@ class Themes {
     hoverColor: const Color(0XFF555766),
     primaryColor: const Color(0XFF8ABA41),
     primaryColorLight: const Color(0XFFD9F99D),
-    primaryColorDark: const Color(0XFF4D7C0F),
+    primaryColorDark: const Color.fromARGB(255, 116, 155, 58),
     iconTheme: const IconThemeData(
       color: Color(0XFFFFFFFF),
     ),
@@ -141,8 +141,8 @@ class Themes {
         color: const Color(0XFF8ABA41),
       ),
       titleLarge: TextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: ScreenUtil().setSp(14),
+        fontWeight: FontWeight.w500,
+        fontSize: ScreenUtil().setSp(12),
         color: Colors.white,
       ),
       titleMedium: TextStyle(
@@ -163,7 +163,7 @@ class Themes {
       ),
       labelMedium: TextStyle(
         fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         fontSize: ScreenUtil().setSp(14),
         color: const Color(0XFFFFFDFA),
         letterSpacing: 1.5,

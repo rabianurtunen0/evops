@@ -1,5 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:evops/addDevice.dart';
 import 'package:evops/deviceInformation.dart';
@@ -25,55 +26,75 @@ class _DevicesState extends State<Devices> {
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: devicesList.isNotEmpty
-            ? Container(
-                margin: const EdgeInsets.symmetric(
-                    vertical: 12.0, horizontal: 18.0),
-                alignment: Alignment.topCenter,
-                child: GridView.builder(
-                  itemCount: devicesList.length,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 0.85,
-                    crossAxisSpacing: 18,
-                    mainAxisSpacing: 18,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Material(
-                      elevation: 3,
-                      borderRadius: BorderRadius.circular(10.0),
-                      color:
-                          index == 2 ? const Color(0XFF8ABA41) : Colors.white,
-                      child: MaterialButton(
+            ? Scrollbar(
+              controller: _scrollController,
+              thickness: 5,
+              radius: const Radius.circular(20.0),
+              scrollbarOrientation: ScrollbarOrientation.right,
+              child: Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.014,
+                      horizontal: MediaQuery.of(context).size.width * 0.056),
+                  alignment: Alignment.topCenter,
+                  child: GridView.builder(
+                    itemCount: devicesList.length,
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 0.8,
+                      crossAxisSpacing: 18,
+                      mainAxisSpacing: 18,
+                    ),
+                    itemBuilder: (context, index) {
+                      return MaterialButton(
+                        elevation: 3,
+                        color: index == 2
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).cardColor,
+                        minWidth: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        splashColor: const Color.fromARGB(255, 116, 155, 58),
+                        splashColor: index == 2 ? Theme.of(context).primaryColorDark : Theme.of(context).hoverColor,
+                        highlightColor: index == 2 ? Theme.of(context).primaryColorDark : Theme.of(context).hoverColor,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              width: 48.0,
-                              height: 48.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
+                            index == 2
+                                ? Icon(
+                                    BootstrapIcons.plus_lg,
+                                    size: ScreenUtil().setSp(24),
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    BootstrapIcons.fuel_pump,
+                                    size: ScreenUtil().setSp(24),
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                            index == 2
+                                ? const Text('', style: TextStyle(fontSize: 0.0))
+                                : Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.012),
+                              child: Text(
+                                devicesList[index][1],
+                                style: Theme.of(context).textTheme.titleMedium,
+                              )),
+                            index == 2
+                                ? const Text('', style: TextStyle(fontSize: 0.0))
+                                : Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.012),
+                              child: Text(
+                                devicesList[index][2],
+                                style: Theme.of(context).textTheme.displaySmall,
+                                textAlign: TextAlign.center,
                               ),
-                              child: index == 2
-                                  ? const Icon(
-                                      BootstrapIcons.plus_lg,
-                                      color: Colors.white,
-                                    )
-                                  : Image(
-                                      image: AssetImage(devicesList[index][0]),
-                                    ),
                             ),
-                            index == 2
-                                ? const Text('',
-                                    style: TextStyle(fontSize: 0.0))
-                                : Text(devicesList[index][1]),
-                            index == 2
-                                ? const Text('',
-                                    style: TextStyle(fontSize: 0.0))
-                                : Text(devicesList[index][2]),
                           ],
                         ),
                         onPressed: () {
@@ -81,10 +102,10 @@ class _DevicesState extends State<Devices> {
                               ? Get.to(const AddDevice())
                               : Get.to(const DeviceInformation());
                         },
-                      ),
-                    );
-                  },
-                ))
+                      );
+                    },
+                  )),
+            )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

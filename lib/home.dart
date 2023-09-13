@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:evops/assistantAI.dart';
 import 'package:evops/themeService.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:evops/calendar.dart';
@@ -17,7 +18,11 @@ enum Sky { sun, moon }
 class Home extends StatefulWidget {
   final int selectedIndex;
   final int selectedItemPosition;
-  const Home({Key? key, required this.selectedIndex, required this.selectedItemPosition}) : super(key: key);
+  const Home(
+      {Key? key,
+      required this.selectedIndex,
+      required this.selectedItemPosition})
+      : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -61,21 +66,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       key: _scaffoldKey,
       appBar: selectedIndex != 3
           ? AppBar(
-              toolbarHeight: 50,
+              toolbarHeight: MediaQuery.of(context).size.height * 0.06,
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               elevation: 0,
               leading: Builder(builder: (BuildContext context) {
-                return IconButton(
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/images/menu.svg',
-                    color: Theme.of(context).iconTheme.color,
+                return Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.035),
+                  child: IconButton(
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/images/menu.svg',
+                      width: MediaQuery.of(context).size.width * 0.018,
+                      height: MediaQuery.of(context).size.height * 0.018,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                   ),
-                  splashColor: Colors.transparent,
-                  splashRadius: 1.0,
                 );
               }),
             )
@@ -102,33 +113,38 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.fromLTRB(24.0, 96.0, 0.0, 36.0),
+                  padding: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.056,
+                      MediaQuery.of(context).size.height * 0.104,
+                      0.0,
+                      MediaQuery.of(context).size.height * 0.044),
                   child: SvgPicture.asset(
                     Theme.of(context).backgroundColor == const Color(0XFF282A37)
                         ? 'assets/images/evops_dark.svg'
                         : 'assets/images/evops_light.svg',
-                    width: 152,
-                    height: 43.2,
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.0466,
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(0.0,
+                      MediaQuery.of(context).size.height * 0.0066, 0.0, 0.0),
                   decoration: selectedIndex == 0
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
-                          border: const Border(
+                          border: Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         )
-                      : const BoxDecoration(
+                      : BoxDecoration(
                           border: Border(
                             left: BorderSide(
                               color: Colors.transparent,
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         ),
@@ -145,30 +161,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.018,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: selectedIndex == 0
                               ? Icon(
                                   BootstrapIcons.fuel_pump_fill,
                                   color: Theme.of(context).primaryColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 )
                               : Icon(
                                   BootstrapIcons.fuel_pump,
                                   color: Theme.of(context).highlightColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.045,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: Text(
                             'Devices',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: ScreenUtil().setSp(12),
                               color: selectedIndex == 0
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).highlightColor,
@@ -181,22 +202,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(0.0,
+                      MediaQuery.of(context).size.height * 0.0066, 0.0, 0.0),
                   decoration: selectedIndex == 1
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
-                          border: const Border(
+                          border: Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         )
-                      : const BoxDecoration(
+                      : BoxDecoration(
                           border: Border(
                             left: BorderSide(
                               color: Colors.transparent,
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         ),
@@ -213,30 +235,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.018,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: selectedIndex == 1
                               ? Icon(
                                   BootstrapIcons.lightning_charge_fill,
                                   color: Theme.of(context).primaryColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 )
                               : Icon(
                                   BootstrapIcons.lightning_charge,
                                   color: Theme.of(context).highlightColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.045,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: Text(
                             'Charge',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: ScreenUtil().setSp(12),
                               color: selectedIndex == 1
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).highlightColor,
@@ -249,22 +276,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(0.0,
+                      MediaQuery.of(context).size.height * 0.0066, 0.0, 0.0),
                   decoration: selectedIndex == 2
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
-                          border: const Border(
+                          border: Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         )
-                      : const BoxDecoration(
+                      : BoxDecoration(
                           border: Border(
                             left: BorderSide(
                               color: Colors.transparent,
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         ),
@@ -281,30 +309,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.018,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: selectedIndex == 2
                               ? Icon(
                                   BootstrapIcons.calendar2_week_fill,
                                   color: Theme.of(context).primaryColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 )
                               : Icon(
                                   BootstrapIcons.calendar2_week,
                                   color: Theme.of(context).highlightColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.045,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: Text(
                             'Calendar',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: ScreenUtil().setSp(12),
                               color: selectedIndex == 2
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).highlightColor,
@@ -317,22 +350,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(0.0,
+                      MediaQuery.of(context).size.height * 0.0066, 0.0, 0.0),
                   decoration: selectedIndex == 3
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
-                          border: const Border(
+                          border: Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         )
-                      : const BoxDecoration(
+                      : BoxDecoration(
                           border: Border(
                             left: BorderSide(
                               color: Colors.transparent,
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         ),
@@ -349,30 +383,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.018,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: selectedIndex == 3
                               ? Icon(
                                   BootstrapIcons.map_fill,
                                   color: Theme.of(context).primaryColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 )
                               : Icon(
                                   BootstrapIcons.map,
                                   color: Theme.of(context).highlightColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.045,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: Text(
                             'Map',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: ScreenUtil().setSp(12),
                               color: selectedIndex == 3
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).highlightColor,
@@ -385,22 +424,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.fromLTRB(0.0, 6.0, 0.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(0.0,
+                      MediaQuery.of(context).size.height * 0.0066, 0.0, 0.0),
                   decoration: selectedIndex == 4
                       ? BoxDecoration(
                           color: Theme.of(context).cardColor,
-                          border: const Border(
+                          border: Border(
                             left: BorderSide(
                               color: Color(0XFF8ABA41),
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         )
-                      : const BoxDecoration(
+                      : BoxDecoration(
                           border: Border(
                             left: BorderSide(
                               color: Colors.transparent,
-                              width: 9,
+                              width: MediaQuery.of(context).size.width * 0.018,
                             ),
                           ),
                         ),
@@ -417,30 +457,35 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     child: Row(
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 0.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.018,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: selectedIndex == 4
                               ? Icon(
                                   BootstrapIcons.person_fill,
                                   color: Theme.of(context).primaryColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 )
                               : Icon(
                                   BootstrapIcons.person,
                                   color: Theme.of(context).highlightColor,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(17),
                                 ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(18.0, 2.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(
+                              MediaQuery.of(context).size.width * 0.045,
+                              0.0,
+                              0.0,
+                              0.0),
                           child: Text(
                             'Profile',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: ScreenUtil().setSp(12),
                               color: selectedIndex == 4
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).highlightColor,
@@ -457,7 +502,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 18.0),
+                  padding: EdgeInsets.fromLTRB(
+                      0.0,
+                      MediaQuery.of(context).size.height * 0.012,
+                      0.0,
+                      MediaQuery.of(context).size.height * 0.018),
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
@@ -487,11 +536,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Sky.sun: Align(
                           alignment: Alignment.center,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.01),
                             child: Icon(
                               BootstrapIcons.brightness_high_fill,
-                              size: 18.0,
+                              size: ScreenUtil().setSp(15),
                               color: Theme.of(context).backgroundColor ==
                                       const Color(0XFFFFFFFF)
                                   ? Color(0XFF131622)
@@ -502,11 +552,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         Sky.moon: Align(
                           alignment: Alignment.center,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    MediaQuery.of(context).size.width * 0.01),
                             child: Icon(
                               BootstrapIcons.moon_stars,
-                              size: 15.0,
+                              size: ScreenUtil().setSp(13),
                               color: Theme.of(context).backgroundColor ==
                                       const Color(0XFFFFFFFF)
                                   ? Colors.transparent
@@ -519,8 +570,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  height: 40,
-                  margin: const EdgeInsets.fromLTRB(30.0, 18.0, 30.0, 36.0),
+                  height: MediaQuery.of(context).size.height * 0.046,
+                  margin: EdgeInsets.fromLTRB(
+                      MediaQuery.of(context).size.width * 0.066,
+                      MediaQuery.of(context).size.height * 0.018,
+                      MediaQuery.of(context).size.width * 0.066,
+                      MediaQuery.of(context).size.height * 0.042),
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(12.0)),
@@ -530,23 +585,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     },
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           BootstrapIcons.headset,
-                          color: Color(0XFFFFFDFA),
-                          size: 20,
+                          color: const Color(0XFFFFFDFA),
+                          size: ScreenUtil().setSp(17),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 12.0),
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.028,
+                          ),
                           child: Text(
                             'Assistant AI',
                             style: TextStyle(
-                              fontFamily: 'AvenirNext',
+                              fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w600,
-                              fontSize: 14.0,
-                              color: Color(0XFFFFFDFA),
+                              fontSize: ScreenUtil().setSp(11),
+                              color: const Color(0XFFFFFDFA),
+                              letterSpacing: 1.5,
                             ),
                           ),
                         ),
@@ -596,60 +654,60 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             icon: Icon(
               BootstrapIcons.fuel_pump,
               color: Theme.of(context).iconTheme.color,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
             activeIcon: Icon(
               BootstrapIcons.fuel_pump_fill,
               color: Theme.of(context).primaryColor,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               BootstrapIcons.lightning_charge,
               color: Theme.of(context).iconTheme.color,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
             activeIcon: Icon(
               BootstrapIcons.lightning_charge_fill,
               color: Theme.of(context).primaryColor,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               BootstrapIcons.calendar2_week,
               color: Theme.of(context).iconTheme.color,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
             activeIcon: Icon(
               BootstrapIcons.calendar2_week_fill,
               color: Theme.of(context).primaryColor,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               BootstrapIcons.map,
               color: Theme.of(context).iconTheme.color,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
             activeIcon: Icon(
               BootstrapIcons.map_fill,
               color: Theme.of(context).primaryColor,
-              size: 22,
+              size: ScreenUtil().setSp(18),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               BootstrapIcons.person,
               color: Theme.of(context).iconTheme.color,
-              size: 22,
+              size: ScreenUtil().setSp(20),
             ),
             activeIcon: Icon(
               BootstrapIcons.person_fill,
               color: Theme.of(context).primaryColor,
-              size: 22,
+              size: ScreenUtil().setSp(20),
             ),
           ),
         ],
