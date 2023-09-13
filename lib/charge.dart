@@ -312,7 +312,7 @@ class _ChargeState extends State<Charge> {
                                 ),
                                 Icon(
                                   BootstrapIcons.arrow_right,
-                                  size: 20,
+                                  size: ScreenUtil().setSp(16),
                                   color: Theme.of(context).highlightColor,
                                 )
                               ],
@@ -348,20 +348,11 @@ class _ChargeState extends State<Charge> {
                                     children: [
                                       Text(
                                         'Time',
-                                        style: TextStyle(
-                                          color:
-                                              Theme.of(context).highlightColor,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
+                                        style: Theme.of(context).textTheme.titleLarge,
                                       ),
                                       Text(
                                         '1h 27m',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyLarge,
                                       ),
                                     ],
                                   ),
@@ -378,16 +369,11 @@ class _ChargeState extends State<Charge> {
                                       children: [
                                         Text(
                                           devicesList[radioValue][1],
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .highlightColor,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleLarge,
                                         ),
                                         Icon(
                                           BootstrapIcons.arrow_right,
-                                          size: 20.0,
+                                          size: ScreenUtil().setSp(16),
                                           color:
                                               Theme.of(context).highlightColor,
                                         )
@@ -456,18 +442,20 @@ class _ChargeState extends State<Charge> {
       ),
     );
   }
-
   _chooseDeviceModal() {
     showModalBottomSheet<void>(
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
         return Container(
-            height: 250.0,
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 22.0),
+            height: MediaQuery.of(context).size.height * 0.28,
+            padding: EdgeInsets.symmetric(
+              vertical: MediaQuery.of(context).size.height * 0.012,
+              horizontal: MediaQuery.of(context).size.width * 0.06,
+            ),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16.0),
+                top: Radius.circular(24.0),
                 bottom: Radius.zero,
               ),
               color: Theme.of(context).backgroundColor,
@@ -478,19 +466,17 @@ class _ChargeState extends State<Charge> {
                 itemCount: devicesList.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    height: 40.0,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 0.0,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    margin: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).size.height * 0.004,
                     ),
                     child: Material(
                       elevation: 0,
                       color: Theme.of(context).backgroundColor,
                       child: MaterialButton(
-                        minWidth: MediaQuery.of(context).size.width * 0.7,
-                        height: 40,
-                        splashColor: const Color(0XFFEAEAEC),
-                        highlightColor: const Color(0XFFEAEAEC),
+                        minWidth: MediaQuery.of(context).size.width,
+                        splashColor: Theme.of(context).hoverColor,
+                        highlightColor: Theme.of(context).hoverColor,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -499,10 +485,12 @@ class _ChargeState extends State<Charge> {
                                 Icon(
                                   BootstrapIcons.fuel_pump,
                                   color: devicesList[index][2],
-                                  size: 18.0,
+                                  size: ScreenUtil().setSp(16),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(left: 8.0),
+                                  margin: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.036),
                                   child: Text(devicesList[index][1],
                                       style: Theme.of(context)
                                           .textTheme
@@ -526,7 +514,7 @@ class _ChargeState extends State<Charge> {
                                   (Set<MaterialState> states) {
                                     if (states
                                         .contains(MaterialState.selected)) {
-                                      return const Color(0XFF8ABA41);
+                                      return Theme.of(context).primaryColor;
                                     }
                                     return Theme.of(context).highlightColor;
                                   },
@@ -550,10 +538,11 @@ class _ChargeState extends State<Charge> {
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(24.0),
+          top: Radius.circular(36.0),
           bottom: Radius.zero,
         ),
       ),
     );
   }
+
 }

@@ -570,7 +570,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.046,
+                  height: MediaQuery.of(context).size.height * 0.042,
                   margin: EdgeInsets.fromLTRB(
                       MediaQuery.of(context).size.width * 0.066,
                       MediaQuery.of(context).size.height * 0.018,

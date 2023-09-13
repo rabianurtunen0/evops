@@ -1247,12 +1247,14 @@ class _NewEventState extends State<NewEvent> {
                                               child: Row(
                                                 children: [
                                                   Container(
-                                                    margin: EdgeInsets.only(
-                                                        right:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width *
-                                                                0.018),
+                                                    margin: EdgeInsets.fromLTRB(
+                                                      0.0,
+                                                      0.0,
+                                                      MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.018, 
+                                                      MediaQuery.of(context).size.height * 0.002),
                                                     child: Icon(
                                                       BootstrapIcons.circle_fill,
                                                       color:
@@ -1264,9 +1266,11 @@ class _NewEventState extends State<NewEvent> {
                                                   ),
                                                   Text(
                                                     devicesList[radioValue][1],
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall,
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: ScreenUtil().setSp(11),
+                                                      color: Theme.of(context).highlightColor,
+                                                    ),
                                                   ),
                                                 ],
                                               ),

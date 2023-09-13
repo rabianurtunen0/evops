@@ -52,7 +52,6 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
-        maintainBottomViewPadding: true,
         child: Scrollbar(
           controller: _scrollController,
           thickness: 5,
@@ -1468,10 +1467,11 @@ class _ProfileState extends State<Profile> {
                                                                   index][0],
                                                               textAlign:
                                                                   TextAlign.left,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium,
+                                                              style: TextStyle(
+                                                                fontWeight: FontWeight.w400,
+                                                                fontSize: ScreenUtil().setSp(11),
+                                                                color: Theme.of(context).highlightColor,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
