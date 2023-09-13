@@ -1696,7 +1696,7 @@ class _ProfileState extends State<Profile> {
                         MediaQuery.of(context).size.width * 0.006,
                         0.0,
                         MediaQuery.of(context).size.width * 0.006,
-                        MediaQuery.of(context).size.height * 0.1,
+                        MediaQuery.of(context).size.height * 0.15,
                       ),
                       child: Material(
                         elevation: 0,
@@ -1724,9 +1724,13 @@ class _ProfileState extends State<Profile> {
                             });
                           },
                           child: _isLoading
-                              ? const CircularProgressIndicator(
-                                  color: Color(0XFFFFFDFA),
-                                  strokeWidth: 2.0,
+                              ? SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.036,
+                                  width: MediaQuery.of(context).size.height * 0.036,
+                                  child: const CircularProgressIndicator(
+                                    color: Color(0XFFFFFDFA),
+                                    strokeWidth: 2.0,
+                                  ),
                                 )
                               : Text(
                                   'Log out',

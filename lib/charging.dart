@@ -505,9 +505,13 @@ class _ChargingState extends State<Charging> {
                       setState(() {});
                     },
                     child: paymentLoading
-                        ? const CircularProgressIndicator(
-                            color: Color(0XFFFFFDFA),
-                            strokeWidth: 2.0,
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            width: MediaQuery.of(context).size.height * 0.03,
+                            child: const CircularProgressIndicator(
+                                color: Color(0XFFFFFDFA),
+                                strokeWidth: 2.0,
+                              ),
                           )
                         : Text(
                             'PAY',
@@ -1150,9 +1154,13 @@ class _ChargingState extends State<Charging> {
                                         });
                                       },
                                       child: changeCardLoading
-                                          ? const CircularProgressIndicator(
-                                              color: Color(0XFFFFFDFA),
-                                              strokeWidth: 2.0,
+                                          ? SizedBox(
+                                              height: MediaQuery.of(context).size.height * 0.032,
+                                              width: MediaQuery.of(context).size.height * 0.032,
+                                              child: const CircularProgressIndicator(
+                                                color: Color(0XFFFFFDFA),
+                                                strokeWidth: 2.0,
+                                              ),
                                             )
                                           : Text(
                                               'Add Card',

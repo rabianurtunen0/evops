@@ -348,10 +348,14 @@ class _SignUpState extends State<SignUp> {
                         });
                       },
                       child: _isLoading
-                          ? const CircularProgressIndicator(
-                              color: Color(0XFFFFFDFA),
-                              strokeWidth: 2.0,
-                            )
+                          ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.032,
+                            width: MediaQuery.of(context).size.height * 0.032,
+                            child: const CircularProgressIndicator(
+                                color: Color(0XFFFFFDFA),
+                                strokeWidth: 2.0,
+                              ),
+                          )
                           : Text(
                               'Sign Up',
                               style: Theme.of(context).textTheme.labelMedium,

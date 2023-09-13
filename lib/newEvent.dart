@@ -1325,10 +1325,14 @@ class _NewEventState extends State<NewEvent> {
                         });
                       },
                       child: isLoading
-                          ? const CircularProgressIndicator(
-                              color: Color(0XFFFFFDFA),
-                              strokeWidth: 2.0,
-                            )
+                          ? SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.032,
+                              width: MediaQuery.of(context).size.height * 0.032,
+                              child: const CircularProgressIndicator(
+                                color: Color(0XFFFFFDFA),
+                                strokeWidth: 2.0,
+                              ),
+                          )
                           : Text(
                               'Save',
                               style: Theme.of(context).textTheme.labelMedium,

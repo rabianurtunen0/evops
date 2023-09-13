@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:bootstrap_icons/bootstrap_icons.dart';
-import 'package:evops/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:geolocator/geolocator.dart';
 
 class Map extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -194,22 +192,10 @@ class _MapState extends State<Map> {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      openLocationSettings();
-      
-    }
-  }
-
-  @override
   void didChangeDependencies() {
     closedShowDialog ? openLocationSettings() : Null;
     super.didChangeDependencies();
   }
-
-  
-
-
 
 
   @override
