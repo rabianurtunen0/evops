@@ -52,6 +52,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
+        maintainBottomViewPadding: true,
         child: Scrollbar(
           controller: _scrollController,
           thickness: 5,
@@ -1695,7 +1696,7 @@ class _ProfileState extends State<Profile> {
                         MediaQuery.of(context).size.width * 0.006,
                         0.0,
                         MediaQuery.of(context).size.width * 0.006,
-                        MediaQuery.of(context).size.height * 0.009,
+                        MediaQuery.of(context).size.height * 0.1,
                       ),
                       child: Material(
                         elevation: 0,
