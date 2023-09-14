@@ -321,45 +321,50 @@ class _SignUpState extends State<SignUp> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.88,
+                    height: MediaQuery.of(context).size.height * 0.052,
                     alignment: Alignment.center,
                     margin: EdgeInsets.fromLTRB(
                         MediaQuery.of(context).size.width * 0.007,
                         MediaQuery.of(context).size.height * 0.007,
                         MediaQuery.of(context).size.width * 0.007,
                         0.0),
-                    child: MaterialButton(
-                      minWidth: MediaQuery.of(context).size.width * 0.88,
-                      height: MediaQuery.of(context).size.height * 0.052,
+                    child: Material(
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(12.0),
                       color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      splashColor: Theme.of(context).primaryColor,
-                      highlightColor: Theme.of(context).primaryColorDark,
-                      onPressed: () {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        Future.delayed(const Duration(seconds: 1), () {
+                      child: MaterialButton(
+                        minWidth: MediaQuery.of(context).size.width * 0.88,
+                        height: MediaQuery.of(context).size.height * 0.052,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        splashColor: Theme.of(context).primaryColor,
+                        highlightColor: Theme.of(context).primaryColorDark,
+                        onPressed: () {
                           setState(() {
-                            _isLoading = false;
-                            Get.to(const Login());
+                            _isLoading = true;
                           });
-                        });
-                      },
-                      child: _isLoading
-                          ? SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.032,
-                            width: MediaQuery.of(context).size.height * 0.032,
-                            child: const CircularProgressIndicator(
-                                color: Color(0XFFFFFDFA),
-                                strokeWidth: 2.0,
+                          Future.delayed(const Duration(seconds: 1), () {
+                            setState(() {
+                              _isLoading = false;
+                              Get.to(const Login());
+                            });
+                          });
+                        },
+                        child: _isLoading
+                            ? SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.032,
+                              width: MediaQuery.of(context).size.height * 0.032,
+                              child: const CircularProgressIndicator(
+                                  color: Color(0XFFFFFDFA),
+                                  strokeWidth: 2.0,
+                                ),
+                            )
+                            : Text(
+                                'Sign Up',
+                                style: Theme.of(context).textTheme.labelMedium,
                               ),
-                          )
-                          : Text(
-                              'Sign Up',
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
+                      ),
                     ),
                   ),
                   Container(

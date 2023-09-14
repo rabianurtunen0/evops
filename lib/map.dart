@@ -4,6 +4,7 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,11 +19,13 @@ class Map extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Map> createState() => _MapState();
+  _MapState createState() => _MapState();
 }
 
 class _MapState extends State<Map> {
-  final Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> _controller = Completer();
+  PermissionStatus? _locationPermission;
+  StreamController<bool> _mapUpdateStreamController = StreamController<bool>();
   final searchEditingController = TextEditingController();
   final searchScrollController = ScrollController();
 
@@ -46,7 +49,6 @@ class _MapState extends State<Map> {
   String searchWords = '';
   bool showSearchList = false;
   bool menuIconColor = false;
-  bool closedShowDialog = false;
   List searchList = ['bjkj', 'jnklk'];
 
   double cameraPositionZoom = 15.0;
@@ -122,19 +124,9 @@ class _MapState extends State<Map> {
     ));
   }
 
-  bool checkReady(LatLng? x, LocationPermission? y) {
-    if (x == initPosition ||
-        y == LocationPermission.denied ||
-        y == LocationPermission.deniedForever) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<void> openLocationSettings() async {
     if (await Permission.location.isDenied) {
-      showOpenedLocation();
+      //showOpenedLocation();
     } else {
       menuIconColor = true;
       generateMarkersList();
@@ -178,28 +170,59 @@ class _MapState extends State<Map> {
     });
   }
 
+  Future<void> _checkLocationPermission() async {
+    final status = await Permission.location.status;
+    setState(() {
+      _locationPermission = status;
+    });
+
+    if (status.isGranted) {
+      _loadMap();
+    }
+  }
+
+  void _listenToPermissionChanges() {
+    Permission.location.status.then((status) {
+      _checkLocationPermission();
+    });
+  }
+
+  Future<void> _loadMap() async {
+    await Future.delayed(Duration(seconds: 1));
+    final Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      currentLatLng = LatLng(position.latitude, position.longitude);
+      generateMarkersList();
+    });
+    _mapUpdateStreamController.add(true);
+  }
+
+  void _requestLocationPermission() async {
+    final status = await Permission.location.request();
+    if (status.isGranted) {
+      _checkLocationPermission();
+    }
+  }
 
   @override
   void initState() {
     openLocationSettings();
     checkLocationPermission();
     super.initState();
+    _checkLocationPermission();
+    _listenToPermissionChanges();
   }
 
   @override
   void dispose() {
+    _mapUpdateStreamController.close();
     super.dispose();
   }
 
   @override
-  void didChangeDependencies() {
-    closedShowDialog ? openLocationSettings() : Null;
-    super.didChangeDependencies();
-  }
-
-
-  @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
@@ -282,445 +305,492 @@ class _MapState extends State<Map> {
               )
             : Container(),
       ),
-      body: checkReady(currentLatLng, permission)
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).highlightColor,
-                ),
-              )
-            : SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height),
-                  child: Container(
-                    child: Stack(children: [
-                      GoogleMap(
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: false,
-                        zoomControlsEnabled: false,
-                        mapType: MapType.normal,
-                        polylines: {
-                          Polyline(
-                            polylineId: const PolylineId("route"),
-                            points: polylineCoordinates,
-                            color: Colors.red,
-                            width: 4,
-                            endCap: Cap.buttCap,
-                            startCap: Cap.buttCap,
-                          ),
-                        },
-                        initialCameraPosition: CameraPosition(
-                          target: currentLatLng,
-                          zoom: cameraPositionZoom,
-                        ),
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                        },
-                        markers: Set<Marker>.of(markersList),
-                      ),
-                      showMarkerDialog
-                          ? AnimatedPositioned(
-                              duration: const Duration(seconds: 4),
-                              bottom: 100,
-                              left: MediaQuery.of(context).size.width * 0.05,
-                              right: MediaQuery.of(context).size.width * 0.05,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                height: 320,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).backgroundColor,
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0.0, 12.0, 0.0, 18.0),
-                                      child: SvgPicture.asset(
-                                        'assets/images/line.svg',
-                                        color: Theme.of(context).disabledColor,
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          24.0, 0.0, 24.0, 24.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 24.0),
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.18,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.18,
-                                            decoration: BoxDecoration(
+      body: Center(
+        child: StreamBuilder<bool>(
+          stream: _mapUpdateStreamController.stream,
+          builder: (context, snapshot) {
+            return _locationPermission == PermissionStatus.granted
+                ? snapshot.hasData && snapshot.data == true
+                    ? SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height),
+                          child: Container(
+                            child: Stack(children: [
+                              GoogleMap(
+                                myLocationEnabled: true,
+                                myLocationButtonEnabled: false,
+                                zoomControlsEnabled: false,
+                                mapType: MapType.normal,
+                                polylines: {
+                                  Polyline(
+                                    polylineId: const PolylineId("route"),
+                                    points: polylineCoordinates,
+                                    color: Colors.red,
+                                    width: 4,
+                                    endCap: Cap.buttCap,
+                                    startCap: Cap.buttCap,
+                                  ),
+                                },
+                                initialCameraPosition: CameraPosition(
+                                  target: currentLatLng,
+                                  zoom: cameraPositionZoom,
+                                ),
+                                onMapCreated: (controller) {
+                                  setState(() {
+                                    _controller =
+                                        Completer<GoogleMapController>();
+                                    _controller.complete(controller);
+                                  });
+                                },
+                                markers: Set<Marker>.of(markersList),
+                              ),
+                              showMarkerDialog
+                                  ? AnimatedPositioned(
+                                      duration: const Duration(seconds: 4),
+                                      bottom: 100,
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        height: 320,
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            borderRadius:
+                                                BorderRadius.circular(16.0)),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  0.0, 12.0, 0.0, 18.0),
+                                              child: SvgPicture.asset(
+                                                'assets/images/line.svg',
                                                 color: Theme.of(context)
                                                     .disabledColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(16.0)),
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 2.0),
-                                                child: Text(
-                                                  'Car Charging Station',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleLarge,
-                                                ),
                                               ),
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 2.0),
-                                                child: Text(
-                                                  '1257 Leaf St, Alabama',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .displaySmall,
-                                                ),
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  24.0, 0.0, 24.0, 24.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 24.0),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.18,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.18,
+                                                    decoration: BoxDecoration(
+                                                        color: Theme.of(context)
+                                                            .disabledColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    16.0)),
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .symmetric(
+                                                            vertical: 2.0),
+                                                        child: Text(
+                                                          'Car Charging Station',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleLarge,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .symmetric(
+                                                            vertical: 2.0),
+                                                        child: Text(
+                                                          '1257 Leaf St, Alabama',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .displaySmall,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: const EdgeInsets
+                                                            .symmetric(
+                                                            vertical: 2.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              BootstrapIcons
+                                                                  .geo_alt,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              size: 14.0,
+                                                            ),
+                                                            Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                          4.0),
+                                                              child: Text(
+                                                                '500 m / 10 min',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodySmall,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 2.0),
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      BootstrapIcons.geo_alt,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      size: 14.0,
-                                                    ),
-                                                    Container(
-                                                      margin:
-                                                          const EdgeInsets.only(
-                                                              left: 4.0),
-                                                      child: Text(
-                                                        '500 m / 10 min',
+                                            ),
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  24.0, 0.0, 24.0, 0.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Connection',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                      Text(
+                                                        'Type 3',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .bodySmall,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'Connection',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
+                                                    ],
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    'assets/images/line_vertical.svg',
+                                                    color: Theme.of(context)
+                                                        .disabledColor,
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Per kWh',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                      Text(
+                                                        '€ 1.3',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall,
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    'assets/images/line_vertical.svg',
+                                                    color: Theme.of(context)
+                                                        .disabledColor,
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        'Parking Fee',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                      Text(
+                                                        '€ 0.7',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                'Type 3',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                          SvgPicture.asset(
-                                            'assets/images/line_vertical.svg',
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'Per kWh',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                              Text(
-                                                '€ 1.3',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              )
-                                            ],
-                                          ),
-                                          SvgPicture.asset(
-                                            'assets/images/line_vertical.svg',
-                                            color:
-                                                Theme.of(context).disabledColor,
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                'Parking Fee',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
-                                              Text(
-                                                '€ 0.7',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 12.0),
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.8,
-                                      height: 1,
-                                      color: Theme.of(context).disabledColor,
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          12.0, 0.0, 12.0, 8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          MaterialButton(
-                                            elevation: 0,
-                                            color:
-                                                Theme.of(context).backgroundColor,
-                                            splashColor:
-                                                Theme.of(context).backgroundColor,
-                                            highlightColor:
-                                                Theme.of(context).backgroundColor,
-                                            onPressed: () {},
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Arrive',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Today 9:30',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall,
-                                                    ),
-                                                    Icon(
-                                                      BootstrapIcons.chevron_down,
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      size: 14.0,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
                                             ),
-                                          ),
-                                          Container(
-                                            width: 90.0,
-                                            height: 30.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  Theme.of(context).primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                            ),
-                                            child: Container(
+                                            Container(
                                               alignment: Alignment.center,
-                                              child: Text(
-                                                '1h 15m',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
-                                              ),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12.0),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                              height: 1,
+                                              color: Theme.of(context)
+                                                  .disabledColor,
                                             ),
-                                          ),
-                                          MaterialButton(
-                                            elevation: 0,
-                                            color:
-                                                Theme.of(context).backgroundColor,
-                                            splashColor:
-                                                Theme.of(context).backgroundColor,
-                                            highlightColor:
-                                                Theme.of(context).backgroundColor,
-                                            onPressed: () {},
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Depart',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      'Today 10:45',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodySmall,
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  12.0, 0.0, 12.0, 8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: [
+                                                  MaterialButton(
+                                                    elevation: 0,
+                                                    color: Theme.of(context)
+                                                        .backgroundColor,
+                                                    splashColor:
+                                                        Theme.of(context)
+                                                            .backgroundColor,
+                                                    highlightColor:
+                                                        Theme.of(context)
+                                                            .backgroundColor,
+                                                    onPressed: () {},
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Arrive',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Today 9:30',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall,
+                                                            ),
+                                                            Icon(
+                                                              BootstrapIcons
+                                                                  .chevron_down,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              size: 14.0,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Icon(
-                                                      BootstrapIcons.chevron_down,
+                                                  ),
+                                                  Container(
+                                                    width: 90.0,
+                                                    height: 30.0,
+                                                    decoration: BoxDecoration(
                                                       color: Theme.of(context)
                                                           .primaryColor,
-                                                      size: 14.0,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16.0),
                                                     ),
-                                                  ],
-                                                )
-                                              ],
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        '1h 15m',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  MaterialButton(
+                                                    elevation: 0,
+                                                    color: Theme.of(context)
+                                                        .backgroundColor,
+                                                    splashColor:
+                                                        Theme.of(context)
+                                                            .backgroundColor,
+                                                    highlightColor:
+                                                        Theme.of(context)
+                                                            .backgroundColor,
+                                                    onPressed: () {},
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Depart',
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Today 10:45',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodySmall,
+                                                            ),
+                                                            Icon(
+                                                              BootstrapIcons
+                                                                  .chevron_down,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                              size: 14.0,
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.8,
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.fromLTRB(
-                                          4.0, 0.0, 4.0, 0.0),
-                                      child: MaterialButton(
-                                        minWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.82,
-                                        height: 40,
-                                        color: Theme.of(context).primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16.0),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  4.0, 0.0, 4.0, 0.0),
+                                              child: MaterialButton(
+                                                minWidth: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.82,
+                                                height: 40,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16.0),
+                                                ),
+                                                splashColor: Theme.of(context)
+                                                    .primaryColor,
+                                                highlightColor:
+                                                    Theme.of(context)
+                                                        .primaryColorDark,
+                                                onPressed: () {
+                                                  setState(() {});
+                                                },
+                                                child: const Text(
+                                                  'Go To Charger',
+                                                  style: TextStyle(
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 15.0,
+                                                    color: Color(0XFFFFFDFA),
+                                                    letterSpacing: 1.5,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        splashColor:
-                                            Theme.of(context).primaryColor,
-                                        highlightColor:
-                                            Theme.of(context).primaryColorDark,
-                                        onPressed: () {
-                                          setState(() {});
-                                        },
-                                        child: const Text(
-                                          'Go To Charger',
-                                          style: TextStyle(
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15.0,
-                                            color: Color(0XFFFFFDFA),
-                                            letterSpacing: 1.5,
-                                          ),
-                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : Container(),
-                    ]),
-                  ),
-                ),
-              ),
-    
-    );
-  }
-
-  showOpenedLocation() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            return AlertDialog(
-              elevation: 0,
-              backgroundColor: Theme.of(context).cardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              actions: [
-                Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.018),
-                  child: Text(
-                    'Can "Evops" use your location?',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    child: MaterialButton(
-                      elevation: 0,
-                      onPressed: () {
-                        setState(() {
-                          openAppSettings();
-                          closedShowDialog = true;
-                          Navigator.of(context).pop();
-                          /*Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => const Home(
-                                      selectedIndex: 3,
-                                      selectedItemPosition: 3,
-                                    )),
-                          );*/
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Go to the app's location settings",
-                            style: Theme.of(context).textTheme.bodyLarge,
+                                    )
+                                  : Container(),
+                            ]),
                           ),
-                          Icon(
-                            BootstrapIcons.arrow_right,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ],
+                        ),
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).highlightColor,
+                          strokeWidth: 2.0,
+                        ),
+                      )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.018),
+                        child: Text(
+                          'Can "Evops" use your location?',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
-                    ))
-              ],
-            );
-          });
-        }).then((value) {
-      if (closedShowDialog == false) {
-        Future.delayed(const Duration(seconds: 2), () {
-          if (mounted) {
-            openLocationSettings();
-          }
-        });
-      }
-    });
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.012),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.048,
+                        child: MaterialButton(
+                            elevation: 0,
+                            minWidth: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.height * 0.048,
+                            color: Theme.of(context).cardColor,
+                            shape: RoundedRectangleBorder(
+                              
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _requestLocationPermission();
+                                openAppSettings();
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.006),
+                                  child: Text(
+                                    "Go to the app's settings",
+                                    style: Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.006),
+                                  child: Icon(
+                                    BootstrapIcons.arrow_right,
+                                    color: Theme.of(context).primaryColor,
+                                    size: ScreenUtil().setSp(19),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
+                    ],
+                  );
+          },
+        ),
+      ),
+    );
   }
 }

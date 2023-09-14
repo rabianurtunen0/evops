@@ -1,4 +1,4 @@
-import 'package:evops/start.dart';
+//import 'package:evops/start.dart';
 import 'package:evops/themeService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,10 +7,12 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:evops/logIn.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:evops/theme.dart';
+//import 'package:permission_handler/permission_handler.dart';
 
 main() async {
   await GetStorage.init();
   await ScreenUtil.ensureScreenSize();
+  //await Permission.location.request();
   runApp(const MyApp());
 }
 

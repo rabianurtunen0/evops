@@ -58,209 +58,217 @@ class _CalendarState extends State<Calendar> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.44,
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.035),
-              alignment: Alignment.topCenter,
-              child: TableCalendar(
-                focusedDay: today,
-                firstDay: DateTime(2023),
-                lastDay: DateTime(2123),
-                rowHeight: MediaQuery.of(context).size.height * 0.052,
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                sixWeekMonthsEnforced: true,
-                daysOfWeekHeight: MediaQuery.of(context).size.height * 0.03,
-                daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  weekendStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                ),
-                headerStyle: HeaderStyle(
-                  formatButtonVisible: false,
-                  titleCentered: true,
-                  titleTextStyle: TextStyle(
-                    color: Theme.of(context).iconTheme.color,
-                    fontSize: ScreenUtil().setSp(14),
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  headerMargin: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * 0.012),
-                  leftChevronIcon: const Icon(
-                    Icons.chevron_left_rounded,
-                    color: Color(0XFF8ABA41),
-                  ),
-                  rightChevronIcon: const Icon(
-                    Icons.chevron_right_rounded,
-                    color: Color(0XFF8ABA41),
-                  ),
-                ),
-                onDaySelected: _onDaySelected,
-                selectedDayPredicate: (day) => isSameDay(day, today),
-                calendarStyle: CalendarStyle(
-                  outsideTextStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  defaultTextStyle: TextStyle(
-                    color: Theme.of(context).iconTheme.color,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  weekendTextStyle: TextStyle(
-                    color: Theme.of(context).iconTheme.color,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  todayTextStyle: const TextStyle(
-                    color: Color(0XFF8ABA41),
-                    fontWeight: FontWeight.w800,
-                  ),
-                  todayDecoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: const Color(0XFF8ABA41),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0XFF8ABA41),
-                      width: 1,
+            Flexible(
+              flex: 6,
+              child: Container(
+                  //height: MediaQuery.of(context).size.height * 0.44,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.035),
+                  alignment: Alignment.topCenter,
+                  child: TableCalendar(
+                    focusedDay: today,
+                    firstDay: DateTime(2023),
+                    lastDay: DateTime(2123),
+                    rowHeight: MediaQuery.of(context).size.height * 0.052,
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    sixWeekMonthsEnforced: true,
+                    daysOfWeekHeight: MediaQuery.of(context).size.height * 0.03,
+                    daysOfWeekStyle: DaysOfWeekStyle(
+                      weekdayStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                      weekendStyle: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
+                    ),
+                    headerStyle: HeaderStyle(
+                      formatButtonVisible: false,
+                      titleCentered: true,
+                      titleTextStyle: TextStyle(
+                        color: Theme.of(context).iconTheme.color,
+                        fontSize: ScreenUtil().setSp(14),
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      headerMargin: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).size.height * 0.012),
+                      leftChevronIcon: Icon(
+                        Icons.chevron_left_rounded,
+                        color: Theme.of(context).primaryColor,
+                        size: ScreenUtil().setSp(24),
+                      ),
+                      rightChevronIcon: Icon(
+                        Icons.chevron_right_rounded,
+                        color: Theme.of(context).primaryColor,
+                        size: ScreenUtil().setSp(24),
+                      ),
+                    ),
+                    onDaySelected: _onDaySelected,
+                    selectedDayPredicate: (day) => isSameDay(day, today),
+                    calendarStyle: CalendarStyle(
+                      outsideTextStyle: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      defaultTextStyle: TextStyle(
+                        color: Theme.of(context).iconTheme.color,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      weekendTextStyle: TextStyle(
+                        color: Theme.of(context).iconTheme.color,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      todayTextStyle: const TextStyle(
+                        color: Color(0XFF8ABA41),
+                        fontWeight: FontWeight.w800,
+                      ),
+                      todayDecoration: BoxDecoration(
+                        color: Theme.of(context).backgroundColor,
+                        shape: BoxShape.circle,
+                      ),
+                      selectedDecoration: BoxDecoration(
+                        color: const Color(0XFF8ABA41),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color(0XFF8ABA41),
+                          width: 1,
+                        ),
+                      ),
+                      selectedTextStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  selectedTextStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
                 ),
-              ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.049),
-              height: MediaQuery.of(context).size.height * 0.32,
-              decoration: const BoxDecoration(
-                color: Color(0XFF8ABA41),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.zero,
-                  top: Radius.circular(24.0),
+            Flexible(
+              flex: 4,
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.049),
+                //height: MediaQuery.of(context).size.height * 0.32,
+                decoration: const BoxDecoration(
+                  color: Color(0XFF8ABA41),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.zero,
+                    top: Radius.circular(24.0),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(
-                        vertical: MediaQuery.of(context).size.height * 0.012),
-                    child: SvgPicture.asset(
-                      'assets/images/line.svg',
-                      height: MediaQuery.of(context).size.height * 0.0048,
-                      color: const Color(0XFFFFFDFA),
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).size.height * 0.012),
+                      child: SvgPicture.asset(
+                        'assets/images/line.svg',
+                        height: MediaQuery.of(context).size.height * 0.0048,
+                        color: const Color(0XFFFFFDFA),
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.048,
-                            vertical:
-                                MediaQuery.of(context).size.height * 0.012),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          differenceDate > 0
-                              ? '$differenceDate days ago'
-                              : differenceDate < 0
-                                  ? '${differenceDate.abs()} days before'
-                                  : 'Today',
-                          style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontSize: ScreenUtil().setSp(14),
-                            color: const Color(0XFFFFFDFA),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width * 0.008),
-                        child: IconButton(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          icon: Icon(
-                            BootstrapIcons.plus_circle_fill,
-                            size: ScreenUtil().setSp(16),
-                            color: const Color(0XFFFFFDFA),
-                          ),
-                          onPressed: () {
-                            box.write('year', selectYear);
-                            box.write('month', selectMonth);
-                            box.write('day', selectDay);
-                            box.write('date', selectDate);
-                            print(box.read('year'));
-                            print(box.read('month'));
-                            print(box.read('day'));
-                            Get.to(const NewEvent());
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: eventsList.isEmpty
-                        ? Container(
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(
-                                top:
-                                    MediaQuery.of(context).size.height * 0.066),
-                            child: Icon(
-                              BootstrapIcons.calendar_plus,
-                              color: const Color(0XFFFAFAFA),
-                              size: ScreenUtil().setSp(60),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.048,
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.012),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            differenceDate > 0
+                                ? '$differenceDate days ago'
+                                : differenceDate < 0
+                                    ? '${differenceDate.abs()} days before'
+                                    : 'Today',
+                            style: TextStyle(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: ScreenUtil().setSp(14),
+                              color: const Color(0XFFFFFDFA),
                             ),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: eventsList.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                alignment: Alignment.topCenter,
-                                margin: EdgeInsets.symmetric(
-                                    horizontal:
-                                        MediaQuery.of(context).size.width *
-                                            0.06,
-                                    vertical:
-                                        MediaQuery.of(context).size.height *
-                                            0.012),
-                                width: MediaQuery.of(context).size.width,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: Colors.white70,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        eventsList[index][1],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.008),
+                          child: IconButton(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            icon: Icon(
+                              BootstrapIcons.plus_circle_fill,
+                              size: ScreenUtil().setSp(16),
+                              color: const Color(0XFFFFFDFA),
+                            ),
+                            onPressed: () {
+                              box.write('year', selectYear);
+                              box.write('month', selectMonth);
+                              box.write('day', selectDay);
+                              box.write('date', selectDate);
+                              print(box.read('year'));
+                              print(box.read('month'));
+                              print(box.read('day'));
+                              Get.to(const NewEvent());
                             },
                           ),
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: eventsList.isEmpty
+                          ? Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  top:
+                                      MediaQuery.of(context).size.height * 0.066),
+                              child: Icon(
+                                BootstrapIcons.calendar_plus,
+                                color: const Color(0XFFFAFAFA),
+                                size: ScreenUtil().setSp(60),
+                              ),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: eventsList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  alignment: Alignment.topCenter,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal:
+                                          MediaQuery.of(context).size.width *
+                                              0.06,
+                                      vertical:
+                                          MediaQuery.of(context).size.height *
+                                              0.012),
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.white70,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          eventsList[index][1],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
