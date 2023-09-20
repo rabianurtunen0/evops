@@ -54,6 +54,8 @@ dependencies:
   flutter_screenutil: ^5.9.0
   permission_handler: ^10.4.3
   flutter_riverpod: ^2.3.10
+  uuid: ^4.0.0
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:
